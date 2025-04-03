@@ -73,7 +73,7 @@
   import ValidationErrorIcon from './ValidationErrorIcon.svelte'
   import { isObject } from '$lib/utils/typeUtils.js'
   import { classnames } from '$lib/utils/cssUtils.js'
-  import { isCtrlKeyDown } from 'svelte-jsoneditor/utils/keyBindings'
+  import { isCtrlKeyDown } from 'codemirror-json/utils/keyBindings'
   import Tag from '../../../components/controls/Tag.svelte'
 
   // We pass `pointer` instead of `path` because pointer (a string) is immutable.

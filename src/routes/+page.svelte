@@ -1,9 +1,9 @@
 <svelte:head>
-  <title>svelte-jsoneditor</title>
+  <title>codemirror-json</title>
 </svelte:head>
 
 <section>
-  <h1>svelte-jsoneditor</h1>
+  <h1>codemirror-json</h1>
 
   <h2>Examples</h2>
 

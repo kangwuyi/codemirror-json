@@ -5,7 +5,7 @@
   import { getValueClass } from './utils/getValueClass.js'
   import { addNewLineSuffix } from '$lib/utils/domUtils.js'
   import { type RenderValueProps } from '$lib/types.js'
-  import { isCtrlKeyDown } from 'svelte-jsoneditor/utils/keyBindings'
+  import { isCtrlKeyDown } from 'codemirror-json/utils/keyBindings'
   import { formatSize } from '$lib/utils/fileUtils'
   import Tag from '../../../components/controls/Tag.svelte'
 

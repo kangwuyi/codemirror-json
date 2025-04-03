@@ -4,7 +4,7 @@
     ReadonlyValue,
     type RenderValueComponentDescription,
     type RenderValueProps
-  } from 'svelte-jsoneditor'
+  } from 'codemirror-json'
   import EditableValueInput from '../../components/EditableValueInput.svelte'
 
   let content = $state({
@@ -30,7 +30,7 @@
 </script>
 
 <svelte:head>
-  <title>Custom value renderer (editable input) | svelte-jsoneditor</title>
+  <title>Custom value renderer (editable input) | codemirror-json</title>
 </svelte:head>
 
 <h1>Custom value renderer 2 (editable input)</h1>

@@ -1,5 +1,5 @@
 <script>
-  import { JSONEditor } from 'svelte-jsoneditor'
+  import { JSONEditor } from 'codemirror-json'
 
   let refJsonEditor
 
@@ -26,7 +26,7 @@
 </script>
 
 <svelte:head>
-  <title>Use methods | svelte-jsoneditor</title>
+  <title>Use methods | codemirror-json</title>
 </svelte:head>
 
 <h1>Use methods</h1>

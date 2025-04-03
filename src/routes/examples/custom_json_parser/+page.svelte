@@ -1,5 +1,5 @@
 <script>
-  import { JSONEditor } from 'svelte-jsoneditor'
+  import { JSONEditor } from 'codemirror-json'
   import { parse, stringify } from 'lossless-json'
 
   const LosslessJSONParser = { parse, stringify }
@@ -19,7 +19,7 @@
 </script>
 
 <svelte:head>
-  <title>Custom JSON Parser (Lossless JSON) | svelte-jsoneditor</title>
+  <title>Custom JSON Parser (Lossless JSON) | codemirror-json</title>
 </svelte:head>
 
 <h1>Custom JSON Parser (Lossless JSON)</h1>

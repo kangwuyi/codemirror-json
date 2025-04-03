@@ -1,5 +1,5 @@
 <script>
-  import { JSONEditor } from 'svelte-jsoneditor'
+  import { JSONEditor } from 'codemirror-json'
 
   const themes = [
     { value: 'jse-theme-default', label: 'default' },
@@ -40,7 +40,7 @@
 </script>
 
 <svelte:head>
-  <title>Switch themes and font size with CSS variables | svelte-jsoneditor</title>
+  <title>Switch themes and font size with CSS variables | codemirror-json</title>
 </svelte:head>
 
 <div class="page {selectedTheme} {selectedFontSize}">
@@ -72,7 +72,7 @@
 <style lang="scss">
   // replace the dark theme import with:
   //
-  //    @import 'svelte-jsoneditor/themes/jse-theme-dark.css';
+  //    @import 'codemirror-json/themes/jse-theme-dark.css';
   //
   @import '../../../lib/themes/jse-theme-dark.css';
   @import '../../themes/jse-theme-big.css';

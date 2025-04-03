@@ -5,7 +5,7 @@
     renderValue,
     type RenderValueComponentDescription,
     type RenderValueProps
-  } from 'svelte-jsoneditor'
+  } from 'codemirror-json'
   import ReadonlyPassword from '../../components/ReadonlyPassword.svelte'
   import { EvaluatorAction } from '../../components/EvaluatorAction'
 
@@ -54,7 +54,7 @@
 </script>
 
 <svelte:head>
-  <title>Custom value renderer (password, enum, action) | svelte-jsoneditor</title>
+  <title>Custom value renderer (password, enum, action) | codemirror-json</title>
 </svelte:head>
 
 <h1>Custom value renderer (password, enum, action)</h1>
@@ -76,7 +76,7 @@
   <li>
     The creates a custom component for the field named "evaluate" using a Svelte Action, which
     evaluates the value as an expression containing an addition of two or more values. This solution
-    can be used when using svelte-jsoneditor in a Vanilla JS environment.
+    can be used when using codemirror-json in a Vanilla JS environment.
   </li>
 </ol>
 

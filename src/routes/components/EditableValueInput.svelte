@@ -7,7 +7,7 @@
     type OnPatch,
     type OnSelect,
     type ValueNormalization
-  } from 'svelte-jsoneditor'
+  } from 'codemirror-json'
 
   export let value: unknown
   export let path: JSONPath

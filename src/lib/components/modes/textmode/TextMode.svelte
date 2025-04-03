@@ -1046,7 +1046,6 @@
       canFormat={!isNewDocument}
       canCompact={!isNewDocument}
       canSort={!isNewDocument}
-      canTransform={!isNewDocument}
       canUndo={history.canUndo}
       canRedo={history.canRedo}
       {onRenderMenu}

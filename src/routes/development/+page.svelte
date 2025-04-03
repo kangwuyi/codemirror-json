@@ -20,7 +20,7 @@
     SelectionType,
     toJSONContent,
     type RenderValueProps
-  } from 'svelte-jsoneditor'
+  } from 'codemirror-json'
   import { useLocalStorage } from '$lib/utils/localStorageUtils.js'
   import { range } from 'lodash-es'
   import { mount, flushSync } from 'svelte'

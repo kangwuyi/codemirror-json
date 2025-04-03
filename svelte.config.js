@@ -10,9 +10,9 @@ const config = {
   kit: {
     adapter: adapter(),
     alias: {
-      'svelte-jsoneditor': 'src/lib'
-    }
-  }
+      'codemirror-json': 'src/lib',
+    },
+  },
 }
 
 export default config

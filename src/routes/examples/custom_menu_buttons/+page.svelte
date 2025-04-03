@@ -5,7 +5,7 @@
     type MenuItem,
     type MenuSeparator,
     type RenderMenuContext
-  } from 'svelte-jsoneditor'
+  } from 'codemirror-json'
   import { faCopy } from '@fortawesome/free-regular-svg-icons'
   import copyToClipboard from '$lib/utils/copyToClipboard.js'
 
@@ -54,7 +54,7 @@
 </script>
 
 <svelte:head>
-  <title>Custom menu buttons | svelte-jsoneditor</title>
+  <title>Custom menu buttons | codemirror-json</title>
 </svelte:head>
 
 <h1>Custom menu buttons</h1>

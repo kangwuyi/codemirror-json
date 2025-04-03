@@ -4,7 +4,7 @@
     createAjvValidator,
     renderValue,
     renderJSONSchemaEnum
-  } from 'svelte-jsoneditor'
+  } from 'codemirror-json'
 
   const schema = {
     title: 'Employee',
@@ -98,7 +98,7 @@
 </script>
 
 <svelte:head>
-  <title>JSON Schema validation | svelte-jsoneditor</title>
+  <title>JSON Schema validation | codemirror-json</title>
 </svelte:head>
 
 <h1>JSON Schema validation</h1>

@@ -6,9 +6,9 @@ const config = {
   plugins: [sveltekit()],
   resolve: {
     alias: {
-      'svelte-jsoneditor': path.resolve('src/lib')
-    }
-  }
+      'codemirror-json': path.resolve('src/lib'),
+    },
+  },
 }
 
 export default config

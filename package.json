@@ -1,11 +1,11 @@
 {
-  "name": "svelte-jsoneditor",
+  "name": "codemirror-json",
   "description": "A web-based tool to view, edit, format, transform, and validate JSON",
   "version": "3.2.0",
-  "homepage": "https://github.com/josdejong/svelte-jsoneditor",
+  "homepage": "https://github.com/kangwuyi/codemirror-json",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/josdejong/svelte-jsoneditor.git"
+    "url": "git+https://github.com/kangwuyi/codemirror-json.git"
   },
   "type": "module",
   "svelte": "./index.js",

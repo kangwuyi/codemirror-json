@@ -14,20 +14,20 @@ import type {
   SearchOptions,
   SearchResultDetails,
   SearchResultItem,
-  SearchResults
+  SearchResults,
 } from '$lib/types'
 import { SearchField } from '$lib/types.js'
 import {
   hasSearchResults,
   isArrayRecursiveState,
-  isObjectRecursiveState
-} from 'svelte-jsoneditor/typeguards.js'
+  isObjectRecursiveState,
+} from 'codemirror-json/typeguards.js'
 
 // TODO: comment
 // TODO: unit test
 export function updateSearchResult(
   newResultItems: SearchResultItem[],
-  previousResult: SearchResultDetails | undefined
+  previousResult: SearchResultDetails | undefined,
 ): SearchResultDetails {
   const activePath = previousResult?.activeItem
     ? getSearchResultPath(previousResult.activeItem)
@@ -56,7 +56,7 @@ export function updateSearchResult(
   return {
     items,
     activeItem,
-    activeIndex
+    activeIndex,
   }
 }
 
@@ -79,7 +79,7 @@ export function searchNext(searchResult: SearchResultDetails): SearchResultDetai
     ...searchResult,
     items,
     activeItem: nextActiveItem,
-    activeIndex: nextActiveIndex
+    activeIndex: nextActiveIndex,
   }
 }
 
@@ -98,7 +98,7 @@ export function searchPrevious(searchResult: SearchResultDetails): SearchResultD
     ...searchResult,
     items,
     activeItem: previousActiveItem,
-    activeIndex: previousActiveIndex
+    activeIndex: previousActiveIndex,
   }
 }
 
@@ -106,7 +106,7 @@ export function searchPrevious(searchResult: SearchResultDetails): SearchResultD
 export function search(
   searchText: string,
   json: unknown,
-  options: SearchOptions = {}
+  options: SearchOptions = {},
 ): SearchResultItem[] {
   const searchTextLowerCase = searchText.toLowerCase()
   const maxResults = options?.maxResults ?? Infinity
@@ -164,7 +164,7 @@ export function search(
         searchTextLowerCase,
         path,
         SearchField.value,
-        onMatch
+        onMatch,
       )
     }
   }
@@ -220,7 +220,7 @@ export function findCaseInsensitiveMatches(
   searchTextLowerCase: string,
   path: JSONPath,
   field: SearchField,
-  onMatch: (searchResultItem: SearchResultItem) => void
+  onMatch: (searchResultItem: SearchResultItem) => void,
 ): void {
   const textLower = text.toLowerCase()
 
@@ -239,7 +239,7 @@ export function findCaseInsensitiveMatches(
         field,
         fieldIndex,
         start: index,
-        end: position
+        end: position,
       })
 
       fieldIndex++
@@ -260,7 +260,7 @@ export function replaceText(text: string, replacementText: string, start: number
 export function replaceAllText(
   text: string,
   replacementText: string,
-  occurrences: Array<{ start: number; end: number }>
+  occurrences: Array<{ start: number; end: number }>,
 ): string {
   let updatedText = text
 
@@ -276,7 +276,7 @@ export function createSearchAndReplaceOperations(
   documentState: DocumentState | undefined,
   replacementText: string,
   searchResultItem: SearchResultItem,
-  parser: JSONParser
+  parser: JSONParser,
 ): { newSelection: JSONSelection | undefined; operations: JSONPatchDocument } {
   const { field, path, start, end } = searchResultItem
 
@@ -293,7 +293,7 @@ export function createSearchAndReplaceOperations(
 
     return {
       newSelection,
-      operations
+      operations,
     }
   } else if (field === SearchField.value) {
     // replace a value
@@ -310,15 +310,15 @@ export function createSearchAndReplaceOperations(
       {
         op: 'replace',
         path: compileJSONPointer(path),
-        value: enforceString ? value : stringConvert(value, parser)
-      }
+        value: enforceString ? value : stringConvert(value, parser),
+      },
     ]
 
     const newSelection = createSelectionFromOperations(json, operations)
 
     return {
       newSelection,
-      operations
+      operations,
     }
   } else {
     throw new Error(`Cannot replace: unknown type of search result field ${field}`)
@@ -330,7 +330,7 @@ export function createSearchAndReplaceAllOperations(
   documentState: DocumentState | undefined,
   searchText: string,
   replacementText: string,
-  parser: JSONParser
+  parser: JSONParser,
 ): { newSelection: JSONSelection | undefined; operations: JSONPatchDocument } {
   // TODO: to improve performance, we could reuse existing search results (except when hitting a maxResult limit)
   const searchResultItems = search(searchText, json, { maxResults: Infinity })
@@ -351,7 +351,7 @@ export function createSearchAndReplaceAllOperations(
       deduplicatedMatches.push({
         path: item.path,
         field: item.field,
-        items: [item]
+        items: [item],
       })
     } else {
       ;(last(deduplicatedMatches) as Match).items.push(item)
@@ -409,8 +409,8 @@ export function createSearchAndReplaceAllOperations(
         {
           op: 'replace',
           path: compileJSONPointer(path),
-          value: enforceString ? value : stringConvert(value, parser)
-        }
+          value: enforceString ? value : stringConvert(value, parser),
+        },
       ]
       allOperations = allOperations.concat(operations)
 
@@ -422,7 +422,7 @@ export function createSearchAndReplaceAllOperations(
 
   return {
     operations: allOperations,
-    newSelection: lastNewSelection
+    newSelection: lastNewSelection,
   }
 }
 
@@ -449,7 +449,7 @@ export function splitValue(text: string, matches: ExtendedSearchResultItem[]): S
         resultIndex: undefined,
         type: 'normal',
         text: precedingText,
-        active: false
+        active: false,
       })
     }
 
@@ -458,7 +458,7 @@ export function splitValue(text: string, matches: ExtendedSearchResultItem[]): S
       resultIndex: match.resultIndex,
       type: 'highlight',
       text: matchingText,
-      active: match.active
+      active: match.active,
     })
 
     previousEnd = match.end
@@ -470,7 +470,7 @@ export function splitValue(text: string, matches: ExtendedSearchResultItem[]): S
       type: 'normal',
       text: text.slice(lastMatch.end),
       resultIndex: undefined,
-      active: false
+      active: false,
     })
   }
 
@@ -489,7 +489,7 @@ function getSearchResultPath(searchResultItem: SearchResultItem): JSONPath {
  * Returns a non-empty array, or undefined if there are no key search results
  */
 export function filterKeySearchResults(
-  searchResult: SearchResults | undefined
+  searchResult: SearchResults | undefined,
 ): ExtendedSearchResultItem[] | undefined {
   const filtered = hasSearchResults(searchResult)
     ? searchResult.searchResults.filter((result) => result.field === SearchField.key)
@@ -503,7 +503,7 @@ export function filterKeySearchResults(
  * Returns a non-empty array, or undefined if there are no value search results
  */
 export function filterValueSearchResults(
-  searchResult: SearchResults | undefined
+  searchResult: SearchResults | undefined,
 ): ExtendedSearchResultItem[] | undefined {
   const filtered = hasSearchResults(searchResult)
     ? searchResult.searchResults.filter((result) => result.field === SearchField.value)
@@ -515,21 +515,21 @@ export function filterValueSearchResults(
 export const searchResultsFactory: RecursiveStateFactory = {
   createObjectDocumentState: () => ({ type: 'object', properties: {} }),
   createArrayDocumentState: () => ({ type: 'array', items: [] }),
-  createValueDocumentState: () => ({ type: 'value' })
+  createValueDocumentState: () => ({ type: 'value' }),
 }
 
 export function updateInSearchResults(
   json: unknown,
   searchResults: SearchResults | undefined,
   path: JSONPath,
-  transform: (value: unknown, state: SearchResults) => SearchResults
+  transform: (value: unknown, state: SearchResults) => SearchResults,
 ): SearchResults {
   return updateInRecursiveState(json, searchResults, path, transform, searchResultsFactory)
 }
 
 export function toRecursiveSearchResults(
   json: unknown,
-  searchResultItems: ExtendedSearchResultItem[]
+  searchResultItems: ExtendedSearchResultItem[],
 ): SearchResults | undefined {
   return searchResultItems.reduce(
     (recursiveState, searchResult) => {
@@ -537,10 +537,10 @@ export function toRecursiveSearchResults(
         ...nestedState,
         searchResults: nestedState.searchResults
           ? nestedState.searchResults.concat(searchResult)
-          : [searchResult]
+          : [searchResult],
       }))
     },
-    undefined as SearchResults | undefined
+    undefined as SearchResults | undefined,
   )
 }
 

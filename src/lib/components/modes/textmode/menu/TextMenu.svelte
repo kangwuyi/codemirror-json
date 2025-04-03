@@ -23,7 +23,6 @@
   export let canFormat: boolean
   export let canCompact: boolean
   export let canSort: boolean
-  export let canTransform: boolean
   export let onRenderMenu: OnRenderMenuInternal
 
   let defaultItems: MenuItem[]

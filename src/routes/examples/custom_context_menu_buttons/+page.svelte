@@ -4,7 +4,7 @@
     JSONEditor,
     type RenderMenuContext,
     toTextContent
-  } from 'svelte-jsoneditor'
+  } from 'codemirror-json'
   import { faCalculator } from '@fortawesome/free-solid-svg-icons'
 
   let content = $state({
@@ -53,7 +53,7 @@
 </script>
 
 <svelte:head>
-  <title>Custom context menu buttons | svelte-jsoneditor</title>
+  <title>Custom context menu buttons | codemirror-json</title>
 </svelte:head>
 
 <h1>Custom context menu buttons</h1>

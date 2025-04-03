@@ -1,5 +1,5 @@
 import { createDebug } from '../utils/debug.js'
-import type { HistoryInstance, History } from 'svelte-jsoneditor'
+import type { HistoryInstance, History } from 'codemirror-json'
 
 const MAX_HISTORY_ITEMS = 1000
 
@@ -36,7 +36,7 @@ export function createHistoryInstance<T>(options: HistoryOptions<T> = {}): Histo
       add,
       undo,
       redo,
-      clear
+      clear,
     }
   }
 
@@ -95,6 +95,6 @@ export function createHistoryInstance<T>(options: HistoryOptions<T> = {}): Histo
   }
 
   return {
-    get
+    get,
   }
 }

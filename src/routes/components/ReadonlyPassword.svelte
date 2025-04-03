@@ -3,7 +3,7 @@
 <script lang="ts">
   import Icon from 'svelte-awesome'
   import { faLock } from '@fortawesome/free-solid-svg-icons'
-  import { createEditValueSelection, type OnSelect } from 'svelte-jsoneditor'
+  import { createEditValueSelection, type OnSelect } from 'codemirror-json'
   import type { JSONPath } from 'immutable-json-patch'
 
   export let value: string

@@ -159,8 +159,8 @@
   import JSONPreview from '../../controls/JSONPreview.svelte'
   import ContextMenu from '../../controls/contextmenu/ContextMenu.svelte'
   import createTreeContextMenuItems from './contextmenu/createTreeContextMenuItems'
-  import { toRecursiveSearchResults as toRecursiveSearchResults } from 'svelte-jsoneditor/logic/search.js'
-  import { isTreeHistoryItem } from 'svelte-jsoneditor'
+  import { toRecursiveSearchResults as toRecursiveSearchResults } from 'codemirror-json/logic/search.js'
+  import { isTreeHistoryItem } from 'codemirror-json'
 
   const debug = createDebug('jsoneditor:TreeMode')
 

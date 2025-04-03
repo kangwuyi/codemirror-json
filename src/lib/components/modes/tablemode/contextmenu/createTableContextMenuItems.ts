@@ -1,4 +1,4 @@
-import type { ContextMenuItem, DocumentState, JSONSelection } from 'svelte-jsoneditor'
+import type { ContextMenuItem, DocumentState, JSONSelection } from 'codemirror-json'
 import {
   faCheckSquare,
   faClone,
@@ -8,7 +8,7 @@ import {
   faPen,
   faPlus,
   faSquare,
-  faTrashCan
+  faTrashCan,
 } from '@fortawesome/free-solid-svg-icons'
 import { isKeySelection, isMultiSelection, isValueSelection } from '$lib/logic/selection'
 import { getIn } from 'immutable-json-patch'
@@ -31,7 +31,7 @@ export default function ({
   onDuplicateRow,
   onInsertBeforeRow,
   onInsertAfterRow,
-  onRemoveRow
+  onRemoveRow,
 }: {
   json: unknown | undefined
   documentState: DocumentState | undefined
@@ -84,7 +84,7 @@ export default function ({
                 icon: faPen,
                 text: 'Edit',
                 title: 'Edit the value (Double-click on the value)',
-                disabled: !canEditValue
+                disabled: !canEditValue,
               },
               width: '11em',
               items: [
@@ -94,7 +94,7 @@ export default function ({
                   text: 'Edit',
                   title: 'Edit the value (Double-click on the value)',
                   onClick: () => onEditValue(),
-                  disabled: !canEditValue
+                  disabled: !canEditValue,
                 },
                 {
                   type: 'button',
@@ -102,9 +102,9 @@ export default function ({
                   text: 'Enforce string',
                   title: 'Enforce keeping the value as string when it contains a numeric value',
                   onClick: () => onToggleEnforceString(),
-                  disabled: !canEnforceString
-                }
-              ]
+                  disabled: !canEnforceString,
+                },
+              ],
             },
             {
               type: 'dropdown-button',
@@ -114,7 +114,7 @@ export default function ({
                 icon: faCut,
                 text: 'Cut',
                 title: 'Cut selected contents, formatted with indentation (Ctrl+X)',
-                disabled: !canCut
+                disabled: !canCut,
               },
               width: '10em',
               items: [
@@ -124,7 +124,7 @@ export default function ({
                   text: 'Cut formatted',
                   title: 'Cut selected contents, formatted with indentation (Ctrl+X)',
                   onClick: () => onCut(true),
-                  disabled: readOnly || !hasSelectionContents
+                  disabled: readOnly || !hasSelectionContents,
                 },
                 {
                   type: 'button',
@@ -132,9 +132,9 @@ export default function ({
                   text: 'Cut compacted',
                   title: 'Cut selected contents, without indentation (Ctrl+Shift+X)',
                   onClick: () => onCut(false),
-                  disabled: readOnly || !hasSelectionContents
-                }
-              ]
+                  disabled: readOnly || !hasSelectionContents,
+                },
+              ],
             },
             {
               type: 'dropdown-button',
@@ -144,7 +144,7 @@ export default function ({
                 icon: faCopy,
                 text: 'Copy',
                 title: 'Copy selected contents, formatted with indentation (Ctrl+C)',
-                disabled: !hasSelectionContents
+                disabled: !hasSelectionContents,
               },
               width: '12em',
               items: [
@@ -154,7 +154,7 @@ export default function ({
                   text: 'Copy formatted',
                   title: 'Copy selected contents, formatted with indentation (Ctrl+C)',
                   onClick: () => onCopy(false),
-                  disabled: !hasSelectionContents
+                  disabled: !hasSelectionContents,
                 },
                 {
                   type: 'button',
@@ -162,9 +162,9 @@ export default function ({
                   text: 'Copy compacted',
                   title: 'Copy selected contents, without indentation (Ctrl+Shift+C)',
                   onClick: () => onCopy(false),
-                  disabled: !hasSelectionContents
-                }
-              ]
+                  disabled: !hasSelectionContents,
+                },
+              ],
             },
             {
               type: 'button',
@@ -172,7 +172,7 @@ export default function ({
               icon: faPaste,
               text: 'Paste',
               title: 'Paste clipboard contents (Ctrl+V)',
-              disabled: readOnly || !hasSelection
+              disabled: readOnly || !hasSelection,
             },
             {
               type: 'button',
@@ -180,9 +180,9 @@ export default function ({
               icon: faTrashCan,
               text: 'Remove',
               title: 'Remove selected contents (Delete)',
-              disabled: readOnly || !hasSelectionContents
-            }
-          ]
+              disabled: readOnly || !hasSelectionContents,
+            },
+          ],
         },
         {
           type: 'column',
@@ -194,7 +194,7 @@ export default function ({
               icon: faPen,
               text: 'Edit row',
               title: 'Edit the current row',
-              disabled: readOnly || !hasSelection || !hasJson
+              disabled: readOnly || !hasSelection || !hasJson,
             },
             {
               type: 'button',
@@ -202,7 +202,7 @@ export default function ({
               icon: faClone,
               text: 'Duplicate row',
               title: 'Duplicate the current row (Ctrl+D)',
-              disabled: readOnly || !hasSelection || !hasJson
+              disabled: readOnly || !hasSelection || !hasJson,
             },
             {
               type: 'button',
@@ -210,7 +210,7 @@ export default function ({
               icon: faPlus,
               text: 'Insert before',
               title: 'Insert a row before the current row',
-              disabled: readOnly || !hasSelection || !hasJson
+              disabled: readOnly || !hasSelection || !hasJson,
             },
             {
               type: 'button',
@@ -218,7 +218,7 @@ export default function ({
               icon: faPlus,
               text: 'Insert after',
               title: 'Insert a row after the current row',
-              disabled: readOnly || !hasSelection || !hasJson
+              disabled: readOnly || !hasSelection || !hasJson,
             },
             {
               type: 'button',
@@ -226,11 +226,11 @@ export default function ({
               icon: faTrashCan,
               text: 'Remove row',
               title: 'Remove current row',
-              disabled: readOnly || !hasSelection || !hasJson
-            }
-          ]
-        }
-      ]
-    }
+              disabled: readOnly || !hasSelection || !hasJson,
+            },
+          ],
+        },
+      ],
+    },
   ]
 }

@@ -1,4 +1,4 @@
-import { type OnJSONSelect } from 'svelte-jsoneditor'
+import { type OnJSONSelect } from 'codemirror-json'
 import type { Action } from 'svelte/action'
 import { type JSONPath } from 'immutable-json-patch'
 import { createEditValueSelection } from '$lib/logic/selection'
@@ -12,7 +12,7 @@ export interface EvaluatorActionProps {
 
 export const EvaluatorAction: Action<HTMLDivElement, Record<string, unknown>> = (
   node: HTMLDivElement,
-  initialProps: Record<string, unknown>
+  initialProps: Record<string, unknown>,
 ) => {
   let props = toEvaluatorProps(initialProps as Record<string, unknown>)
 
@@ -40,7 +40,7 @@ export const EvaluatorAction: Action<HTMLDivElement, Record<string, unknown>> = 
     },
     destroy: () => {
       node.removeEventListener('dblclick', handleValueDoubleClick)
-    }
+    },
   }
 }
 

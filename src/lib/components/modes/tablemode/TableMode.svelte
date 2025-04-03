@@ -151,7 +151,7 @@
   import ContextMenu from '../../controls/contextmenu/ContextMenu.svelte'
   import { flattenSearchResults, toRecursiveSearchResults } from '$lib/logic/search.js'
   import JSONValue from '../treemode/JSONValue.svelte'
-  import { isTreeHistoryItem } from 'svelte-jsoneditor'
+  import { isTreeHistoryItem } from 'codemirror-json'
 
   const debug = createDebug('jsoneditor:TableMode')
   const { openAbsolutePopup, closeAbsolutePopup } =

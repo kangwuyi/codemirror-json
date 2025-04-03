@@ -1,5 +1,5 @@
 <script>
-  import { JSONEditor } from 'svelte-jsoneditor'
+  import { JSONEditor } from 'codemirror-json'
 
   let content = $state({
     text: undefined, // can be used to pass a stringified JSON document instead
@@ -10,7 +10,7 @@
 </script>
 
 <svelte:head>
-  <title>Custom theme color with CSS variables | svelte-jsoneditor</title>
+  <title>Custom theme color with CSS variables | codemirror-json</title>
 </svelte:head>
 
 <h1>Custom theme color</h1>

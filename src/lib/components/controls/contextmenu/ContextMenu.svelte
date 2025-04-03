@@ -20,7 +20,6 @@
 
   export let items: ContextMenuItem[]
   export let onRequestClose: () => void
-  export let tip: string | undefined
 
   let refContextMenu: HTMLDivElement
 

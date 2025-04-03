@@ -1,5 +1,5 @@
 <script>
-  import { JSONEditor } from 'svelte-jsoneditor'
+  import { JSONEditor } from 'codemirror-json'
 
   /**
    * rules:
@@ -102,7 +102,7 @@
 </script>
 
 <svelte:head>
-  <title>Custom validation | svelte-jsoneditor</title>
+  <title>Custom validation | codemirror-json</title>
 </svelte:head>
 
 <h1>Custom validation</h1>
