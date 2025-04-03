@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>JSONEditor | Basic usage</title>
+
+    <style>
+      #jsoneditor {
+        width: 600px;
+        height: 500px;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      <button id="setContent">Set content</button>
+      <button id="getContent">Get content</button>
+    </p>
+    <div id="jsoneditor"></div>
+
+    <script type="module">
+      import { createJSONEditor } from '../../package-vanilla/standalone.js'
+
+      // create the editor
+      const editor = createJSONEditor({
+        target: document.getElementById('jsoneditor')
+      })
+
+      // set json
+      document.getElementById('setContent').onclick = function () {
+        const content = {
+          text: undefined, // used in text mode
+          json: {
+            array: [1, 2, 3],
+            boolean: true,
+            color: '#82b92c',
+            null: null,
+            number: 123,
+            object: { a: 'b', c: 'd' },
+            time: 1575599819000,
+            string: 'Hello World'
+          }
+        }
+
+        editor.set(content)
+      }
+
+      // get json
+      document.getElementById('getContent').onclick = function () {
+        const content = editor.get()
+        alert(JSON.stringify(content, null, 2))
+      }
+    </script>
+  </body>
+</html>
