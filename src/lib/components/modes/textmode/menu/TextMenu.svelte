@@ -101,4 +101,4 @@
   }]
 </script>
 
-<Menu {items} {rightItems}/>
+<Menu {items} {rightItems} {isModalLayer}/>
