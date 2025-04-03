@@ -12,7 +12,6 @@
     type JSONParser,
     type JSONSelection,
     Mode,
-    type OnFind,
     type OnJSONSelect,
     type OnPasteJson,
     type OnPatch,

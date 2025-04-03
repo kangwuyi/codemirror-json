@@ -15,7 +15,7 @@ const excludedDependencies = ['sass']
 // This is necessary for the "svelte" dependency, which is needed to export the TypeScript types
 const usedDependencyNames = [
   ...getVanillaDependencies(),
-  ...Object.keys(pkg.peerDependencies)
+  ...Object.keys(pkg.peerDependencies),
 ].sort()
 
 const usedDependencies = usedDependencyNames.reduce((deps, name) => {
@@ -30,7 +30,7 @@ const usedDependencies = usedDependencyNames.reduce((deps, name) => {
 
 const vanillaPackage = {
   ...pkg,
-  name: 'vanilla-jsoneditor',
+  name: '@kangwuyi/codemirror-json',
   scripts: {},
   dependencies: usedDependencies,
   peerDependencies: {}, // all peer dependencies are moved to dependencies
@@ -43,11 +43,11 @@ const vanillaPackage = {
     './index.js.map': './index.js.map',
     './standalone.js': './standalone.js',
     './standalone.js.map': './standalone.js.map',
-    './standalone.d.ts': './standalone.d.ts'
-  }
+    './standalone.d.ts': './standalone.d.ts',
+  },
 }
 
 writeFileSync(
   path.join(vanillaPackageFolder, 'package.json'),
-  JSON.stringify(vanillaPackage, null, 2)
+  JSON.stringify(vanillaPackage, null, 2),
 )

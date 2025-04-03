@@ -75,6 +75,7 @@
 
   export let isModalLayer: boolean
 
+  console.log('pathParser', pathParser)
   let refTreeMode: TreeMode | undefined
   let refTableMode: TableMode | undefined
   let refTextMode: TextMode | undefined

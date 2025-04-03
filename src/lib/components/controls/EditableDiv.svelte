@@ -6,7 +6,7 @@
   import { keyComboFromEvent } from '$lib/utils/keyBindings.js'
   import { createDebug } from '$lib/utils/debug.js'
   import { noop } from 'lodash-es'
-  import type { OnFind, OnPaste } from '$lib/types'
+  import type { OnPaste } from '$lib/types'
   import { UpdateSelectionAfterChange } from '$lib/types'
   import { classnames } from '$lib/utils/cssUtils.js'
 
