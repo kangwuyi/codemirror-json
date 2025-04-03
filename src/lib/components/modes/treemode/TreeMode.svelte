@@ -100,7 +100,6 @@
   import JSONNode from './JSONNode.svelte'
   import TreeMenu from './menu/TreeMenu.svelte'
   import Welcome from './Welcome.svelte'
-  import NavigationBar from '../../controls/navigationBar/NavigationBar.svelte'
   import type {
     AbsolutePopupContext,
     AbsolutePopupOptions,
@@ -1665,13 +1664,6 @@
     onChangeMode(Mode.text)
   }
 
-  function handleNavigationBarSelect(newSelection: JSONSelection) {
-    selection = newSelection
-
-    focus()
-    scrollTo(getFocusPath(newSelection))
-  }
-
   export function focus() {
     debug('focus')
     // with just .focus(), sometimes the input doesn't react on onpaste events
@@ -1782,10 +1774,6 @@
       onCopy={handleCopy}
       {onRenderMenu}
     />
-  {/if}
-
-  {#if navigationBar}
-    <NavigationBar {json} {selection} onSelect={handleNavigationBarSelect} {onError} {pathParser} />
   {/if}
 
   {#if !isSSR}
