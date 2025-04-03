@@ -472,17 +472,6 @@
     })
   }
 
-  function handleToggleSearch() {
-    if (codeMirrorView) {
-      // TODO: figure out the proper way to detect whether the search panel is open
-      if (codeMirrorRef && codeMirrorRef.querySelector('.cm-search')) {
-        closeSearchPanel(codeMirrorView)
-      } else {
-        openSearchPanel(codeMirrorView)
-      }
-    }
-  }
-
   function handleUndo(): boolean {
     if (readOnly) {
       return false
@@ -1109,7 +1098,6 @@
       onCompact={handleCompact}
       onSort={handleSort}
       onTransform={handleTransform}
-      onToggleSearch={handleToggleSearch}
       onUndo={handleUndo}
       onRedo={handleRedo}
       canFormat={!isNewDocument}

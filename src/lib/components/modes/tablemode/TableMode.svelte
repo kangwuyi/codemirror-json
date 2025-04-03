@@ -232,40 +232,6 @@
 
   let searchResultDetails: SearchResultDetails | undefined
   let searchResults: SearchResults | undefined
-  let showSearch = false
-  let showReplace = false
-
-  $: applySearchBoxSpacing(showSearch)
-
-  function applySearchBoxSpacing(showSearch: boolean) {
-    if (!refContents) {
-      return
-    }
-
-    const offset = showSearch ? SEARCH_BOX_HEIGHT : -SEARCH_BOX_HEIGHT
-    refContents.scrollTo({
-      top: (refContents.scrollTop += offset),
-      left: refContents.scrollLeft
-    })
-  }
-
-  function handleSearch(result: SearchResultDetails | undefined) {
-    searchResultDetails = result
-    searchResults = searchResultDetails
-      ? toRecursiveSearchResults(json, searchResultDetails.items)
-      : undefined
-  }
-
-  async function handleFocusSearch(path: JSONPath) {
-    selection = undefined // navigation path of current selection would be confusing
-    await scrollTo(path)
-  }
-
-  function handleCloseSearch() {
-    showSearch = false
-    showReplace = false
-    focus()
-  }
 
   $: applyExternalContent(externalContent)
   $: applyExternalSelection(externalSelection)
@@ -298,8 +264,7 @@
     viewPortHeight,
     json,
     itemHeightsCache, // warning: itemHeightsCache is mutated and is not responsive itself
-    defaultItemHeight,
-    showSearch ? SEARCH_BOX_HEIGHT : 0
+    defaultItemHeight
   )
 
   $: refreshScrollTop(json)
@@ -805,7 +770,7 @@
     path: JSONPath,
     { scrollToWhenVisible = true }: ScrollToOptions = {}
   ): Promise<void> {
-    const searchBoxHeight = showSearch ? SEARCH_BOX_HEIGHT : 0
+    const searchBoxHeight = 0
     const top = calculateAbsolutePosition(path, columns, itemHeightsCache, defaultItemHeight)
     const roughDistance = top - scrollTop + searchBoxHeight + defaultItemHeight
     const elem = findElement(path)
@@ -1608,14 +1573,10 @@
   function openFind(findAndReplace: boolean): void {
     debug('openFind', { findAndReplace })
 
-    showSearch = false
-    showReplace = false
 
     flushSync()
 
     // trick to make sure the focus goes to the search box
-    showSearch = true
-    showReplace = findAndReplace
   }
 
   function handleUndo() {
@@ -1733,7 +1694,6 @@
     <TableMenu
       {containsValidArray}
       {readOnly}
-      bind:showSearch
       {history}
       onSort={handleSortAll}
       onTransform={handleTransformAll}
@@ -1796,7 +1756,6 @@
             </tr>
             <tr
               class="jse-table-invisible-start-section"
-              class:jse-search-box-background={showSearch}
             >
               <td style:height={visibleSection.startHeight + 'px'} colspan={columns.length}></td>
             </tr>

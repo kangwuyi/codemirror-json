@@ -281,49 +281,6 @@
 
   let searchResultDetails: SearchResultDetails | undefined
   let searchResults: SearchResults | undefined
-  let showSearch = false
-  let showReplace = false
-
-  // eslint-disable-next-line svelte/no-unused-svelte-ignore
-  // svelte-ignore reactive_declaration_non_reactive_property
-  $: applySearchBoxSpacing(showSearch)
-
-  function applySearchBoxSpacing(showSearch: boolean) {
-    if (!refContents) {
-      return
-    }
-
-    if (showSearch && refContents.scrollTop === 0) {
-      refContents.style.overflowAnchor = 'none'
-      refContents.scrollTop += SEARCH_BOX_HEIGHT
-      setTimeout(() => {
-        if (refContents) {
-          refContents.style.overflowAnchor = ''
-        }
-      })
-    }
-  }
-
-  function handleSearch(result: SearchResultDetails | undefined) {
-    searchResultDetails = result
-    searchResults = searchResultDetails
-      ? toRecursiveSearchResults(json, searchResultDetails.items)
-      : undefined
-  }
-
-  async function handleFocusSearch(path: JSONPath, resultIndex: number) {
-    documentState = expandPath(json, documentState, path, expandNone)
-
-    const element = findSearchResult(resultIndex)
-
-    await scrollTo(path, { element })
-  }
-
-  function handleCloseSearch() {
-    showSearch = false
-    showReplace = false
-    focus()
-  }
 
   function handleSelectValidationError(error: ValidationError) {
     debug('select validation error', error)
@@ -1440,14 +1397,10 @@
   function openFind(findAndReplace: boolean): void {
     debug('openFind', { findAndReplace })
 
-    showSearch = false
-    showReplace = false
 
     flushSync()
 
     // trick to make sure the focus goes to the search box
-    showSearch = true
-    showReplace = findAndReplace
   }
 
   function handleExpandSection(path: JSONPath, section: Section) {
@@ -1913,7 +1866,6 @@
       {selection}
       {readOnly}
       {history}
-      bind:showSearch
       onExpandAll={handleExpandAll}
       onCollapseAll={handleCollapseAll}
       onUndo={handleUndo}
@@ -1978,9 +1930,6 @@
       {/if}
     {:else}
       <div class="jse-contents" data-jsoneditor-scrollable-contents={true} bind:this={refContents}>
-        {#if showSearch}
-          <div class="jse-search-box-background"></div>
-        {/if}
         <JSONNode
           value={json}
           pointer={''}

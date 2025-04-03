@@ -27,7 +27,6 @@
   export let selection: JSONSelection | undefined
 
   export let readOnly: boolean
-  export let showSearch = false
   export let history: History<HistoryItem>
 
   export let onExpandAll: () => void
@@ -39,10 +38,6 @@
   export let onContextMenu: (event: MouseEvent) => void
   export let onCopy: () => void
   export let onRenderMenu: OnRenderMenuInternal
-
-  function handleToggleSearch() {
-    showSearch = !showSearch
-  }
 
   $: hasJson = json !== undefined
   $: hasSelectionContents =

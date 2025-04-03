@@ -15,7 +15,6 @@
 
   export let containsValidArray: boolean
   export let readOnly: boolean
-  export let showSearch = false
   export let history: History<HistoryItem>
   export let onSort: () => void
   export let onTransform: () => void
@@ -23,10 +22,6 @@
   export let onUndo: () => void
   export let onRedo: () => void
   export let onRenderMenu: OnRenderMenuInternal
-
-  function handleToggleSearch() {
-    showSearch = !showSearch
-  }
 
   let defaultItems: MenuItem[]
   $: defaultItems = !readOnly
