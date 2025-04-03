@@ -44,7 +44,6 @@
   export let tabSize: number
   export let truncateTextSize: number
   export let mainMenuBar: boolean
-  export let navigationBar: boolean
   export let statusBar: boolean
   export let askToFormat: boolean
   export let escapeControlCharacters: boolean
@@ -255,7 +254,6 @@
             {statusBar}
             {askToFormat}
             {mainMenuBar}
-            {navigationBar}
             {escapeControlCharacters}
             {escapeUnicodeCharacters}
             {flattenColumns}

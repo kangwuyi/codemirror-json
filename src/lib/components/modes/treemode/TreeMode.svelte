@@ -185,14 +185,12 @@
   export let history: History<HistoryItem>
   export let truncateTextSize: number
   export let mainMenuBar: boolean
-  export let navigationBar: boolean
   export let escapeControlCharacters: boolean
   export let escapeUnicodeCharacters: boolean
   export let parser: JSONParser
   export let parseMemoizeOne: JSONParser['parse']
   export let validator: Validator | undefined
   export let validationParser: JSONParser
-  export let pathParser: JSONPathParser
   export let indentation: number | string
   export let onError: OnError
   export let onChange: OnChange

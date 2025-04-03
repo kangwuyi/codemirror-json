@@ -236,7 +236,6 @@
   const validateArray = useLocalStorage('svelte-jsoneditor-demo-validate-array', false)
   const readOnly = useLocalStorage('svelte-jsoneditor-demo-readOnly', false)
   const mainMenuBar = useLocalStorage('svelte-jsoneditor-demo-mainMenuBar', true)
-  const navigationBar = useLocalStorage('svelte-jsoneditor-demo-navigationBar', true)
   const statusBar = useLocalStorage('svelte-jsoneditor-demo-statusBar', true)
   const askToFormat = useLocalStorage('svelte-jsoneditor-demo-askToFormat', true)
   const escapeControlCharacters = useLocalStorage(
@@ -474,9 +473,6 @@
       <input type="checkbox" bind:checked={$mainMenuBar} /> mainMenuBar
     </label>
     <label>
-      <input type="checkbox" bind:checked={$navigationBar} /> navigationBar
-    </label>
-    <label>
       <input type="checkbox" bind:checked={$statusBar} /> statusBar
     </label>
     <label>
@@ -701,7 +697,6 @@
               bind:selection={selectionTree}
               bind:mode={leftEditorMode}
               mainMenuBar={$mainMenuBar}
-              navigationBar={$navigationBar}
               statusBar={$statusBar}
               askToFormat={$askToFormat}
               escapeControlCharacters={$escapeControlCharacters}
@@ -763,7 +758,6 @@
               bind:content
               bind:selection={selectionText}
               mainMenuBar={$mainMenuBar}
-              navigationBar={$navigationBar}
               statusBar={$statusBar}
               askToFormat={$askToFormat}
               escapeControlCharacters={$escapeControlCharacters}

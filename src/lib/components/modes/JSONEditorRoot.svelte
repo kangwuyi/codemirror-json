@@ -48,7 +48,6 @@
   export let truncateTextSize: number
   export let externalMode: Mode
   export let mainMenuBar: boolean
-  export let navigationBar: boolean
   export let statusBar: boolean
   export let askToFormat: boolean
   export let escapeControlCharacters: boolean
@@ -381,7 +380,6 @@
     {indentation}
     {truncateTextSize}
     {mainMenuBar}
-    {navigationBar}
     {escapeControlCharacters}
     {escapeUnicodeCharacters}
     {parser}

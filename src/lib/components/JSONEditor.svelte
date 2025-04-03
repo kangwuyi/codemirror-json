@@ -56,7 +56,6 @@
   const truncateTextSizeDefault = 1000
   const modeDefault = Mode.tree
   const mainMenuBarDefault = true
-  const navigationBarDefault = true
   const statusBarDefault = true
   const askToFormatDefault = true
   const escapeControlCharactersDefault = false
@@ -91,7 +90,6 @@
   export let truncateTextSize: number = truncateTextSizeDefault
   export let mode: Mode = modeDefault
   export let mainMenuBar: boolean = mainMenuBarDefault
-  export let navigationBar: boolean = navigationBarDefault
   export let statusBar: boolean = statusBarDefault
   export let askToFormat: boolean = askToFormatDefault
   export let escapeControlCharacters: boolean = escapeControlCharactersDefault
@@ -292,9 +290,6 @@
         case 'mainMenuBar':
           mainMenuBar = props[name] ?? mainMenuBarDefault
           break
-        case 'navigationBar':
-          navigationBar = props[name] ?? navigationBarDefault
-          break
         case 'statusBar':
           statusBar = props[name] ?? statusBarDefault
           break
@@ -440,7 +435,6 @@
       tabSize,
       truncateTextSize,
       mainMenuBar,
-      navigationBar,
       statusBar,
       askToFormat,
       escapeControlCharacters,
@@ -483,7 +477,6 @@
         {statusBar}
         {askToFormat}
         {mainMenuBar}
-        {navigationBar}
         {escapeControlCharacters}
         {escapeUnicodeCharacters}
         {flattenColumns}

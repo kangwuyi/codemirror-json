@@ -597,7 +597,6 @@ export interface JSONEditorPropsOptional {
   truncateTextSize?: number
   mode?: Mode
   mainMenuBar?: boolean
-  navigationBar?: boolean
   statusBar?: boolean
   askToFormat?: boolean
   escapeControlCharacters?: boolean
@@ -630,7 +629,6 @@ export interface JSONEditorModalProps {
   tabSize: number
   truncateTextSize: number
   mainMenuBar: boolean
-  navigationBar: boolean
   statusBar: boolean
   askToFormat: boolean
   escapeControlCharacters: boolean
