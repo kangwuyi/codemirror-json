@@ -338,6 +338,7 @@
     {onBlur}
     onRenderMenu={handleRenderMenu}
     {onSortModal}
+    {onJSONEditorModal}
   />
 {:else if mode === Mode.table}
   <TableMode
@@ -386,7 +387,6 @@
     {parseMemoizeOne}
     {validator}
     {validationParser}
-    {pathParser}
     {onError}
     {onChange}
     {onChangeMode}

@@ -6,6 +6,7 @@
   import { isMenuButton, isMenuSeparator, isMenuSpace } from '$lib/typeguards.js'
 
   export let items: MenuItem[] = []
+  export let rightItems: MenuItem[] = []
 
   function unknownMenuItem(item: MenuItem): string {
     console.error('Unknown type of menu item', item)
@@ -42,6 +43,30 @@
   {/each}
 
   <slot name="right" />
+  {#each rightItems as item}
+    {#if isMenuSeparator(item)}
+      <div class="jse-separator"></div>
+    {:else if isMenuSpace(item)}
+      <div class="jse-space"></div>
+    {:else if isMenuButton(item)}
+      <button
+        type="button"
+        class="jse-button {item.className}"
+        on:click={item.onClick}
+        title={item.title}
+        disabled={item.disabled || false}
+      >
+        {#if item.icon}
+          <Icon data={item.icon} />
+        {/if}
+        {#if item.text}
+          {item.text}
+        {/if}
+      </button>
+    {:else}
+      {unknownMenuItem(item)}
+    {/if}
+  {/each}
 </div>
 
 <style src="./Menu.scss"></style>

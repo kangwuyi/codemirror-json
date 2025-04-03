@@ -1000,6 +1000,15 @@
     })
   }
 
+  // 打开 modal 编辑器
+  function handleEditModal() {
+    const path = [] as JSONPath
+    const value = getIn(json, path)
+    if (isObjectOrArray(value)) {
+      openJSONEditorModal(path)
+    }
+  }
+
   function handleEditValue() {
     if (readOnly || !selection) {
       return
@@ -1467,6 +1476,8 @@
     })
   }
 
+  
+
   function openJSONEditorModal(path: JSONPath) {
     debug('openJSONEditorModal', { path })
 
@@ -1622,6 +1633,7 @@
       onRedo={handleRedo}
       onContextMenu={handleContextMenuFromTableMenu}
       {onRenderMenu}
+      onOpenEditorModal={handleEditModal}
     />
   {/if}
 

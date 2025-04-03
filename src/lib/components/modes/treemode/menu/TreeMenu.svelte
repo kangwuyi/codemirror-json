@@ -4,10 +4,9 @@
   import {
     faCopy,
     faEllipsisV,
-    faFilter,
     faRedo,
-    faSearch,
     faSortAmountDownAlt,
+    faExpand,
     faUndo
   } from '@fortawesome/free-solid-svg-icons'
   import { CONTEXT_MENU_EXPLANATION } from '$lib/constants.js'
@@ -37,7 +36,8 @@
   export let onContextMenu: (event: MouseEvent) => void
   export let onCopy: () => void
   export let onRenderMenu: OnRenderMenuInternal
-
+  export let onOpenEditorModal: () => void
+  
   $: hasJson = json !== undefined
   $: hasSelectionContents =
     hasJson &&
@@ -134,6 +134,17 @@
   // eslint-disable-next-line svelte/no-unused-svelte-ignore
   // svelte-ignore reactive_declaration_non_reactive_property
   $: items = onRenderMenu(defaultItems) || defaultItems
+
+  // header right menu
+  let rightItems: MenuItem[]
+  $: rightItems =  [{
+    type: 'button',
+    icon: faExpand,
+    title: '全屏',
+    className: 'jse-fullscreen',
+    onClick: onOpenEditorModal,
+    disabled: false
+  }]
 </script>
 
-<Menu {items} />
+<Menu {items} {rightItems}/>

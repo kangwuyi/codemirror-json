@@ -627,6 +627,23 @@
     selection = createEditKeySelection(getFocusPath(selection))
   }
 
+  function handleEditModal() {
+    // selection 选中的key，比如选中字段 color
+    // eq: {type: 'key', path: ['color']}
+    // selection 选中的值域，比如选中字段 object 中字段 a 的值
+    // eq: {type: 'value', path: ['object', 'a']}
+    // const selection = getSelection()
+    // path json 对象中嵌套的 key 的列表
+    // eq: ['object', 'a']
+    // const path = selection ? getFocusPath(selection) : []
+    // [] 代表选中最顶层全部内容
+    const path = [] as JSONPath
+    const value = getIn(json, path)
+    if (isObjectOrArray(value)) {
+      openJSONEditorModal(path, value)
+    }
+  }
+  
   function handleEditValue() {
     if (readOnly || !selection) {
       return
@@ -1770,6 +1787,7 @@
       onSort={handleSortAll}
       onContextMenu={handleContextMenuFromTreeMenu}
       onCopy={handleCopy}
+      onOpenEditorModal={handleEditModal}
       {onRenderMenu}
     />
   {/if}

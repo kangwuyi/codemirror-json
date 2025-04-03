@@ -5,9 +5,8 @@
   import Menu from '../../../controls/Menu.svelte'
   import {
     faEllipsisV,
-    faFilter,
     faRedo,
-    faSearch,
+    faExpand,
     faSortAmountDownAlt,
     faUndo
   } from '@fortawesome/free-solid-svg-icons'
@@ -21,7 +20,9 @@
   export let onUndo: () => void
   export let onRedo: () => void
   export let onRenderMenu: OnRenderMenuInternal
+  export let onOpenEditorModal: () => void
 
+  
   let defaultItems: MenuItem[]
   $: defaultItems = !readOnly
     ? [
@@ -71,6 +72,16 @@
 
   let items: MenuItem[]
   $: items = onRenderMenu(defaultItems) || defaultItems
+  // header right menu
+  let rightItems: MenuItem[]
+  $: rightItems =  [{
+    type: 'button',
+    icon: faExpand,
+    title: '全屏',
+    className: 'jse-fullscreen',
+    onClick: onOpenEditorModal,
+    disabled: false
+  }]
 </script>
 
-<Menu {items} />
+<Menu {items} {rightItems}/>

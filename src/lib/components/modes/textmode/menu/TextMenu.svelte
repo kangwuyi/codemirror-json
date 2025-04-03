@@ -2,9 +2,8 @@
 
 <script lang="ts">
   import {
-    faFilter,
     faRedo,
-    faSearch,
+    faExpand,
     faSortAmountDownAlt,
     faUndo
   } from '@fortawesome/free-solid-svg-icons'
@@ -24,6 +23,7 @@
   export let canCompact: boolean
   export let canSort: boolean
   export let onRenderMenu: OnRenderMenuInternal
+  export let onOpenEditorModal: () => void
 
   let defaultItems: MenuItem[]
   $: defaultItems = !readOnly
@@ -87,6 +87,17 @@
   // eslint-disable-next-line svelte/no-unused-svelte-ignore
   // svelte-ignore reactive_declaration_non_reactive_property
   $: items = onRenderMenu(defaultItems) || defaultItems
+
+  // header right menu
+  let rightItems: MenuItem[]
+  $: rightItems =  [{
+    type: 'button',
+    icon: faExpand,
+    title: '全屏',
+    className: 'jse-fullscreen',
+    onClick: onOpenEditorModal,
+    disabled: false
+  }]
 </script>
 
-<Menu {items} />
+<Menu {items} {rightItems}/>

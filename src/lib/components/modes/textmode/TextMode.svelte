@@ -85,6 +85,7 @@
   import StatusBar from './StatusBar.svelte'
   import { highlighter } from './codemirror/codemirror-theme.js'
   import type {
+    AfterPatchCallback,
     Content,
     ContentErrors,
     History,
@@ -97,6 +98,7 @@
     OnChangeMode,
     OnError,
     OnFocus,
+    OnJSONEditorModal,
     OnRedo,
     OnRenderMenuInternal,
     OnSelect,
@@ -146,6 +148,7 @@
   export let onBlur: OnBlur
   export let onRenderMenu: OnRenderMenuInternal
   export let onSortModal: OnSortModal
+  export let onJSONEditorModal: OnJSONEditorModal
 
   const debug = createDebug('jsoneditor:TextMode')
 
@@ -414,6 +417,32 @@
     } catch (err) {
       onError(err as Error)
     }
+  }
+
+  function handleEditModal() {
+    const path = [] as JSONPath
+    const codeMirrorText = getCodeMirrorValue()
+      openJSONEditorModal(path, codeMirrorText)
+  }
+
+  function openJSONEditorModal(path: JSONPath, value: string) {
+    debug('openJSONEditorModal', { path, value })
+
+    modalOpen = true
+
+    onJSONEditorModal({
+      content: {
+        text: value || ''
+      },
+      path,
+      onClose: () => {
+        modalOpen = false
+        setTimeout(focus)
+      },
+      onPatch: function (operations: JSONPatchDocument, afterPatch?: AfterPatchCallback): JSONPatchResult {
+        throw new Error('Function not implemented.')
+      }
+    })
   }
 
   function handleUndo(): boolean {
@@ -1049,6 +1078,7 @@
       canUndo={history.canUndo}
       canRedo={history.canRedo}
       {onRenderMenu}
+      onOpenEditorModal={handleEditModal}
     />
   {/if}
 
