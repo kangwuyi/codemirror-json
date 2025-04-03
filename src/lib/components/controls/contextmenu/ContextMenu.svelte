@@ -121,17 +121,6 @@
       {unknownMenuItem(item)}
     {/if}
   {/each}
-
-  {#if tip}
-    <div class="jse-row">
-      <div class="jse-tip">
-        <div class="jse-tip-icon">
-          <Icon data={faLightbulb} />
-        </div>
-        <div class="jse-tip-text">{tip}</div>
-      </div>
-    </div>
-  {/if}
 </div>
 
 <style src="./ContextMenu.scss"></style>

@@ -3,7 +3,7 @@ import {
   compileJSONPointer,
   isJSONArray,
   isJSONObject,
-  parseJSONPointer
+  parseJSONPointer,
 } from 'immutable-json-patch'
 import { groupBy, isEmpty, isEqual, mapValues, partition } from 'lodash-es'
 import type { JSONSelection, SortedColumn, TableCellIndex, ValidationError } from '$lib/types.js'
@@ -24,7 +24,7 @@ const endOfPath = Symbol('path')
 export function getColumns(
   array: Array<unknown>,
   flatten: boolean,
-  maxSampleCount = Infinity
+  maxSampleCount = Infinity,
 ): JSONPath[] {
   const merged: NestedObject = {}
 
@@ -73,7 +73,7 @@ function _collectPaths(
   object: NestedObject,
   parentPath: JSONPath,
   paths: JSONPath[],
-  flatten: boolean
+  flatten: boolean,
 ): void {
   for (const key in object) {
     const path = parentPath.concat(key)
@@ -91,7 +91,7 @@ function _collectPaths(
 
 export function maintainColumnOrder(
   newColumns: JSONPath[],
-  previousColumns: JSONPath[]
+  previousColumns: JSONPath[],
 ): JSONPath[] {
   const orderedColumns = new Set(previousColumns.map(compileJSONPointer))
   const newColumnsSet = new Set(newColumns.map(compileJSONPointer))
@@ -153,8 +153,7 @@ export function calculateVisibleSection(
   json: unknown | undefined,
   itemHeights: Record<number, number>,
   defaultItemHeight: number,
-  searchBoxOffset: number,
-  margin = 80
+  margin = 80,
 ): VisibleSection {
   const itemCount = isJSONArray(json) ? json.length : 0
   const averageItemHeight = calculateAverageItemHeight(itemHeights, defaultItemHeight)
@@ -164,7 +163,7 @@ export function calculateVisibleSection(
   const getItemHeight = (index: number) => itemHeights[index] || defaultItemHeight
 
   let startIndex = 0
-  let startHeight = searchBoxOffset
+  let startHeight = 0
   while (startHeight < viewPortTop && startIndex < itemCount) {
     startHeight += getItemHeight(startIndex)
     startIndex++
@@ -196,7 +195,7 @@ export function calculateVisibleSection(
     endHeight,
     averageItemHeight,
     visibleHeight,
-    visibleItems
+    visibleItems,
   }
 }
 
@@ -206,7 +205,7 @@ export function calculateVisibleSectionApprox(
   scrollTop: number,
   viewPortHeight: number,
   json: unknown | undefined,
-  defaultItemHeight: number
+  defaultItemHeight: number,
 ): VisibleSection {
   const itemCount = isJSONArray(json) ? json.length : 0
   const averageItemHeight = defaultItemHeight
@@ -227,7 +226,7 @@ export function calculateVisibleSectionApprox(
     endHeight,
     averageItemHeight,
     visibleHeight,
-    visibleItems
+    visibleItems,
   }
 }
 
@@ -236,7 +235,7 @@ export function calculateAbsolutePosition(
   path: JSONPath,
   columns: JSONPath[],
   itemHeights: Record<number, number>,
-  defaultItemHeight: number
+  defaultItemHeight: number,
 ): number {
   const { rowIndex } = toTableCellPosition(path, columns)
 
@@ -251,7 +250,7 @@ export function calculateAbsolutePosition(
 
 function calculateAverageItemHeight(
   itemHeights: Record<number, number>,
-  defaultItemHeight: number
+  defaultItemHeight: number,
 ): number {
   const values = Object.values(itemHeights) // warning: itemHeights is mutated and not updated itself, we can't watch it!
   if (isEmpty(values)) {
@@ -278,7 +277,7 @@ export function selectPreviousRow(columns: JSONPath[], selection: JSONSelection)
 export function selectNextRow(
   json: unknown,
   columns: JSONPath[],
-  selection: JSONSelection
+  selection: JSONSelection,
 ): JSONSelection {
   const { rowIndex, columnIndex } = toTableCellPosition(getFocusPath(selection), columns)
 
@@ -322,7 +321,7 @@ export function toTableCellPosition(path: JSONPath, columns: JSONPath[]): TableC
 
   return {
     rowIndex: !isNaN(rowIndex) ? rowIndex : -1,
-    columnIndex: columns.findIndex((c) => pathStartsWith(column, c))
+    columnIndex: columns.findIndex((c) => pathStartsWith(column, c)),
   }
 }
 
@@ -353,10 +352,10 @@ export interface GroupedValidationErrors {
  */
 export function groupValidationErrors(
   validationErrors: ValidationError[],
-  columns: JSONPath[]
+  columns: JSONPath[],
 ): GroupedValidationErrors {
   const [arrayErrors, rootErrors] = partition(validationErrors, (validationError) =>
-    containsNumber(validationError.path[0])
+    containsNumber(validationError.path[0]),
   )
 
   const errorsByRow: Dictionary<ValidationError[]> = groupBy(arrayErrors, findRowIndex)
@@ -364,7 +363,7 @@ export function groupValidationErrors(
   const groupedErrorsByRow = mapValues(errorsByRow, (errors) => {
     const groupByRow: GroupedValidationErrorsByRow = {
       row: [],
-      columns: {}
+      columns: {},
     }
 
     errors.forEach((error) => {
@@ -385,13 +384,13 @@ export function groupValidationErrors(
 
   return {
     root: rootErrors,
-    rows: groupedErrorsByRow
+    rows: groupedErrorsByRow,
   }
 }
 
 export function mergeValidationErrors(
   path: JSONPath,
-  validationErrors: ValidationError[] | undefined
+  validationErrors: ValidationError[] | undefined,
 ): ValidationError | undefined {
   if (!validationErrors || validationErrors.length === 0) {
     return undefined
@@ -410,7 +409,7 @@ export function mergeValidationErrors(
           return stringifyJSONPath(error.path) + ' ' + error.message
         })
         .join(', '),
-    severity: ValidationSeverity.warning
+    severity: ValidationSeverity.warning,
   }
 }
 
@@ -434,10 +433,10 @@ function findColumnIndex(error: ValidationError, columns: JSONPath[]): number {
 export function clearSortedColumnWhenAffectedByOperations(
   sortedColumn: SortedColumn | undefined,
   operations: JSONPatchOperation[],
-  columms: JSONPath[]
+  columms: JSONPath[],
 ): SortedColumn | undefined {
   const mustBeCleared = operations.some((operation) =>
-    operationAffectsSortedColumn(sortedColumn, operation, columms)
+    operationAffectsSortedColumn(sortedColumn, operation, columms),
   )
 
   return mustBeCleared ? undefined : sortedColumn
@@ -446,7 +445,7 @@ export function clearSortedColumnWhenAffectedByOperations(
 export function operationAffectsSortedColumn(
   sortedColumn: SortedColumn | undefined,
   operation: JSONPatchOperation,
-  columns: JSONPath[]
+  columns: JSONPath[],
 ): boolean {
   if (!sortedColumn) {
     return false

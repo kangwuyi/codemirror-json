@@ -30,7 +30,6 @@
         height: CONTEXT_MENU_HEIGHT,
         offsetTop: 2,
         offsetLeft: 0,
-        showTip: true
       })
     }
   }

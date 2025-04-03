@@ -1529,7 +1529,6 @@
     height,
     offsetTop,
     offsetLeft,
-    showTip
   }: AbsolutePopupOptions) {
     const defaultItems: ContextMenuItem[] = createTreeContextMenuItems({
       json,
@@ -1564,9 +1563,6 @@
     }
 
     const props = {
-      tip: showTip
-        ? 'Tip: you can open this context menu via right-click or with Ctrl+Q'
-        : undefined,
       items,
       onRequestClose: () => closeAbsolutePopup(popupId)
     }
@@ -1608,7 +1604,6 @@
         top: (event as MouseEvent).clientY,
         width: CONTEXT_MENU_WIDTH,
         height: CONTEXT_MENU_HEIGHT,
-        showTip: false
       })
     } else {
       // type === 'keydown' (from the quick key Ctrl+Q)
@@ -1620,7 +1615,6 @@
           offsetTop: 2,
           width: CONTEXT_MENU_WIDTH,
           height: CONTEXT_MENU_HEIGHT,
-          showTip: false
         })
       } else {
         // fallback on just displaying the TreeContextMenu top left
@@ -1631,7 +1625,6 @@
             left: rect.left + 2,
             width: CONTEXT_MENU_WIDTH,
             height: CONTEXT_MENU_HEIGHT,
-            showTip: false
           })
         }
       }
@@ -1644,7 +1637,6 @@
       offsetTop: 0,
       width: CONTEXT_MENU_WIDTH,
       height: CONTEXT_MENU_HEIGHT,
-      showTip: true
     })
   }
 

@@ -575,7 +575,6 @@ export interface AbsolutePopupOptions {
   height?: number
   offsetTop?: number
   offsetLeft?: number
-  showTip?: boolean
   closeOnOuterClick?: boolean
   onClose?: () => void
 }
