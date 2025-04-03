@@ -7,14 +7,9 @@
     EditableValue,
     isJSONContent,
     isTextContent,
-    javascriptQueryLanguage,
-    jmespathQueryLanguage,
-    jsonQueryLanguage,
-    jsonpathQueryLanguage,
     JSONEditor,
     type JSONEditorSelection,
     type JSONParser,
-    lodashQueryLanguage,
     type MenuItem,
     Mode,
     type OnChangeStatus,
@@ -257,10 +252,6 @@
     'svelte-jsoneditor-demo-useCustomValueRenderer',
     false
   )
-  const multipleQueryLanguages = useLocalStorage(
-    'svelte-jsoneditor-demo-multipleQueryLanguages',
-    true
-  )
   const selectedTheme = useLocalStorage('svelte-jsoneditor-demo-theme', themes[0].value)
   const selectedIndentation = useLocalStorage(
     'svelte-jsoneditor-demo-indentation',
@@ -275,16 +266,6 @@
   const truncateTextSize = useLocalStorage('svelte-jsoneditor-demo-truncateTextSize', 1000)
   let leftEditorMode: Mode = Mode.tree
 
-  $: queryLanguages = $multipleQueryLanguages
-    ? [
-        jsonQueryLanguage,
-        jmespathQueryLanguage,
-        jsonpathQueryLanguage,
-        javascriptQueryLanguage,
-        lodashQueryLanguage
-      ]
-    : [jsonQueryLanguage]
-  let queryLanguageId = jsonQueryLanguage.id // TODO: store in local storage
 
   let selectedParser: JSONParser
   $: selectedParser =
@@ -345,11 +326,6 @@
 
   function onChangeMode(mode: Mode) {
     console.log('onChangeMode', mode)
-  }
-
-  function onChangeQueryLanguage(newQueryLanguageId: string) {
-    console.log('onChangeQueryLanguage', newQueryLanguageId)
-    queryLanguageId = newQueryLanguageId
   }
 
   function onRenderContextMenu(items: ContextMenuItem[], context: RenderMenuContext) {
@@ -521,19 +497,6 @@
     <label>
       <input type="checkbox" bind:checked={$useCustomValueRenderer} /> Custom onRenderValue
     </label>
-  </p>
-  <p>
-    <label>
-      <input type="checkbox" bind:checked={$multipleQueryLanguages} /> Multiple query languages
-    </label>
-    {#if $multipleQueryLanguages}
-      . Selected query language:
-      <select bind:value={queryLanguageId}>
-        {#each queryLanguages as queryLanguage}
-          <option value={queryLanguage.id}>{queryLanguage.name}</option>
-        {/each}
-      </select>
-    {/if}
   </p>
 
   <p>
@@ -751,8 +714,6 @@
               parser={selectedParser}
               pathParser={selectedPathParser}
               validator={selectedValidator}
-              {queryLanguages}
-              bind:queryLanguageId
               {onRenderMenu}
               onChange={onChangeTree}
               onSelect={onSelectTree}
@@ -815,9 +776,6 @@
               parser={selectedParser}
               pathParser={selectedPathParser}
               validator={selectedValidator}
-              {queryLanguages}
-              {queryLanguageId}
-              {onChangeQueryLanguage}
               {onRenderMenu}
               onChange={onChangeText}
               onSelect={onSelectText}

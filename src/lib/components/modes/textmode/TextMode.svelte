@@ -101,13 +101,11 @@
     OnRenderMenuInternal,
     OnSelect,
     OnSortModal,
-    OnTransformModal,
     OnUndo,
     ParseError,
     RichValidationError,
     TextHistoryItem,
     TextSelection,
-    TransformModalOptions,
     ValidationError,
     Validator
   } from '$lib/types.js'
@@ -148,7 +146,6 @@
   export let onBlur: OnBlur
   export let onRenderMenu: OnRenderMenuInternal
   export let onSortModal: OnSortModal
-  export let onTransformModal: OnTransformModal
 
   const debug = createDebug('jsoneditor:TextMode')
 
@@ -417,59 +414,6 @@
     } catch (err) {
       onError(err as Error)
     }
-  }
-
-  /**
-   * This method is exposed via JSONEditor.transform
-   */
-  export function openTransformModal({
-    id,
-    rootPath,
-    onTransform,
-    onClose
-  }: TransformModalOptions) {
-    try {
-      const json = parser.parse(text)
-
-      modalOpen = true
-
-      onTransformModal({
-        id: id || transformModalId,
-        json,
-        rootPath: rootPath || [],
-        onTransform: (operations) => {
-          if (onTransform) {
-            onTransform({
-              operations,
-              json,
-              transformedJson: immutableJSONPatch(json, operations)
-            })
-          } else {
-            debug('onTransform', operations)
-            handlePatch(operations, true)
-          }
-        },
-        onClose: () => {
-          modalOpen = false
-          focus()
-          if (onClose) {
-            onClose()
-          }
-        }
-      })
-    } catch (err) {
-      onError(err as Error)
-    }
-  }
-
-  function handleTransform() {
-    if (readOnly) {
-      return
-    }
-
-    openTransformModal({
-      rootPath: []
-    })
   }
 
   function handleUndo(): boolean {
@@ -1097,7 +1041,6 @@
       onFormat={handleFormat}
       onCompact={handleCompact}
       onSort={handleSort}
-      onTransform={handleTransform}
       onUndo={handleUndo}
       onRedo={handleRedo}
       canFormat={!isNewDocument}

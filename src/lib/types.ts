@@ -379,7 +379,6 @@ export interface QueryLanguageOptions {
   }
 }
 
-export type OnChangeQueryLanguage = (queryLanguageId: string) => void
 export interface OnChangeStatus {
   contentErrors: ContentErrors | undefined
   patchResult: JSONPatchResult | undefined
@@ -430,7 +429,6 @@ export type OnError = (error: Error) => void
 export type OnFocus = () => void
 export type OnBlur = () => void
 export type OnSortModal = (props: SortModalCallback) => void
-export type OnTransformModal = (props: TransformModalCallback) => void
 export type OnJSONEditorModal = (props: JSONEditorModalCallback) => void
 export type FindNextInside = (path: JSONPath) => JSONSelection | undefined
 
@@ -611,10 +609,6 @@ export interface JSONEditorPropsOptional {
   validationParser?: JSONParser
   pathParser?: JSONPathParser
 
-  queryLanguages?: QueryLanguage[]
-  queryLanguageId?: string
-
-  onChangeQueryLanguage?: OnChangeQueryLanguage
   onChange?: OnChange
   onRenderValue?: OnRenderValue
   onClassName?: OnClassName
@@ -653,7 +647,6 @@ export interface JSONEditorModalProps {
   onRenderMenu: OnRenderMenu
   onRenderContextMenu: OnRenderContextMenu
   onSortModal: (props: SortModalCallback) => void
-  onTransformModal: (props: TransformModalCallback) => void
   onClose: () => void
 }
 
@@ -732,51 +725,6 @@ export interface SvelteComponentRenderer {
 export interface SvelteActionRenderer {
   action: Action<HTMLElement, Record<string, unknown>>
   props: Record<string, unknown>
-}
-
-export interface TransformModalOptions {
-  id?: string
-  rootPath?: JSONPath
-  onTransform?: (state: {
-    operations: JSONPatchDocument
-    json: unknown
-    transformedJson: unknown
-  }) => void
-  onClose?: () => void
-}
-
-export interface TransformModalCallback {
-  id: string
-  json: unknown
-  rootPath: JSONPath
-  onTransform: (operations: JSONPatchDocument) => void
-  onClose: () => void
-}
-
-export interface TransformModalProps extends TransformModalCallback {
-  id: string
-  json: unknown
-  rootPath: JSONPath
-  indentation: number | string
-  truncateTextSize: number
-  escapeControlCharacters: boolean
-  escapeUnicodeCharacters: boolean
-  parser: JSONParser
-  parseMemoizeOne: JSONParser['parse']
-  validationParser: JSONParser
-  pathParser: JSONPathParser
-
-  queryLanguages: QueryLanguage[]
-  queryLanguageId: string
-  onChangeQueryLanguage: OnChangeQueryLanguage
-
-  onRenderValue: OnRenderValue
-  onRenderMenu: OnRenderMenuInternal
-  onRenderContextMenu: OnRenderContextMenuInternal
-  onClassName: OnClassName
-
-  onTransform: (operations: JSONPatchDocument) => void
-  onClose: () => void
 }
 
 export interface SortModalCallback {

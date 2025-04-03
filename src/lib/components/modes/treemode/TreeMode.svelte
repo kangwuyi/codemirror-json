@@ -133,7 +133,6 @@
     OnRenderValue,
     OnSelect,
     OnSortModal,
-    OnTransformModal,
     OnUndo,
     ParseError,
     PastedJson,
@@ -141,7 +140,6 @@
     SearchResultDetails,
     SearchResults,
     Section,
-    TransformModalOptions,
     TreeModeContext,
     ValidationError,
     ValidationErrors,
@@ -210,7 +208,6 @@
   export let onFocus: OnFocus
   export let onBlur: OnBlur
   export let onSortModal: OnSortModal
-  export let onTransformModal: OnTransformModal
   export let onJSONEditorModal: OnJSONEditorModal
 
   // modalOpen is true when one of the modals is open.
@@ -1065,67 +1062,6 @@
     openSortModal(rootPath)
   }
 
-  /**
-   * This method is exposed via JSONEditor.transform
-   */
-  export function openTransformModal(options: TransformModalOptions) {
-    if (json === undefined) {
-      return
-    }
-
-    const { id, onTransform, onClose } = options
-    const rootPath = options.rootPath || []
-
-    modalOpen = true
-
-    onTransformModal({
-      id: id || transformModalId,
-      json,
-      rootPath,
-      onTransform: (operations) => {
-        if (onTransform) {
-          onTransform({
-            operations,
-            json,
-            transformedJson: immutableJSONPatch(json, operations)
-          })
-        } else {
-          debug('onTransform', rootPath, operations)
-
-          handlePatch(operations, (patchedJson, patchedState) => ({
-            // expand the newly replaced array if needed and select it
-            state: expandSmartIfCollapsed(patchedJson, patchedState, rootPath),
-            selection: createValueSelection(rootPath)
-          }))
-        }
-      },
-      onClose: () => {
-        modalOpen = false
-        setTimeout(focus)
-        if (onClose) {
-          onClose()
-        }
-      }
-    })
-  }
-
-  function handleTransformSelection() {
-    if (!selection) {
-      return
-    }
-
-    const rootPath = findRootPath(json, selection)
-    openTransformModal({
-      rootPath
-    })
-  }
-
-  function handleTransformAll() {
-    openTransformModal({
-      rootPath: []
-    })
-  }
-
   function openJSONEditorModal(path: JSONPath, value: unknown) {
     debug('openJSONEditorModal', { path, value })
 
@@ -1619,7 +1555,6 @@
       onConvert: handleConvert,
 
       onSort: handleSortSelection,
-      onTransform: handleTransformSelection
     })
 
     const items = onRenderContextMenu(defaultItems) ?? defaultItems
@@ -1851,7 +1786,6 @@
       onUndo={handleUndo}
       onRedo={handleRedo}
       onSort={handleSortAll}
-      onTransform={handleTransformAll}
       onContextMenu={handleContextMenuFromTreeMenu}
       onCopy={handleCopy}
       {onRenderMenu}

@@ -18,7 +18,6 @@
     OnRenderMenu,
     OnRenderValue,
     OnSortModal,
-    OnTransformModal,
     Validator
   } from '$lib/types'
   import { Mode } from '$lib/types.js'
@@ -62,7 +61,6 @@
   export let onRenderContextMenu: OnRenderContextMenu
 
   export let onSortModal: OnSortModal
-  export let onTransformModal: OnTransformModal
 
   export let onClose: () => void
 
@@ -278,7 +276,6 @@
             {onRenderMenu}
             {onRenderContextMenu}
             {onSortModal}
-            {onTransformModal}
             onJSONEditorModal={handleJSONEditorModal}
           />
         </div>

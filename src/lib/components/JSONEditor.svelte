@@ -5,10 +5,8 @@
   import { uniqueId } from '../utils/uniqueId.js'
   import { isEqualParser, isJSONContent, validateContentType } from '../utils/jsonUtils.js'
   import AbsolutePopup from './modals/popup/AbsolutePopup.svelte'
-  import { jsonQueryLanguage } from '$lib/plugins/query/jsonQueryLanguage.js'
   import { renderValue } from '$lib/plugins/value/renderValue.js'
   import { flushSync } from 'svelte'
-  import TransformModal from './modals/TransformModal.svelte'
   import type {
     Content,
     ContentErrors,
@@ -24,7 +22,6 @@
     OnBlur,
     OnChange,
     OnChangeMode,
-    OnChangeQueryLanguage,
     OnChangeStatus,
     OnClassName,
     OnError,
@@ -35,9 +32,6 @@
     OnSelect,
     QueryLanguage,
     SortModalCallback,
-    TransformModalCallback,
-    TransformModalOptions,
-    TransformModalProps,
     Validator
   } from '$lib/types'
   import type { OnRenderContextMenu } from '$lib/types.js'
@@ -75,9 +69,6 @@
     parse: parseJSONPath,
     stringify: stringifyJSONPath
   }
-  const queryLanguagesDefault = [jsonQueryLanguage]
-  const queryLanguageIdDefault = queryLanguagesDefault[0].id
-  const onChangeQueryLanguageDefault = noop
   const onChangeDefault = undefined
   const onSelectDefault = undefined
   const onRenderValueDefault = renderValue
@@ -110,9 +101,6 @@
   export let validator: Validator | undefined = validatorDefault
   export let validationParser: JSONParser = validationParserDefault
   export let pathParser: JSONPathParser = pathParserDefault
-  export let queryLanguages: QueryLanguage[] = queryLanguagesDefault
-  export let queryLanguageId: string = queryLanguageIdDefault
-  export let onChangeQueryLanguage: OnChangeQueryLanguage = onChangeQueryLanguageDefault
   export let onChange: OnChange | undefined = onChangeDefault
   export let onSelect: OnSelect | undefined = onSelectDefault
   export let onRenderValue: OnRenderValue = onRenderValueDefault
@@ -129,7 +117,6 @@
   let refJSONEditorRoot: JSONEditorRoot
   let jsonEditorModalProps: JSONEditorModalProps | undefined = undefined
   let sortModalProps: SortModalCallback | undefined
-  let transformModalProps: TransformModalProps | undefined
 
   $: {
     const contentError = validateContentType(content)
@@ -227,15 +214,6 @@
 
   export function collapse(path: JSONPath, recursive = false): void {
     refJSONEditorRoot.collapse(path, recursive)
-
-    flushSync()
-  }
-
-  /**
-   * Open the transform modal
-   */
-  export function transform(options: TransformModalOptions = {}): void {
-    refJSONEditorRoot.transform(options)
 
     flushSync()
   }
@@ -344,15 +322,6 @@
         case 'pathParser':
           pathParser = props[name] ?? pathParserDefault
           break
-        case 'queryLanguages':
-          queryLanguages = props[name] ?? queryLanguagesDefault
-          break
-        case 'queryLanguageId':
-          queryLanguageId = props[name] ?? queryLanguageIdDefault
-          break
-        case 'onChangeQueryLanguage':
-          onChangeQueryLanguage = props[name] ?? onChangeQueryLanguageDefault
-          break
         case 'onChange':
           onChange = props[name] ?? onChangeDefault
           break
@@ -388,10 +357,6 @@
           // We should never reach this default case
           unknownProperty(name)
       }
-    }
-
-    if (!queryLanguages.some((queryLanguage) => queryLanguage.id === queryLanguageId)) {
-      queryLanguageId = queryLanguages[0].id
     }
 
     function unknownProperty(name: never) {
@@ -451,44 +416,6 @@
     onChangeMode(newMode)
   }
 
-  function handleChangeQueryLanguage(newQueryLanguageId: string) {
-    debug('handleChangeQueryLanguage', newQueryLanguageId)
-    queryLanguageId = newQueryLanguageId
-    onChangeQueryLanguage(newQueryLanguageId)
-  }
-
-  // The onTransformModal method is located in JSONEditor to prevent circular references:
-  //     TreeMode -> TransformModal -> TreeMode
-  function onTransformModal({ id, json, rootPath, onTransform, onClose }: TransformModalCallback) {
-    if (readOnly) {
-      return
-    }
-
-    transformModalProps = {
-      id,
-      json,
-      rootPath,
-      indentation,
-      truncateTextSize,
-      escapeControlCharacters,
-      escapeUnicodeCharacters,
-      parser,
-      parseMemoizeOne,
-      validationParser,
-      pathParser,
-      queryLanguages,
-      queryLanguageId,
-      onChangeQueryLanguage: handleChangeQueryLanguage,
-      onRenderValue,
-      onRenderMenu: (items: MenuItem[]) => onRenderMenu(items, { mode, modal: true, readOnly }),
-      onRenderContextMenu: (items: ContextMenuItem[]) =>
-        onRenderContextMenu(items, { mode, modal: true, readOnly, selection }),
-      onClassName,
-      onTransform,
-      onClose
-    }
-  }
-
   // The onSortModal is positioned here for consistency with TransformModal
   function onSortModal(props: SortModalCallback) {
     if (readOnly) {
@@ -528,7 +455,6 @@
       onRenderMenu,
       onRenderContextMenu,
       onSortModal,
-      onTransformModal,
       onClose
     }
   }
@@ -578,7 +504,6 @@
         {onRenderMenu}
         {onRenderContextMenu}
         {onSortModal}
-        {onTransformModal}
         {onJSONEditorModal}
       />
     {/key}
@@ -590,16 +515,6 @@
       onClose={() => {
         sortModalProps?.onClose()
         sortModalProps = undefined
-      }}
-    />
-  {/if}
-
-  {#if transformModalProps}
-    <TransformModal
-      {...transformModalProps}
-      onClose={() => {
-        transformModalProps?.onClose()
-        transformModalProps = undefined
       }}
     />
   {/if}

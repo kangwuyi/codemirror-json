@@ -28,7 +28,6 @@
     OnRenderValue,
     OnSelect,
     OnSortModal,
-    OnTransformModal,
     OnUndo,
     ParseError,
     PastedJson,
@@ -36,7 +35,6 @@
     SearchResultDetails,
     SearchResults,
     SortedColumn,
-    TransformModalOptions,
     ValidationError,
     Validator,
     ValueNormalization
@@ -190,7 +188,6 @@
   export let onFocus: OnFocus
   export let onBlur: OnBlur
   export let onSortModal: OnSortModal
-  export let onTransformModal: OnTransformModal
   export let onJSONEditorModal: OnJSONEditorModal
 
   let normalization: ValueNormalization
@@ -1478,46 +1475,6 @@
     })
   }
 
-  /**
-   * This method is exposed via JSONEditor.transform
-   */
-  export function openTransformModal(options: TransformModalOptions) {
-    if (json === undefined) {
-      return
-    }
-
-    const { id, onTransform, onClose } = options
-    const rootPath = options.rootPath || []
-
-    modalOpen = true
-
-    onTransformModal({
-      id: id || transformModalId,
-      json,
-      rootPath: rootPath || [],
-      onTransform: (operations) => {
-        if (onTransform) {
-          onTransform({
-            operations,
-            json: json,
-            transformedJson: immutableJSONPatch(json, operations)
-          })
-        } else {
-          debug('onTransform', rootPath, operations)
-
-          handlePatch(operations)
-        }
-      },
-      onClose: () => {
-        modalOpen = false
-        setTimeout(focus)
-        if (onClose) {
-          onClose()
-        }
-      }
-    })
-  }
-
   function openJSONEditorModal(path: JSONPath) {
     debug('openJSONEditorModal', { path })
 
@@ -1550,12 +1507,6 @@
   function handleSortAll() {
     const rootPath: JSONPath = []
     openSortModal(rootPath)
-  }
-
-  function handleTransformAll() {
-    openTransformModal({
-      rootPath: []
-    })
   }
 
   function handleUndo() {
@@ -1675,7 +1626,6 @@
       {readOnly}
       {history}
       onSort={handleSortAll}
-      onTransform={handleTransformAll}
       onUndo={handleUndo}
       onRedo={handleRedo}
       onContextMenu={handleContextMenuFromTableMenu}

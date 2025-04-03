@@ -21,13 +21,6 @@ export { keyComboFromEvent } from './utils/keyBindings'
 // validator plugins
 export * from './plugins/validator/createAjvValidator.js'
 
-// query plugins
-export { jsonQueryLanguage } from './plugins/query/jsonQueryLanguage.js'
-export { jmespathQueryLanguage } from './plugins/query/jmespathQueryLanguage.js'
-export { jsonpathQueryLanguage } from './plugins/query/jsonpathQueryLanguage.js'
-export { lodashQueryLanguage } from './plugins/query/lodashQueryLanguage.js'
-export { javascriptQueryLanguage } from './plugins/query/javascriptQueryLanguage.js'
-
 // content
 export {
   isContent,
@@ -36,7 +29,7 @@ export {
   isLargeContent,
   toTextContent,
   toJSONContent,
-  estimateSerializedSize
+  estimateSerializedSize,
 } from './utils/jsonUtils.js'
 
 // expand
@@ -61,7 +54,7 @@ export {
   getAnchorPath,
   getStartPath,
   getEndPath,
-  getSelectionPaths
+  getSelectionPaths,
 } from './logic/selection.js'
 
 // parser
@@ -83,7 +76,7 @@ export {
   isBoolean,
   isTimestamp,
   isColor,
-  isUrl
+  isUrl,
 } from './utils/typeUtils'
 
 // types

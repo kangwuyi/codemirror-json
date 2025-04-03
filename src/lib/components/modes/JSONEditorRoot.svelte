@@ -26,8 +26,6 @@
     OnRenderValue,
     OnSelect,
     OnSortModal,
-    OnTransformModal,
-    TransformModalOptions,
     Validator,
     ModeHistoryItem
   } from '$lib/types'
@@ -74,7 +72,6 @@
   export let onFocus: OnFocus
   export let onBlur: OnBlur
   export let onSortModal: OnSortModal
-  export let onTransformModal: OnTransformModal
   export let onJSONEditorModal: OnJSONEditorModal
 
   let refTreeMode: TreeMode | undefined
@@ -241,21 +238,6 @@
   }
 
   /**
-   * Open the transform modal
-   */
-  export function transform(options: TransformModalOptions): void {
-    if (refTextMode) {
-      refTextMode.openTransformModal(options)
-    } else if (refTreeMode) {
-      refTreeMode.openTransformModal(options)
-    } else if (refTableMode) {
-      refTableMode.openTransformModal(options)
-    } else {
-      throw new Error(`Method transform is not available in mode "${mode}"`)
-    }
-  }
-
-  /**
    * Validate the contents of the editor using the configured validator.
    * Returns a parse error or a list with validation warnings
    */
@@ -357,7 +339,6 @@
     {onBlur}
     onRenderMenu={handleRenderMenu}
     {onSortModal}
-    {onTransformModal}
   />
 {:else if mode === Mode.table}
   <TableMode
@@ -387,7 +368,6 @@
     onRenderMenu={handleRenderMenu}
     onRenderContextMenu={handleRenderContextMenu}
     {onSortModal}
-    {onTransformModal}
     {onJSONEditorModal}
   />
 {:else}
@@ -422,7 +402,6 @@
     onRenderMenu={handleRenderMenu}
     onRenderContextMenu={handleRenderContextMenu}
     {onSortModal}
-    {onTransformModal}
     {onJSONEditorModal}
   />
 {/if}
