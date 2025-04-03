@@ -206,6 +206,7 @@
   export let onBlur: OnBlur
   export let onSortModal: OnSortModal
   export let onJSONEditorModal: OnJSONEditorModal
+  export let isModalLayer: boolean
 
   // modalOpen is true when one of the modals is open.
   // This is used to track whether the editor still has focus
@@ -1789,6 +1790,7 @@
       onCopy={handleCopy}
       onOpenEditorModal={handleEditModal}
       {onRenderMenu}
+      {isModalLayer}
     />
   {/if}
 

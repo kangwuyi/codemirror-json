@@ -645,6 +645,8 @@ export interface JSONEditorModalProps {
   onRenderContextMenu: OnRenderContextMenu
   onSortModal: (props: SortModalCallback) => void
   onClose: () => void
+  // 判断是否是 modal 层中，用于重置区分 toolbar 中的图标
+  isModalLayer: boolean
 }
 
 export interface JSONEditorContext {

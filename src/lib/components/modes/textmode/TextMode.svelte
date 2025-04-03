@@ -149,6 +149,7 @@
   export let onRenderMenu: OnRenderMenuInternal
   export let onSortModal: OnSortModal
   export let onJSONEditorModal: OnJSONEditorModal
+  export let isModalLayer: boolean
 
   const debug = createDebug('jsoneditor:TextMode')
 
@@ -1079,6 +1080,7 @@
       canRedo={history.canRedo}
       {onRenderMenu}
       onOpenEditorModal={handleEditModal}
+      {isModalLayer}
     />
   {/if}
 

@@ -21,6 +21,7 @@
   export let onRedo: () => void
   export let onRenderMenu: OnRenderMenuInternal
   export let onOpenEditorModal: () => void
+  export let isModalLayer: boolean
 
   
   let defaultItems: MenuItem[]

@@ -73,6 +73,8 @@
   export let onSortModal: OnSortModal
   export let onJSONEditorModal: OnJSONEditorModal
 
+  export let isModalLayer: boolean
+
   let refTreeMode: TreeMode | undefined
   let refTableMode: TableMode | undefined
   let refTextMode: TextMode | undefined
@@ -339,6 +341,7 @@
     onRenderMenu={handleRenderMenu}
     {onSortModal}
     {onJSONEditorModal}
+    {isModalLayer}
   />
 {:else if mode === Mode.table}
   <TableMode
@@ -369,6 +372,7 @@
     onRenderContextMenu={handleRenderContextMenu}
     {onSortModal}
     {onJSONEditorModal}
+    {isModalLayer}
   />
 {:else}
   <!-- mode === Mode.tree -->
@@ -401,5 +405,6 @@
     onRenderContextMenu={handleRenderContextMenu}
     {onSortModal}
     {onJSONEditorModal}
+    {isModalLayer}
   />
 {/if}

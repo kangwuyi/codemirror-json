@@ -449,7 +449,8 @@
       onRenderMenu,
       onRenderContextMenu,
       onSortModal,
-      onClose
+      onClose,
+      isModalLayer: true
     }
   }
 
@@ -498,6 +499,7 @@
         {onRenderContextMenu}
         {onSortModal}
         {onJSONEditorModal}
+        isModalLayer={false}
       />
     {/key}
   </div>

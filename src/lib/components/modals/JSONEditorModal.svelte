@@ -63,6 +63,10 @@
 
   export let onClose: () => void
 
+  export let isModalLayer: boolean
+
+  console.log('modal isModalLayer', isModalLayer)
+
   interface ModalState {
     mode: Mode
     content: Content
@@ -275,6 +279,7 @@
             {onRenderContextMenu}
             {onSortModal}
             onJSONEditorModal={handleJSONEditorModal}
+            {isModalLayer}
           />
         </div>
 

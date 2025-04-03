@@ -24,6 +24,7 @@
   export let canSort: boolean
   export let onRenderMenu: OnRenderMenuInternal
   export let onOpenEditorModal: () => void
+  export let isModalLayer: boolean
 
   let defaultItems: MenuItem[]
   $: defaultItems = !readOnly

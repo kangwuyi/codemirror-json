@@ -37,6 +37,7 @@
   export let onCopy: () => void
   export let onRenderMenu: OnRenderMenuInternal
   export let onOpenEditorModal: () => void
+  export let isModalLayer: boolean
   
   $: hasJson = json !== undefined
   $: hasSelectionContents =
@@ -147,4 +148,4 @@
   }]
 </script>
 
-<Menu {items} {rightItems}/>
+<Menu {items} {rightItems} {isModalLayer}/>
