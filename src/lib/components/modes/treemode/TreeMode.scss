@@ -58,13 +58,5 @@
       font-family: defaults.$font-family;
       font-size: defaults.$font-size;
     }
-
-    .jse-search-box-background {
-      $search-box-height: 100px;
-      border: calc($search-box-height / 2) solid defaults.$modal-background;
-      margin: -(styles.$contents-padding);
-      margin-bottom: styles.$contents-padding;
-      display: inline-block;
-    }
   }
 }

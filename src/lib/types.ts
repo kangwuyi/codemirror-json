@@ -15,7 +15,7 @@ export type Content = JSONContent | TextContent
 export interface JSONParser {
   parse(
     text: string,
-    reviver?: ((this: unknown, key: string, value: unknown) => unknown) | null
+    reviver?: ((this: unknown, key: string, value: unknown) => unknown) | null,
   ): unknown
 
   stringify(
@@ -24,7 +24,7 @@ export interface JSONParser {
       | ((this: unknown, key: string, value: unknown) => unknown)
       | Array<number | string>
       | null,
-    space?: string | number
+    space?: string | number,
   ): string | undefined
 }
 
@@ -41,7 +41,7 @@ export interface VisibleSection {
 export enum Mode {
   text = 'text',
   tree = 'tree',
-  table = 'table'
+  table = 'table',
 }
 
 export enum SelectionType {
@@ -50,14 +50,14 @@ export enum SelectionType {
   key = 'key',
   value = 'value',
   multi = 'multi',
-  text = 'text' // in text mode
+  text = 'text', // in text mode
 }
 
 export enum CaretType {
   after = 'after',
   key = 'key',
   value = 'value',
-  inside = 'inside'
+  inside = 'inside',
 }
 
 export interface PathOption {
@@ -172,7 +172,7 @@ export interface JSONPatchResult {
 export type AfterPatchCallback = (
   patchedJson: unknown,
   patchedState: DocumentState | undefined,
-  patchedSelection: JSONSelection | undefined
+  patchedSelection: JSONSelection | undefined,
 ) =>
   | {
       json?: unknown
@@ -302,7 +302,7 @@ export interface MessageAction {
 export enum ValidationSeverity {
   info = 'info',
   warning = 'warning',
-  error = 'error'
+  error = 'error',
 }
 
 export interface ValidationError {
@@ -393,7 +393,7 @@ export type OnUndo = (item: HistoryItem | undefined) => void
 export type OnRedo = (item: HistoryItem | undefined) => void
 export type OnPatch = (
   operations: JSONPatchDocument,
-  afterPatch?: AfterPatchCallback
+  afterPatch?: AfterPatchCallback,
 ) => JSONPatchResult
 export type OnChangeText = (updatedText: string, afterPatch?: AfterPatchCallback) => void
 export type OnSort = (params: {
@@ -402,7 +402,6 @@ export type OnSort = (params: {
   itemPath: JSONPath
   direction: 1 | -1
 }) => void
-export type OnFind = (findAndReplace: boolean) => void
 export type OnPaste = (pastedText: string) => void
 export type OnPasteJson = (pastedJson: PastedJson) => void
 export type OnExpand = (relativePath: JSONPath) => boolean
@@ -422,10 +421,10 @@ export type RenderContextMenuContext = RenderMenuContext & {
 }
 export type OnRenderContextMenu = (
   items: ContextMenuItem[],
-  context: RenderContextMenuContext
+  context: RenderContextMenuContext,
 ) => ContextMenuItem[] | false | undefined
 export type OnRenderContextMenuInternal = (
-  items: ContextMenuItem[]
+  items: ContextMenuItem[],
 ) => ContextMenuItem[] | false | undefined
 export type OnError = (error: Error) => void
 export type OnFocus = () => void
@@ -443,7 +442,7 @@ export interface SearchResultDetails {
 
 export enum SearchField {
   key = 'key',
-  value = 'value'
+  value = 'value',
 }
 
 export interface SearchOptions {
@@ -587,7 +586,7 @@ export interface AbsolutePopupContext {
   openAbsolutePopup: (
     component: typeof SvelteComponent<Record<string, unknown>>,
     props: Record<string, unknown>,
-    options: AbsolutePopupOptions
+    options: AbsolutePopupOptions,
   ) => number
   closeAbsolutePopup: (popupId: number | undefined) => void
 }
@@ -671,7 +670,6 @@ export interface JSONEditorContext {
   focus: () => void
   onPatch: OnPatch
   onSelect: OnJSONSelect
-  onFind: OnFind
   onPasteJson: (newPastedJson: PastedJson) => void
   onRenderValue: OnRenderValue
 }
@@ -705,7 +703,6 @@ export interface RenderValueProps extends Record<string, unknown> {
   onPatch: OnPatch
   onPasteJson: OnPasteJson
   onSelect: OnJSONSelect
-  onFind: OnFind
   findNextInside: FindNextInside
   focus: () => void
 }
@@ -807,13 +804,13 @@ export interface JSONEditorModalCallback {
 
 export enum SortDirection {
   asc = 'asc',
-  desc = 'desc'
+  desc = 'desc',
 }
 
 export enum UpdateSelectionAfterChange {
   no = 'no',
   self = 'self',
-  nextInside = 'nextInside'
+  nextInside = 'nextInside',
 }
 
 export interface TableCellIndex {

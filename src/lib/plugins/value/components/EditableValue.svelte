@@ -32,7 +32,6 @@
   export let onPatch: OnPatch
   export let onPasteJson: OnPasteJson
   export let onSelect: OnJSONSelect
-  export let onFind: OnFind
   export let focus: () => void
   export let findNextInside: FindNextInside
 
@@ -121,6 +120,5 @@
   onChange={handleChangeValue}
   onCancel={handleCancelChange}
   onPaste={handlePaste}
-  {onFind}
   onValueClass={handleOnValueClass}
 />

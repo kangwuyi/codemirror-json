@@ -69,7 +69,6 @@
     shortText
     onChange={handleChangeValue}
     onCancel={handleCancelChange}
-    onFind={context.onFind}
   />
 {:else}
   <div

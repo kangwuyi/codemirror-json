@@ -33,7 +33,6 @@
       onPatch: context.onPatch,
       onPasteJson: context.onPasteJson,
       onSelect: context.onSelect,
-      onFind: context.onFind,
       findNextInside: context.findNextInside,
       focus: context.focus
     })

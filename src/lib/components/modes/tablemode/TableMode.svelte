@@ -360,7 +360,6 @@
       return handlePatch(createNestedValueOperations(operations, json), afterPatch)
     },
     onSelect: handleSelect,
-    onFind: openFind,
     onPasteJson: handlePasteJson,
     onRenderValue
   }
@@ -770,9 +769,8 @@
     path: JSONPath,
     { scrollToWhenVisible = true }: ScrollToOptions = {}
   ): Promise<void> {
-    const searchBoxHeight = 0
     const top = calculateAbsolutePosition(path, columns, itemHeightsCache, defaultItemHeight)
-    const roughDistance = top - scrollTop + searchBoxHeight + defaultItemHeight
+    const roughDistance = top - scrollTop + defaultItemHeight
     const elem = findElement(path)
 
     debug('scrollTo', { path, top, scrollTop, elem })
@@ -790,7 +788,7 @@
       }
     }
 
-    const offset = -Math.max(searchBoxHeight + 2 * defaultItemHeight, viewPortRect.height / 4)
+    const offset = -Math.max(2 * defaultItemHeight, viewPortRect.height / 4)
 
     if (elem) {
       return new Promise((resolve) => {
@@ -1318,16 +1316,6 @@
       selection = undefined
     }
 
-    if (combo === 'Ctrl+F') {
-      event.preventDefault()
-      openFind(false)
-    }
-
-    if (combo === 'Ctrl+H') {
-      event.preventDefault()
-      openFind(true)
-    }
-
     if (combo === 'Ctrl+Z') {
       event.preventDefault()
 
@@ -1568,15 +1556,6 @@
     openTransformModal({
       rootPath: []
     })
-  }
-
-  function openFind(findAndReplace: boolean): void {
-    debug('openFind', { findAndReplace })
-
-
-    flushSync()
-
-    // trick to make sure the focus goes to the search box
   }
 
   function handleUndo() {

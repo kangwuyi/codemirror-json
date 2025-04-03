@@ -1394,15 +1394,6 @@
     handleExpand([], false, true)
   }
 
-  function openFind(findAndReplace: boolean): void {
-    debug('openFind', { findAndReplace })
-
-
-    flushSync()
-
-    // trick to make sure the focus goes to the search box
-  }
-
   function handleExpandSection(path: JSONPath, section: Section) {
     debug('handleExpandSection', path, section)
 
@@ -1566,16 +1557,6 @@
     if (combo === 'Escape' && selection) {
       event.preventDefault()
       selection = undefined
-    }
-
-    if (combo === 'Ctrl+F') {
-      event.preventDefault()
-      openFind(false)
-    }
-
-    if (combo === 'Ctrl+H') {
-      event.preventDefault()
-      openFind(true)
     }
 
     if (combo === 'Ctrl+Z') {
@@ -1835,7 +1816,6 @@
     onInsert: handleInsert,
     onExpand: handleExpand,
     onSelect: handleSelect,
-    onFind: openFind,
     onExpandSection: handleExpandSection,
     onPasteJson: handlePasteJson,
     onRenderValue,

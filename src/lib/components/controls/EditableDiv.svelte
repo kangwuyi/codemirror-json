@@ -18,7 +18,6 @@
   export let label: string
   export let onChange: (newValue: string, updateSelection: UpdateSelectionAfterChange) => void
   export let onCancel: () => void
-  export let onFind: OnFind
   export let onPaste: OnPaste = noop
   export let onValueClass: (value: string) => string = () => ''
 
@@ -99,16 +98,6 @@
 
       const newValue = getDomValue()
       onChange(newValue, UpdateSelectionAfterChange.nextInside)
-    }
-
-    if (combo === 'Ctrl+F') {
-      event.preventDefault()
-      onFind(false)
-    }
-
-    if (combo === 'Ctrl+H') {
-      event.preventDefault()
-      onFind(true)
     }
   }
 
