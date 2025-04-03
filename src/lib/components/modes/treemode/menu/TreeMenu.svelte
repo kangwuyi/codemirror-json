@@ -34,7 +34,6 @@
   export let onUndo: () => void
   export let onRedo: () => void
   export let onSort: () => void
-  export let onTransform: () => void
   export let onContextMenu: (event: MouseEvent) => void
   export let onCopy: () => void
   export let onRenderMenu: OnRenderMenuInternal
@@ -78,14 +77,6 @@
           title: 'Sort',
           className: 'jse-sort',
           onClick: onSort,
-          disabled: readOnly || json === undefined
-        },
-        {
-          type: 'button',
-          icon: faFilter,
-          title: 'Transform contents (filter, sort, project)',
-          className: 'jse-transform',
-          onClick: onTransform,
           disabled: readOnly || json === undefined
         },
         {

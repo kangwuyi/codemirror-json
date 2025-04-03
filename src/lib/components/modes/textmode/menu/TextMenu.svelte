@@ -16,8 +16,6 @@
   export let onFormat: () => boolean
   export let onCompact: () => boolean
   export let onSort: () => void
-  export let onTransform: () => void
-  export let onToggleSearch: () => void
   export let onUndo: () => void
   export let onRedo: () => void
   export let canUndo: boolean
@@ -57,14 +55,6 @@
           className: 'jse-sort',
           onClick: onSort,
           disabled: readOnly || !canSort
-        },
-        {
-          type: 'button',
-          icon: faFilter,
-          title: 'Transform contents (filter, sort, project)',
-          className: 'jse-transform',
-          onClick: onTransform,
-          disabled: readOnly || !canTransform
         },
         {
           type: 'separator'

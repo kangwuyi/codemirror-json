@@ -17,7 +17,6 @@
   export let readOnly: boolean
   export let history: History<HistoryItem>
   export let onSort: () => void
-  export let onTransform: () => void
   export let onContextMenu: (event: MouseEvent) => void
   export let onUndo: () => void
   export let onRedo: () => void
@@ -32,14 +31,6 @@
           title: 'Sort',
           className: 'jse-sort',
           onClick: onSort,
-          disabled: readOnly || !containsValidArray
-        },
-        {
-          type: 'button',
-          icon: faFilter,
-          title: 'Transform contents (filter, sort, project)',
-          className: 'jse-transform',
-          onClick: onTransform,
           disabled: readOnly || !containsValidArray
         },
         {

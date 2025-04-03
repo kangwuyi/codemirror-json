@@ -13,7 +13,7 @@ import {
   faPlus,
   faSortAmountDownAlt,
   faSquare,
-  faTrashCan
+  faTrashCan,
 } from '@fortawesome/free-solid-svg-icons'
 import {
   canConvert,
@@ -23,14 +23,14 @@ import {
   isKeySelection,
   isMultiSelection,
   isValueSelection,
-  singleItemSelected
+  singleItemSelected,
 } from '$lib/logic/selection'
 import type {
   ConvertType,
   DocumentState,
   InsertType,
   JSONSelection,
-  ContextMenuItem
+  ContextMenuItem,
 } from '$lib/types'
 import { initial, isEmpty } from 'lodash-es'
 import { getIn } from 'immutable-json-patch'
@@ -56,7 +56,6 @@ export default function ({
   onConvert,
   onInsertAfter,
   onSort,
-  onTransform
 }: {
   json: unknown
   documentState: DocumentState | undefined
@@ -76,7 +75,6 @@ export default function ({
   onConvert: (type: ConvertType) => void
   onInsertAfter: () => void
   onSort: () => void
-  onTransform: () => void
 }): ContextMenuItem[] {
   const hasJson = json !== undefined
   const hasSelection = !!selection
@@ -150,7 +148,7 @@ export default function ({
           icon: faPen,
           text: 'Edit key',
           title: 'Edit the key (Double-click on the key)',
-          disabled: !canEditKey
+          disabled: !canEditKey,
         },
         {
           type: 'dropdown-button',
@@ -160,7 +158,7 @@ export default function ({
             icon: faPen,
             text: editValueText,
             title: 'Edit the value (Double-click on the value)',
-            disabled: !canEditValue
+            disabled: !canEditValue,
           },
           width: '11em',
           items: [
@@ -170,7 +168,7 @@ export default function ({
               text: editValueText,
               title: 'Edit the value (Double-click on the value)',
               onClick: () => onEditValue(),
-              disabled: !canEditValue
+              disabled: !canEditValue,
             },
             {
               type: 'button',
@@ -178,11 +176,11 @@ export default function ({
               text: 'Enforce string',
               title: 'Enforce keeping the value as string when it contains a numeric value',
               onClick: () => onToggleEnforceString(),
-              disabled: !canEnforceString
-            }
-          ]
-        }
-      ]
+              disabled: !canEnforceString,
+            },
+          ],
+        },
+      ],
     },
     { type: 'separator' },
     {
@@ -196,7 +194,7 @@ export default function ({
             icon: faCut,
             text: 'Cut',
             title: 'Cut selected contents, formatted with indentation (Ctrl+X)',
-            disabled: !canCut
+            disabled: !canCut,
           },
           width: '10em',
           items: [
@@ -206,7 +204,7 @@ export default function ({
               text: 'Cut formatted',
               title: 'Cut selected contents, formatted with indentation (Ctrl+X)',
               onClick: () => onCut(true),
-              disabled: !canCut
+              disabled: !canCut,
             },
             {
               type: 'button',
@@ -214,9 +212,9 @@ export default function ({
               text: 'Cut compacted',
               title: 'Cut selected contents, without indentation (Ctrl+Shift+X)',
               onClick: () => onCut(false),
-              disabled: !canCut
-            }
-          ]
+              disabled: !canCut,
+            },
+          ],
         },
         {
           type: 'dropdown-button',
@@ -226,7 +224,7 @@ export default function ({
             icon: faCopy,
             text: 'Copy',
             title: 'Copy selected contents, formatted with indentation (Ctrl+C)',
-            disabled: !canCopy
+            disabled: !canCopy,
           },
           width: '12em',
           items: [
@@ -236,7 +234,7 @@ export default function ({
               text: 'Copy formatted',
               title: 'Copy selected contents, formatted with indentation (Ctrl+C)',
               onClick: () => onCopy(true),
-              disabled: !canCopy
+              disabled: !canCopy,
             },
             {
               type: 'button',
@@ -244,9 +242,9 @@ export default function ({
               text: 'Copy compacted',
               title: 'Copy selected contents, without indentation (Ctrl+Shift+C)',
               onClick: () => onCopy(false),
-              disabled: !canCopy
-            }
-          ]
+              disabled: !canCopy,
+            },
+          ],
         },
         {
           type: 'button',
@@ -254,9 +252,9 @@ export default function ({
           icon: faPaste,
           text: 'Paste',
           title: 'Paste clipboard contents (Ctrl+V)',
-          disabled: !canPaste
-        }
-      ]
+          disabled: !canPaste,
+        },
+      ],
     },
     { type: 'separator' },
     {
@@ -271,7 +269,7 @@ export default function ({
               icon: faClone,
               text: 'Duplicate',
               title: 'Duplicate selected contents (Ctrl+D)',
-              disabled: !canDuplicate
+              disabled: !canDuplicate,
             },
             {
               type: 'button',
@@ -279,7 +277,7 @@ export default function ({
               icon: faCropAlt,
               text: 'Extract',
               title: 'Extract selected contents',
-              disabled: !canExtract
+              disabled: !canExtract,
             },
             {
               type: 'button',
@@ -287,15 +285,7 @@ export default function ({
               icon: faSortAmountDownAlt,
               text: 'Sort',
               title: 'Sort array or object contents',
-              disabled: readOnly || !hasSelectionContents
-            },
-            {
-              type: 'button',
-              onClick: () => onTransform(),
-              icon: faFilter,
-              text: 'Transform',
-              title: 'Transform array or object contents (filter, sort, project)',
-              disabled: readOnly || !hasSelectionContents
+              disabled: readOnly || !hasSelectionContents,
             },
             {
               type: 'button',
@@ -303,9 +293,9 @@ export default function ({
               icon: faTrashCan,
               text: 'Remove',
               title: 'Remove selected contents (Delete)',
-              disabled: readOnly || !hasSelectionContents
-            }
-          ]
+              disabled: readOnly || !hasSelectionContents,
+            },
+          ],
         },
         {
           type: 'column',
@@ -317,7 +307,7 @@ export default function ({
               icon: convertMode ? faArrowRightArrowLeft : faPlus,
               text: 'Structure',
               title: insertOrConvertText + ' structure like the first item in the array',
-              disabled: !canInsertOrConvertStructure
+              disabled: !canInsertOrConvertStructure,
             },
             {
               type: 'button',
@@ -325,7 +315,7 @@ export default function ({
               icon: convertMode ? faArrowRightArrowLeft : faPlus,
               text: 'Object',
               title: insertOrConvertText + ' object',
-              disabled: !canInsertOrConvertObject
+              disabled: !canInsertOrConvertObject,
             },
             {
               type: 'button',
@@ -333,7 +323,7 @@ export default function ({
               icon: convertMode ? faArrowRightArrowLeft : faPlus,
               text: 'Array',
               title: insertOrConvertText + ' array',
-              disabled: !canInsertOrConvertArray
+              disabled: !canInsertOrConvertArray,
             },
             {
               type: 'button',
@@ -341,14 +331,14 @@ export default function ({
               icon: convertMode ? faArrowRightArrowLeft : faPlus,
               text: 'Value',
               title: insertOrConvertText + ' value',
-              disabled: !canInsertOrConvertValue
-            }
-          ]
-        }
-      ]
+              disabled: !canInsertOrConvertValue,
+            },
+          ],
+        },
+      ],
     },
     {
-      type: 'separator'
+      type: 'separator',
     },
     {
       type: 'row',
@@ -359,7 +349,7 @@ export default function ({
           icon: faCaretSquareUp,
           text: 'Insert before',
           title: 'Select area before current entry to insert or paste contents',
-          disabled: readOnly || !hasSelectionContents || rootSelected
+          disabled: readOnly || !hasSelectionContents || rootSelected,
         },
         {
           type: 'button',
@@ -367,9 +357,9 @@ export default function ({
           icon: faCaretSquareDown,
           text: 'Insert after',
           title: 'Select area after current entry to insert or paste contents',
-          disabled: readOnly || !hasSelectionContents || rootSelected
-        }
-      ]
-    }
+          disabled: readOnly || !hasSelectionContents || rootSelected,
+        },
+      ],
+    },
   ]
 }
