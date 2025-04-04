@@ -42,7 +42,11 @@
   on:mousedown={toggleBooleanValue}
   title={!readOnly ? 'Click to toggle this boolean value' : `Boolean value ${value}`}
 >
-  {@html value === true ? LocalCheckSquareIcon : LocalSquareIcon}
+  {#if value === true}
+    <LocalCheckSquareIcon />
+  {:else}
+    <LocalSquareIcon />
+  {/if}
 </div>
 
 <style src="./BooleanToggle.scss"></style>

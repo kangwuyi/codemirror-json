@@ -595,9 +595,9 @@
           title="Expand or collapse this array (Ctrl+Click to expand/collapse recursively)"
         >
           {#if expanded}
-            {@html LocalCaretDownIcon}
+            <LocalCaretDownIcon />
           {:else}
-            {@html LocalCaretRightIcon}
+            <LocalCaretRightIcon />
           {/if}
         </button>
         <slot name="identifier" />
@@ -732,9 +732,9 @@
           title="Expand or collapse this object (Ctrl+Click to expand/collapse recursively)"
         >
           {#if expanded}
-            {@html LocalCaretDownIcon}
+            <LocalCaretDownIcon />
           {:else}
-            {@html LocalCaretRightIcon}
+            <LocalCaretRightIcon />
           {/if}
         </button>
         <slot name="identifier" />

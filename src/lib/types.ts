@@ -250,7 +250,7 @@ export type ClipboardValues = Array<{ key: string; value: unknown }>
 export interface MenuButton {
   type: 'button'
   onClick: (event: MouseEvent) => void
-  icon?: string
+  icon?: Component
   text?: string
   title?: string
   className?: string
@@ -292,7 +292,7 @@ export type ContextMenuItem = MenuButton | MenuDropDownButton | MenuSeparator | 
 export interface MessageAction {
   text: string
   title: string
-  icon?: string
+  icon?: Component
   onClick?: () => void
   onMouseDown?: () => void
   disabled?: boolean
@@ -353,29 +353,6 @@ export interface TextLocation {
 export interface Section {
   start: number // start included
   end: number // end excluded
-}
-
-export interface QueryLanguage {
-  id: string
-  name: string
-  description: string
-  createQuery: (json: unknown, queryOptions: QueryLanguageOptions) => string
-  executeQuery: (json: unknown, query: string, parser: JSONParser) => unknown
-}
-
-export interface QueryLanguageOptions {
-  filter?: {
-    path?: JSONPath
-    relation?: '==' | '!=' | '<' | '<=' | '>' | '>='
-    value?: string
-  }
-  sort?: {
-    path?: JSONPath
-    direction?: 'asc' | 'desc'
-  }
-  projection?: {
-    paths?: JSONPath[]
-  }
 }
 
 export interface OnChangeStatus {

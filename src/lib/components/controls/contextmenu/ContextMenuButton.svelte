@@ -18,7 +18,7 @@
   disabled={item.disabled || false}
 >
   {#if item.icon}
-    {@html item.icon}
+    <svelte:component this={item.icon} />
   {/if}
   {#if item.text}
     {item.text}

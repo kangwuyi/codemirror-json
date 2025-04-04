@@ -2,10 +2,10 @@
 
 <script lang="ts">
   import type { MessageAction } from '$lib/types'
-  import { onDestroy } from 'svelte'
+  import { onDestroy, type Component } from 'svelte'
 
   export let type: 'success' | 'error' | 'warning' | 'info' = 'success'
-  export let icon: HTMLOrSVGElement | undefined = undefined
+  export let icon: Component | undefined = undefined
   export let message: string | undefined = undefined
   export let actions: MessageAction[] = []
   export let onClick: (() => void) | undefined = undefined
@@ -33,7 +33,7 @@
   >
     <div class="jse-text-centered">
       {#if icon}
-        {@html icon}
+        <svelte:component this={icon} />
       {/if}
       {message}
     </div>
@@ -57,7 +57,7 @@
         disabled={action.disabled}
       >
         {#if action.icon}
-          {@html action.icon}
+          <svelte:component this={action.icon} />
         {/if}
         {action.text}
       </button>

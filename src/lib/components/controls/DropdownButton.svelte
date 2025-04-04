@@ -71,7 +71,7 @@
             class={item.className}
           >
             {#if item.icon}
-              {@html item.icon}
+              <svelte:component this={item.icon} />
             {/if}
             {item.text}
           </button>

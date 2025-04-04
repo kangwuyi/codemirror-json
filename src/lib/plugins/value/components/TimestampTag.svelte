@@ -15,7 +15,7 @@
 </script>
 
 <div class="jse-timestamp" use:tooltip={{ text, ...absolutePopupContext }}>
-  {@html LocalClockIcon}
+  <LocalClockIcon />
 </div>
 
 <style src="./TimestampTag.scss"></style>

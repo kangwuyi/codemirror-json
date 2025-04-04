@@ -30,7 +30,6 @@
     OnRenderMenu,
     OnRenderValue,
     OnSelect,
-    QueryLanguage,
     SortModalCallback,
     Validator
   } from '$lib/types'

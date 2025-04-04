@@ -43,7 +43,7 @@
   title={CONTEXT_MENU_EXPLANATION}
   on:click={handleClick}
 >
-  {@html LocalCaretDownIcon}
+  <LocalCaretDownIcon />
 </button>
 
 <style src="./ContextMenuPointer.scss"></style>

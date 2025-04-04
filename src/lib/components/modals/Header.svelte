@@ -23,13 +23,15 @@
       title="Toggle full screen"
       on:click={() => (fullscreen = !fullscreen)}
     >
-      {@html fullscreen
-        ? LocalDownLeftAndUpRightToCenterIcon
-        : LocalUpRightAndDownLeftFromCenterIcon}
+      {#if fullscreen}
+        <LocalDownLeftAndUpRightToCenterIcon />
+      {:else}
+        <LocalUpRightAndDownLeftFromCenterIcon />
+      {/if}
     </button>
   {/if}
   <button type="button" class="jse-close" on:click={() => onClose?.()}>
-    {@html LocalTimesIcon}
+    <LocalTimesIcon />
   </button>
 </div>
 

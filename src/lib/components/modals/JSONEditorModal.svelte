@@ -292,7 +292,7 @@
 
           {#if stack.length > 1}
             <button type="button" class="jse-secondary" on:click={handleClose}>
-              {@html LocalCaretLeftIcon} Back
+              <LocalCaretLeftIcon />Back
             </button>
           {/if}
           {#if !readOnly}

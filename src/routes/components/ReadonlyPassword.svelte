@@ -30,7 +30,7 @@
   data-type="selectable-value"
   on:dblclick={handleValueDoubleClick}
 >
-  {@html LocalLockIcon}
+  <LocalLockIcon />
   {hiddenValue}
 </div>
 

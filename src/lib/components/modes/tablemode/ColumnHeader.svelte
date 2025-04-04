@@ -49,7 +49,11 @@
   </span>
   {#if sortDirection !== undefined}
     <span class="jse-column-sort-icon" title={`Currently sorted in ${sortDirectionName} order`}>
-      {@html sortDirection === SortDirection.asc ? LocalCaretDownIcon : LocalCaretUpIcon}
+      {#if sortDirection === SortDirection.asc}
+        <LocalCaretDownIcon />
+      {:else}
+        <LocalCaretUpIcon />
+      {/if}
     </span>
   {/if}
 </button>
