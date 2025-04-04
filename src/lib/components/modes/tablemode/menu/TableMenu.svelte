@@ -3,13 +3,12 @@
 <script lang="ts">
   import type { HistoryItem, History, MenuItem, OnRenderMenuInternal } from '$lib/types'
   import Menu from '../../../controls/Menu.svelte'
-  import {
-    faEllipsisV,
-    faRedo,
-    faExpand,
-    faSortAmountDownAlt,
-    faUndo
-  } from '@fortawesome/free-solid-svg-icons'
+  import LocalEllipsisVIcon from '$lib/assets/icon/ellipsis-vertical-solid.svg?raw'
+  import LocalRedoIcon from '$lib/assets/icon/rotate-left-solid.svg?raw'
+  import LocalUndoIcon from '$lib/assets/icon/rotate-right-solid.svg?raw'
+  import LocalExpandIcon from '$lib/assets/icon/expand-solid.svg?raw'
+  import LocalSortAmountDownAltIcon from '$lib/assets/icon/arrow-down-short-wide-solid.svg?raw'
+
   import { CONTEXT_MENU_EXPLANATION } from '$lib/constants.js'
 
   export let containsValidArray: boolean
@@ -23,13 +22,12 @@
   export let onOpenEditorModal: () => void
   export let isModalLayer: boolean
 
-  
   let defaultItems: MenuItem[]
   $: defaultItems = !readOnly
     ? [
         {
           type: 'button',
-          icon: faSortAmountDownAlt,
+          icon: LocalSortAmountDownAltIcon,
           title: 'Sort',
           className: 'jse-sort',
           onClick: onSort,
@@ -37,7 +35,7 @@
         },
         {
           type: 'button',
-          icon: faEllipsisV,
+          icon: LocalEllipsisVIcon,
           title: CONTEXT_MENU_EXPLANATION,
           className: 'jse-contextmenu',
           onClick: onContextMenu
@@ -47,7 +45,7 @@
         },
         {
           type: 'button',
-          icon: faUndo,
+          icon: LocalUndoIcon,
           title: 'Undo (Ctrl+Z)',
           className: 'jse-undo',
           onClick: onUndo,
@@ -55,7 +53,7 @@
         },
         {
           type: 'button',
-          icon: faRedo,
+          icon: LocalRedoIcon,
           title: 'Redo (Ctrl+Shift+Z)',
           className: 'jse-redo',
           onClick: onRedo,
@@ -75,14 +73,16 @@
   $: items = onRenderMenu(defaultItems) || defaultItems
   // header right menu
   let rightItems: MenuItem[]
-  $: rightItems =  [{
-    type: 'button',
-    icon: faExpand,
-    title: '全屏',
-    className: 'jse-fullscreen',
-    onClick: onOpenEditorModal,
-    disabled: false
-  }]
+  $: rightItems = [
+    {
+      type: 'button',
+      icon: LocalExpandIcon,
+      title: '全屏',
+      className: 'jse-fullscreen',
+      onClick: onOpenEditorModal,
+      disabled: false
+    }
+  ]
 </script>
 
-<Menu {items} {rightItems} {isModalLayer}/>
+<Menu {items} {rightItems} {isModalLayer} />

@@ -5,7 +5,7 @@
     type RenderMenuContext,
     toTextContent
   } from 'codemirror-json'
-  import { faCalculator } from '@fortawesome/free-solid-svg-icons'
+  import LocalCalculateIcon from './calculator-solid.svg?raw'
 
   let content = $state({
     text: undefined, // can be used to pass a stringified JSON document instead
@@ -41,7 +41,7 @@
           {
             type: 'button',
             onClick: handleCalculateSize,
-            icon: faCalculator,
+            icon: LocalCalculateIcon,
             text: 'Calculate size',
             title: 'Calculate the size of the document and report that in an alert',
             disabled: false

@@ -26,8 +26,8 @@
   import { stringifyJSONPath } from '$lib/utils/pathUtils.js'
   import { initial, isEmpty, last } from 'lodash-es'
   import { isJSONContent, toJSONContent } from '$lib/utils/jsonUtils.js'
-  import Icon from 'svelte-awesome'
-  import { faCaretLeft } from '@fortawesome/free-solid-svg-icons'
+  import LocalCaretLeftIcon from '$lib/assets/icon/caret-left-solid.svg?raw'
+
   import memoizeOne from 'memoize-one'
   import { getFocusPath, isJSONSelection } from '$lib/logic/selection.js'
   import Modal from './Modal.svelte'
@@ -292,7 +292,7 @@
 
           {#if stack.length > 1}
             <button type="button" class="jse-secondary" on:click={handleClose}>
-              <Icon data={faCaretLeft} /> Back
+              {@html LocalCaretLeftIcon} Back
             </button>
           {/if}
           {#if !readOnly}

@@ -1,15 +1,15 @@
+import LocalCheckSquareIcon from '$lib/assets/icon/square-check-solid.svg?raw'
+import LocalCloneIcon from '$lib/assets/icon/clone-solid.svg?raw'
+import LocalCopyIcon from '$lib/assets/icon/copy-solid.svg?raw'
+import LocalCutIcon from '$lib/assets/icon/scissors-solid.svg?raw'
+import LocalPasteIcon from '$lib/assets/icon/paste-solid.svg?raw'
+import LocalPenIcon from '$lib/assets/icon/pen-solid.svg?raw'
+import LocalPlusIcon from '$lib/assets/icon/plus-solid.svg?raw'
+import LocalSquareIcon from '$lib/assets/icon/square-solid.svg?raw'
+import LocalTrashCanIcon from '$lib/assets/icon/trash-can-solid.svg?raw'
+
 import type { ContextMenuItem, DocumentState, JSONSelection } from 'codemirror-json'
-import {
-  faCheckSquare,
-  faClone,
-  faCopy,
-  faCut,
-  faPaste,
-  faPen,
-  faPlus,
-  faSquare,
-  faTrashCan,
-} from '@fortawesome/free-solid-svg-icons'
+
 import { isKeySelection, isMultiSelection, isValueSelection } from '$lib/logic/selection'
 import { getIn } from 'immutable-json-patch'
 import { getFocusPath, singleItemSelected } from '$lib/logic/selection'
@@ -31,7 +31,7 @@ export default function ({
   onDuplicateRow,
   onInsertBeforeRow,
   onInsertAfterRow,
-  onRemoveRow,
+  onRemoveRow
 }: {
   json: unknown | undefined
   documentState: DocumentState | undefined
@@ -81,108 +81,108 @@ export default function ({
               main: {
                 type: 'button',
                 onClick: () => onEditValue(),
-                icon: faPen,
+                icon: LocalPenIcon,
                 text: 'Edit',
                 title: 'Edit the value (Double-click on the value)',
-                disabled: !canEditValue,
+                disabled: !canEditValue
               },
               width: '11em',
               items: [
                 {
                   type: 'button',
-                  icon: faPen,
+                  icon: LocalPenIcon,
                   text: 'Edit',
                   title: 'Edit the value (Double-click on the value)',
                   onClick: () => onEditValue(),
-                  disabled: !canEditValue,
+                  disabled: !canEditValue
                 },
                 {
                   type: 'button',
-                  icon: enforceString ? faCheckSquare : faSquare,
+                  icon: enforceString ? LocalCheckSquareIcon : LocalSquareIcon,
                   text: 'Enforce string',
                   title: 'Enforce keeping the value as string when it contains a numeric value',
                   onClick: () => onToggleEnforceString(),
-                  disabled: !canEnforceString,
-                },
-              ],
+                  disabled: !canEnforceString
+                }
+              ]
             },
             {
               type: 'dropdown-button',
               main: {
                 type: 'button',
                 onClick: () => onCut(true),
-                icon: faCut,
+                icon: LocalCutIcon,
                 text: 'Cut',
                 title: 'Cut selected contents, formatted with indentation (Ctrl+X)',
-                disabled: !canCut,
+                disabled: !canCut
               },
               width: '10em',
               items: [
                 {
                   type: 'button',
-                  icon: faCut,
+                  icon: LocalCutIcon,
                   text: 'Cut formatted',
                   title: 'Cut selected contents, formatted with indentation (Ctrl+X)',
                   onClick: () => onCut(true),
-                  disabled: readOnly || !hasSelectionContents,
+                  disabled: readOnly || !hasSelectionContents
                 },
                 {
                   type: 'button',
-                  icon: faCut,
+                  icon: LocalCutIcon,
                   text: 'Cut compacted',
                   title: 'Cut selected contents, without indentation (Ctrl+Shift+X)',
                   onClick: () => onCut(false),
-                  disabled: readOnly || !hasSelectionContents,
-                },
-              ],
+                  disabled: readOnly || !hasSelectionContents
+                }
+              ]
             },
             {
               type: 'dropdown-button',
               main: {
                 type: 'button',
                 onClick: () => onCopy(true),
-                icon: faCopy,
+                icon: LocalCopyIcon,
                 text: 'Copy',
                 title: 'Copy selected contents, formatted with indentation (Ctrl+C)',
-                disabled: !hasSelectionContents,
+                disabled: !hasSelectionContents
               },
               width: '12em',
               items: [
                 {
                   type: 'button',
-                  icon: faCopy,
+                  icon: LocalCopyIcon,
                   text: 'Copy formatted',
                   title: 'Copy selected contents, formatted with indentation (Ctrl+C)',
                   onClick: () => onCopy(false),
-                  disabled: !hasSelectionContents,
+                  disabled: !hasSelectionContents
                 },
                 {
                   type: 'button',
-                  icon: faCopy,
+                  icon: LocalCopyIcon,
                   text: 'Copy compacted',
                   title: 'Copy selected contents, without indentation (Ctrl+Shift+C)',
                   onClick: () => onCopy(false),
-                  disabled: !hasSelectionContents,
-                },
-              ],
+                  disabled: !hasSelectionContents
+                }
+              ]
             },
             {
               type: 'button',
               onClick: () => onPaste(),
-              icon: faPaste,
+              icon: LocalPasteIcon,
               text: 'Paste',
               title: 'Paste clipboard contents (Ctrl+V)',
-              disabled: readOnly || !hasSelection,
+              disabled: readOnly || !hasSelection
             },
             {
               type: 'button',
               onClick: () => onRemove(),
-              icon: faTrashCan,
+              icon: LocalTrashCanIcon,
               text: 'Remove',
               title: 'Remove selected contents (Delete)',
-              disabled: readOnly || !hasSelectionContents,
-            },
-          ],
+              disabled: readOnly || !hasSelectionContents
+            }
+          ]
         },
         {
           type: 'column',
@@ -191,46 +191,46 @@ export default function ({
             {
               type: 'button',
               onClick: () => onEditRow(),
-              icon: faPen,
+              icon: LocalPenIcon,
               text: 'Edit row',
               title: 'Edit the current row',
-              disabled: readOnly || !hasSelection || !hasJson,
+              disabled: readOnly || !hasSelection || !hasJson
             },
             {
               type: 'button',
               onClick: () => onDuplicateRow(),
-              icon: faClone,
+              icon: LocalCloneIcon,
               text: 'Duplicate row',
               title: 'Duplicate the current row (Ctrl+D)',
-              disabled: readOnly || !hasSelection || !hasJson,
+              disabled: readOnly || !hasSelection || !hasJson
             },
             {
               type: 'button',
               onClick: () => onInsertBeforeRow(),
-              icon: faPlus,
+              icon: LocalPlusIcon,
               text: 'Insert before',
               title: 'Insert a row before the current row',
-              disabled: readOnly || !hasSelection || !hasJson,
+              disabled: readOnly || !hasSelection || !hasJson
             },
             {
               type: 'button',
               onClick: () => onInsertAfterRow(),
-              icon: faPlus,
+              icon: LocalPlusIcon,
               text: 'Insert after',
               title: 'Insert a row after the current row',
-              disabled: readOnly || !hasSelection || !hasJson,
+              disabled: readOnly || !hasSelection || !hasJson
             },
             {
               type: 'button',
               onClick: () => onRemoveRow(),
-              icon: faTrashCan,
+              icon: LocalTrashCanIcon,
               text: 'Remove row',
               title: 'Remove current row',
-              disabled: readOnly || !hasSelection || !hasJson,
-            },
-          ],
-        },
-      ],
-    },
+              disabled: readOnly || !hasSelection || !hasJson
+            }
+          ]
+        }
+      ]
+    }
   ]
 }

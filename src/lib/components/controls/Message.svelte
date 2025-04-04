@@ -1,13 +1,11 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import Icon from 'svelte-awesome'
   import type { MessageAction } from '$lib/types'
-  import type { IconDefinition } from '@fortawesome/free-solid-svg-icons'
   import { onDestroy } from 'svelte'
 
   export let type: 'success' | 'error' | 'warning' | 'info' = 'success'
-  export let icon: IconDefinition | undefined = undefined
+  export let icon: HTMLOrSVGElement | undefined = undefined
   export let message: string | undefined = undefined
   export let actions: MessageAction[] = []
   export let onClick: (() => void) | undefined = undefined
@@ -35,7 +33,7 @@
   >
     <div class="jse-text-centered">
       {#if icon}
-        <Icon data={icon} />
+        {@html icon}
       {/if}
       {message}
     </div>
@@ -59,7 +57,7 @@
         disabled={action.disabled}
       >
         {#if action.icon}
-          <Icon data={action.icon} />
+          {@html action.icon}
         {/if}
         {action.text}
       </button>

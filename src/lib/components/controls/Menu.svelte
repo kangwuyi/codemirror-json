@@ -1,7 +1,6 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import Icon from 'svelte-awesome'
   import type { MenuItem } from '$lib/types'
   import { isMenuButton, isMenuSeparator, isMenuSpace } from '$lib/typeguards.js'
 
@@ -37,7 +36,7 @@
         disabled={item.disabled || false}
       >
         {#if item.icon}
-          <Icon data={item.icon} />
+          {@html item.icon}
         {/if}
         {#if item.text}
           {item.text}
@@ -65,7 +64,7 @@
           disabled={item.disabled || false}
         >
           {#if item.icon}
-            <Icon data={item.icon} />
+            {@html item.icon}
           {/if}
           {#if item.text}
             {item.text}

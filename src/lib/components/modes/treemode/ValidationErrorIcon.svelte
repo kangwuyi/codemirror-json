@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
-  import Icon from 'svelte-awesome'
+  import LocalExclamationTriangleIcon from '$lib/assets/icon/triangle-exclamation-solid.svg?raw'
   import { getContext } from 'svelte'
   import { tooltip } from '../../controls/tooltip/tooltip.js'
   import type { AbsolutePopupContext, NestedValidationError, ValidationError } from '$lib/types.js'
@@ -23,7 +22,7 @@
   on:click={onExpand}
   use:tooltip={{ text, ...absolutePopupContext }}
 >
-  <Icon data={faExclamationTriangle} />
+  {@html LocalExclamationTriangleIcon}
 </button>
 
 <style src="./ValidationErrorIcon.scss"></style>

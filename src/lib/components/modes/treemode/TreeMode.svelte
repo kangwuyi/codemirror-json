@@ -1,8 +1,11 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
+  import LocalCheckIcon from '$lib/assets/icon/check-solid.svg?raw'
+  import LocalCodeIcon from '$lib/assets/icon/code-solid.svg?raw'
+  import LocalWrenchIcon from '$lib/assets/icon/wrench-solid.svg?raw'
+
   import { createAutoScrollHandler } from '../../controls/createAutoScrollHandler.js'
-  import { faCheck, faCode, faWrench } from '@fortawesome/free-solid-svg-icons'
   import { createDebug } from '$lib/utils/debug.js'
   import {
     compileJSONPointer,
@@ -644,7 +647,7 @@
       openJSONEditorModal(path, value)
     }
   }
-  
+
   function handleEditValue() {
     if (readOnly || !selection) {
       return
@@ -1543,7 +1546,7 @@
     width,
     height,
     offsetTop,
-    offsetLeft,
+    offsetLeft
   }: AbsolutePopupOptions) {
     const defaultItems: ContextMenuItem[] = createTreeContextMenuItems({
       json,
@@ -1568,7 +1571,7 @@
       onInsertAfter: handleInsertAfter,
       onConvert: handleConvert,
 
-      onSort: handleSortSelection,
+      onSort: handleSortSelection
     })
 
     const items = onRenderContextMenu(defaultItems) ?? defaultItems
@@ -1618,7 +1621,7 @@
         left: (event as MouseEvent).clientX,
         top: (event as MouseEvent).clientY,
         width: CONTEXT_MENU_WIDTH,
-        height: CONTEXT_MENU_HEIGHT,
+        height: CONTEXT_MENU_HEIGHT
       })
     } else {
       // type === 'keydown' (from the quick key Ctrl+Q)
@@ -1629,7 +1632,7 @@
           anchor,
           offsetTop: 2,
           width: CONTEXT_MENU_WIDTH,
-          height: CONTEXT_MENU_HEIGHT,
+          height: CONTEXT_MENU_HEIGHT
         })
       } else {
         // fallback on just displaying the TreeContextMenu top left
@@ -1639,7 +1642,7 @@
             top: rect.top + 2,
             left: rect.left + 2,
             width: CONTEXT_MENU_WIDTH,
-            height: CONTEXT_MENU_HEIGHT,
+            height: CONTEXT_MENU_HEIGHT
           })
         }
       }
@@ -1651,7 +1654,7 @@
       anchor: findParentWithNodeName(event.target as HTMLElement, 'BUTTON'),
       offsetTop: 0,
       width: CONTEXT_MENU_WIDTH,
-      height: CONTEXT_MENU_HEIGHT,
+      height: CONTEXT_MENU_HEIGHT
     })
   }
 
@@ -1830,7 +1833,7 @@
           actions={!readOnly
             ? [
                 {
-                  icon: faCode,
+                  icon: LocalCodeIcon,
                   text: 'Repair manually',
                   title: 'Open the document in "code" mode and repair it manually',
                   onClick: handleRequestRepair
@@ -1862,7 +1865,7 @@
           } as text`}
           actions={[
             {
-              icon: faWrench,
+              icon: LocalWrenchIcon,
               text: 'Paste as JSON instead',
               title: 'Replace the value with the pasted JSON',
               // We use mousedown here instead of click: this message pops up
@@ -1887,13 +1890,13 @@
           actions={!readOnly
             ? [
                 {
-                  icon: faCheck,
+                  icon: LocalCheckIcon,
                   text: 'Ok',
                   title: 'Accept the repaired document',
                   onClick: acceptAutoRepair
                 },
                 {
-                  icon: faCode,
+                  icon: LocalCodeIcon,
                   text: 'Repair manually instead',
                   title: 'Leave the document unchanged and repair it manually instead',
                   onClick: handleRequestRepair

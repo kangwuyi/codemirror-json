@@ -5,8 +5,9 @@
   import type { SortedColumn } from '$lib/types.js'
   import { SortDirection } from '$lib/types.js'
   import { stringifyJSONPath } from '$lib/utils/pathUtils.js'
-  import Icon from 'svelte-awesome'
-  import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
+  import LocalCaretDownIcon from '$lib/assets/icon/caret-down-solid.svg?raw'
+  import LocalCaretUpIcon from '$lib/assets/icon/caret-up-solid.svg?raw'
+
   import { isEmpty, isEqual } from 'lodash-es'
   import { MAX_HEADER_NAME_CHARACTERS, SORT_DIRECTION_NAMES } from '$lib/constants.js'
   import { truncate } from '$lib/utils/stringUtils.js'
@@ -48,7 +49,7 @@
   </span>
   {#if sortDirection !== undefined}
     <span class="jse-column-sort-icon" title={`Currently sorted in ${sortDirectionName} order`}>
-      <Icon data={sortDirection === SortDirection.asc ? faCaretDown : faCaretUp} />
+      {@html sortDirection === SortDirection.asc ? LocalCaretDownIcon : LocalCaretUpIcon}
     </span>
   {/if}
 </button>

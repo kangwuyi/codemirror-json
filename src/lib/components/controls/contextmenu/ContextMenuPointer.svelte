@@ -1,8 +1,7 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
-  import Icon from 'svelte-awesome'
+  import LocalCaretDownIcon from '$lib/assets/icon/caret-down-solid.svg?raw'
   import {
     CONTEXT_MENU_EXPLANATION,
     CONTEXT_MENU_HEIGHT,
@@ -29,7 +28,7 @@
         width: CONTEXT_MENU_WIDTH,
         height: CONTEXT_MENU_HEIGHT,
         offsetTop: 2,
-        offsetLeft: 0,
+        offsetLeft: 0
       })
     }
   }
@@ -44,7 +43,7 @@
   title={CONTEXT_MENU_EXPLANATION}
   on:click={handleClick}
 >
-  <Icon data={faCaretDown} />
+  {@html LocalCaretDownIcon}
 </button>
 
 <style src="./ContextMenuPointer.scss"></style>

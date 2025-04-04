@@ -1,13 +1,12 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import {
-    faArrowDown,
-    faCheck,
-    faExclamationTriangle,
-    faTimes,
-    faWrench
-  } from '@fortawesome/free-solid-svg-icons'
+  import LocalArrowDownIcon from '$lib/assets/icon/angle-down-solid.svg?raw'
+  import LocalCheckIcon from '$lib/assets/icon/check-solid.svg?raw'
+  import LocalExclamationTriangleIcon from '$lib/assets/icon/triangle-exclamation-solid.svg?raw'
+  import LocalTimesIcon from '$lib/assets/icon/circle-xmark-solid.svg?raw'
+  import LocalWrenchIcon from '$lib/assets/icon/wrench-solid.svg?raw'
+
   import { createDebug } from '$lib/utils/debug.js'
   import Message from '../../controls/Message.svelte'
   import { normalizeJsonParseError } from '$lib/utils/jsonUtils.js'
@@ -97,7 +96,7 @@
     },
     {
       type: 'button',
-      icon: faTimes,
+      icon: LocalTimesIcon,
       title: 'Cancel repair',
       className: 'jse-cancel',
       onClick: onCancel
@@ -105,14 +104,14 @@
   ]
 
   $: gotoAction = {
-    icon: faArrowDown,
+    icon: LocalArrowDownIcon,
     text: 'Show me',
     title: 'Scroll to the error location',
     onClick: goToError
   }
 
   $: repairAction = {
-    icon: faWrench,
+    icon: LocalWrenchIcon,
     text: 'Auto repair',
     title: 'Automatically repair JSON',
     onClick: handleRepair
@@ -122,7 +121,7 @@
 
   $: successActions = [
     {
-      icon: faCheck,
+      icon: LocalCheckIcon,
       text: 'Apply',
       title: 'Apply fixed JSON',
       disabled: readOnly,
@@ -139,7 +138,7 @@
   {#if error}
     <Message
       type="error"
-      icon={faExclamationTriangle}
+      icon={LocalExclamationTriangleIcon}
       message={`Cannot parse JSON: ${error.message}`}
       actions={errorActions}
     />

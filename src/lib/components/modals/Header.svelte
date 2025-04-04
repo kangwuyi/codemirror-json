@@ -1,12 +1,9 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import Icon from 'svelte-awesome'
-  import {
-    faDownLeftAndUpRightToCenter,
-    faTimes,
-    faUpRightAndDownLeftFromCenter
-  } from '@fortawesome/free-solid-svg-icons'
+  import LocalDownLeftAndUpRightToCenterIcon from '$lib/assets/icon/down-left-and-up-right-to-center-solid.svg?raw'
+  import LocalUpRightAndDownLeftFromCenterIcon from '$lib/assets/icon/up-right-and-down-left-from-center-solid.svg?raw'
+  import LocalTimesIcon from '$lib/assets/icon/circle-xmark-solid.svg?raw'
 
   export let title = 'Modal'
   export let fullScreenButton: boolean = false
@@ -26,11 +23,13 @@
       title="Toggle full screen"
       on:click={() => (fullscreen = !fullscreen)}
     >
-      <Icon data={fullscreen ? faDownLeftAndUpRightToCenter : faUpRightAndDownLeftFromCenter} />
+      {@html fullscreen
+        ? LocalDownLeftAndUpRightToCenterIcon
+        : LocalUpRightAndDownLeftFromCenterIcon}
     </button>
   {/if}
   <button type="button" class="jse-close" on:click={() => onClose?.()}>
-    <Icon data={faTimes} />
+    {@html LocalTimesIcon}
   </button>
 </div>
 

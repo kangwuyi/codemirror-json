@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { MenuButton } from '$lib/types'
-  import Icon from 'svelte-awesome'
   import { classnames } from '$lib/utils/cssUtils.js'
 
   export let item: MenuButton
@@ -19,7 +18,7 @@
   disabled={item.disabled || false}
 >
   {#if item.icon}
-    <Icon data={item.icon} />
+    {@html item.icon}
   {/if}
   {#if item.text}
     {item.text}

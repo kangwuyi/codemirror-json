@@ -1,11 +1,11 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import { faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons'
+  import LocalCaretDownIcon from '$lib/assets/icon/caret-down-solid.svg?raw'
+  import LocalCaretRightIcon from '$lib/assets/icon/caret-right-solid.svg?raw'
   import type { JSONPath, JSONPointer } from 'immutable-json-patch'
   import { appendToJSONPointer, parseJSONPointer } from 'immutable-json-patch'
   import { initial, isEqual, last, range } from 'lodash-es'
-  import Icon from 'svelte-awesome'
   import {
     DEFAULT_VISIBLE_SECTIONS,
     HOVER_COLLECTION,
@@ -595,9 +595,9 @@
           title="Expand or collapse this array (Ctrl+Click to expand/collapse recursively)"
         >
           {#if expanded}
-            <Icon data={faCaretDown} />
+            {@html LocalCaretDownIcon}
           {:else}
-            <Icon data={faCaretRight} />
+            {@html LocalCaretRightIcon}
           {/if}
         </button>
         <slot name="identifier" />
@@ -732,9 +732,9 @@
           title="Expand or collapse this object (Ctrl+Click to expand/collapse recursively)"
         >
           {#if expanded}
-            <Icon data={faCaretDown} />
+            {@html LocalCaretDownIcon}
           {:else}
-            <Icon data={faCaretRight} />
+            {@html LocalCaretRightIcon}
           {/if}
         </button>
         <slot name="identifier" />

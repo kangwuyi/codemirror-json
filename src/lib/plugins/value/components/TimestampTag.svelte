@@ -1,8 +1,8 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import Icon from 'svelte-awesome'
-  import { faClock } from '@fortawesome/free-regular-svg-icons'
+  import LocalClockIcon from '$lib/assets/icon/clock-solid.svg?raw'
+
   import { getContext } from 'svelte'
   import { tooltip } from '$lib/components/controls/tooltip/tooltip.js'
   import type { AbsolutePopupContext } from '$lib/types'
@@ -15,7 +15,7 @@
 </script>
 
 <div class="jse-timestamp" use:tooltip={{ text, ...absolutePopupContext }}>
-  <Icon data={faClock} />
+  {@html LocalClockIcon}
 </div>
 
 <style src="./TimestampTag.scss"></style>

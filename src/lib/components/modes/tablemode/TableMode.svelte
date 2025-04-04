@@ -1,6 +1,9 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
+  import LocalCheckIcon from '$lib/assets/icon/check-solid.svg?raw'
+  import LocalCodeIcon from '$lib/assets/icon/code-solid.svg?raw'
+  import LocalWrenchIcon from '$lib/assets/icon/wrench-solid.svg?raw'
   import type {
     AbsolutePopupContext,
     AbsolutePopupOptions,
@@ -115,7 +118,6 @@
   import { flushSync, getContext, onDestroy, onMount } from 'svelte'
   import { jsonrepair } from 'jsonrepair'
   import Message from '../../controls/Message.svelte'
-  import { faCheck, faCode, faWrench } from '@fortawesome/free-solid-svg-icons'
   import { measure } from '$lib/utils/timeUtils.js'
   import memoizeOne from 'memoize-one'
   import { validateJSON } from '$lib/logic/validation.js'
@@ -891,7 +893,7 @@
     width,
     height,
     offsetTop,
-    offsetLeft,
+    offsetLeft
   }: AbsolutePopupOptions) {
     const defaultItems: ContextMenuItem[] = createTableContextMenuItems({
       json,
@@ -964,7 +966,7 @@
         left: (event as MouseEvent).clientX,
         top: (event as MouseEvent).clientY,
         width: CONTEXT_MENU_WIDTH,
-        height: CONTEXT_MENU_HEIGHT,
+        height: CONTEXT_MENU_HEIGHT
       })
     } else {
       // type === 'keydown' (from the quick key Ctrl+Q)
@@ -975,7 +977,7 @@
           anchor,
           offsetTop: 2,
           width: CONTEXT_MENU_WIDTH,
-          height: CONTEXT_MENU_HEIGHT,
+          height: CONTEXT_MENU_HEIGHT
         })
       } else {
         // fallback on just displaying the TreeContextMenu top left
@@ -985,7 +987,7 @@
             top: rect.top + 2,
             left: rect.left + 2,
             width: CONTEXT_MENU_WIDTH,
-            height: CONTEXT_MENU_HEIGHT,
+            height: CONTEXT_MENU_HEIGHT
           })
         }
       }
@@ -997,7 +999,7 @@
       anchor: findParentWithNodeName(event.target as HTMLElement, 'BUTTON'),
       offsetTop: 0,
       width: CONTEXT_MENU_WIDTH,
-      height: CONTEXT_MENU_HEIGHT,
+      height: CONTEXT_MENU_HEIGHT
     })
   }
 
@@ -1477,8 +1479,6 @@
     })
   }
 
-  
-
   function openJSONEditorModal(path: JSONPath) {
     debug('openJSONEditorModal', { path })
 
@@ -1689,9 +1689,7 @@
                 </th>
               {/if}
             </tr>
-            <tr
-              class="jse-table-invisible-start-section"
-            >
+            <tr class="jse-table-invisible-start-section">
               <td style:height={visibleSection.startHeight + 'px'} colspan={columns.length}></td>
             </tr>
             {#each visibleSection.visibleItems as item, visibleIndex}
@@ -1788,7 +1786,7 @@
           } as text`}
           actions={[
             {
-              icon: faWrench,
+              icon: LocalWrenchIcon,
               text: 'Paste as JSON instead',
               title: 'Paste the text as JSON instead of a single value',
               // We use mousedown here instead of click: this message pops up
@@ -1813,13 +1811,13 @@
           actions={!readOnly
             ? [
                 {
-                  icon: faCheck,
+                  icon: LocalCheckIcon,
                   text: 'Ok',
                   title: 'Accept the repaired document',
                   onClick: acceptAutoRepair
                 },
                 {
-                  icon: faCode,
+                  icon: LocalCodeIcon,
                   text: 'Repair manually instead',
                   title: 'Leave the document unchanged and repair it manually instead',
                   onClick: handleRequestRepair
@@ -1838,7 +1836,7 @@
         actions={!readOnly
           ? [
               {
-                icon: faCode,
+                icon: LocalCodeIcon,
                 text: 'Repair manually',
                 title: 'Open the document in "code" mode and repair it manually',
                 onClick: handleRequestRepair

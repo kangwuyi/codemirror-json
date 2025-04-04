@@ -1,4 +1,6 @@
 <script lang="ts">
+  import LocalCopyIcon from '$lib/assets/icon/copy-solid.svg?raw'
+
   import {
     JSONEditor,
     type MenuButton,
@@ -6,7 +8,6 @@
     type MenuSeparator,
     type RenderMenuContext
   } from 'codemirror-json'
-  import { faCopy } from '@fortawesome/free-regular-svg-icons'
   import copyToClipboard from '$lib/utils/copyToClipboard.js'
 
   let content = $state({
@@ -41,7 +42,7 @@
     const customCopyButton: MenuButton = {
       type: 'button',
       onClick: handleCopy,
-      icon: faCopy,
+      icon: LocalCopyIcon,
       title: 'Copy document to clipboard',
       className: 'custom-copy-button'
     }

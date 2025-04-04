@@ -1,8 +1,7 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import Icon from 'svelte-awesome'
-  import { faLock } from '@fortawesome/free-solid-svg-icons'
+  import LocalLockIcon from '$lib/assets/icon/lock-solid.svg?raw'
   import { createEditValueSelection, type OnSelect } from 'codemirror-json'
   import type { JSONPath } from 'immutable-json-patch'
 
@@ -31,7 +30,7 @@
   data-type="selectable-value"
   on:dblclick={handleValueDoubleClick}
 >
-  <Icon data={faLock} />
+  {@html LocalLockIcon}
   {hiddenValue}
 </div>
 

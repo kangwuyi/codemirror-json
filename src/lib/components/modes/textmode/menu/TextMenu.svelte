@@ -1,13 +1,13 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import {
-    faRedo,
-    faExpand,
-    faSortAmountDownAlt,
-    faUndo
-  } from '@fortawesome/free-solid-svg-icons'
-  import { faJSONEditorCompact, faJSONEditorFormat } from '$lib/img/customFontawesomeIcons.js'
+  import LocalRedoIcon from '$lib/assets/icon/rotate-left-solid.svg?raw'
+  import LocalUndoIcon from '$lib/assets/icon/rotate-right-solid.svg?raw'
+  import LocalExpandIcon from '$lib/assets/icon/expand-solid.svg?raw'
+  import LocalSortAmountDownAltIcon from '$lib/assets/icon/arrow-down-short-wide-solid.svg?raw'
+  import LocalFormatIcon from '$lib/assets/icon/expand-solid.svg?raw'
+  import LocalCompactIcon from '$lib/assets/icon/expand-solid.svg?raw'
+
   import Menu from '../../../controls/Menu.svelte'
   import type { MenuItem, OnRenderMenuInternal } from '$lib/types'
 
@@ -31,7 +31,7 @@
     ? [
         {
           type: 'button',
-          icon: faJSONEditorFormat,
+          icon: LocalFormatIcon,
           title: 'Format JSON: add proper indentation and new lines (Ctrl+I)',
           className: 'jse-format',
           onClick: onFormat,
@@ -39,7 +39,7 @@
         },
         {
           type: 'button',
-          icon: faJSONEditorCompact,
+          icon: LocalCompactIcon,
           title: 'Compact JSON: remove all white spacing and new lines (Ctrl+Shift+I)',
           className: 'jse-compact',
           onClick: onCompact,
@@ -50,7 +50,7 @@
         },
         {
           type: 'button',
-          icon: faSortAmountDownAlt,
+          icon: LocalSortAmountDownAltIcon,
           title: 'Sort',
           className: 'jse-sort',
           onClick: onSort,
@@ -61,7 +61,7 @@
         },
         {
           type: 'button',
-          icon: faUndo,
+          icon: LocalUndoIcon,
           title: 'Undo (Ctrl+Z)',
           className: 'jse-undo',
           onClick: onUndo,
@@ -69,7 +69,7 @@
         },
         {
           type: 'button',
-          icon: faRedo,
+          icon: LocalRedoIcon,
           title: 'Redo (Ctrl+Shift+Z)',
           className: 'jse-redo',
           onClick: onRedo,
@@ -91,14 +91,16 @@
 
   // header right menu
   let rightItems: MenuItem[]
-  $: rightItems =  [{
-    type: 'button',
-    icon: faExpand,
-    title: '全屏',
-    className: 'jse-fullscreen',
-    onClick: onOpenEditorModal,
-    disabled: false
-  }]
+  $: rightItems = [
+    {
+      type: 'button',
+      icon: LocalExpandIcon,
+      title: '全屏',
+      className: 'jse-fullscreen',
+      onClick: onOpenEditorModal,
+      disabled: false
+    }
+  ]
 </script>
 
-<Menu {items} {rightItems} {isModalLayer}/>
+<Menu {items} {rightItems} {isModalLayer} />

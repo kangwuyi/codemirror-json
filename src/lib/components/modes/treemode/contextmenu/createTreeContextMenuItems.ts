@@ -1,20 +1,18 @@
-import {
-  faArrowRightArrowLeft,
-  faCaretSquareDown,
-  faCaretSquareUp,
-  faCheckSquare,
-  faClone,
-  faCopy,
-  faCropAlt,
-  faCut,
-  faFilter,
-  faPaste,
-  faPen,
-  faPlus,
-  faSortAmountDownAlt,
-  faSquare,
-  faTrashCan,
-} from '@fortawesome/free-solid-svg-icons'
+import LocalArrowRightArrowLeftIcon from '$lib/assets/icon/arrow-right-arrow-left-solid.svg?raw'
+import LocalCaretSquareDownIcon from '$lib/assets/icon/square-caret-down-solid.svg?raw'
+import LocalCaretSquareUpIcon from '$lib/assets/icon/square-caret-up-solid.svg?raw'
+import LocalCheckSquareIcon from '$lib/assets/icon/square-check-solid.svg?raw'
+import LocalCloneIcon from '$lib/assets/icon/clone-solid.svg?raw'
+import LocalCopyIcon from '$lib/assets/icon/copy-solid.svg?raw'
+import LocalCropAltIcon from '$lib/assets/icon/crop-solid.svg?raw'
+import LocalCutIcon from '$lib/assets/icon/scissors-solid.svg?raw'
+import LocalPasteIcon from '$lib/assets/icon/paste-solid.svg?raw'
+import LocalPenIcon from '$lib/assets/icon/pen-solid.svg?raw'
+import LocalPlusIcon from '$lib/assets/icon/plus-solid.svg?raw'
+import LocalSortAmountDownAltIcon from '$lib/assets/icon/arrow-down-short-wide-solid.svg?raw'
+import LocalSquareIcon from '$lib/assets/icon/square-solid.svg?raw'
+import LocalTrashCanIcon from '$lib/assets/icon/trash-can-solid.svg?raw'
+
 import {
   canConvert,
   getFocusPath,
@@ -23,14 +21,14 @@ import {
   isKeySelection,
   isMultiSelection,
   isValueSelection,
-  singleItemSelected,
+  singleItemSelected
 } from '$lib/logic/selection'
 import type {
   ConvertType,
   DocumentState,
   InsertType,
   JSONSelection,
-  ContextMenuItem,
+  ContextMenuItem
 } from '$lib/types'
 import { initial, isEmpty } from 'lodash-es'
 import { getIn } from 'immutable-json-patch'
@@ -55,7 +53,7 @@ export default function ({
   onInsert,
   onConvert,
   onInsertAfter,
-  onSort,
+  onSort
 }: {
   json: unknown
   documentState: DocumentState | undefined
@@ -145,42 +143,42 @@ export default function ({
         {
           type: 'button',
           onClick: () => onEditKey(),
-          icon: faPen,
+          icon: LocalPenIcon,
           text: 'Edit key',
           title: 'Edit the key (Double-click on the key)',
-          disabled: !canEditKey,
+          disabled: !canEditKey
         },
         {
           type: 'dropdown-button',
           main: {
             type: 'button',
             onClick: () => onEditValue(),
-            icon: faPen,
+            icon: LocalPenIcon,
             text: editValueText,
             title: 'Edit the value (Double-click on the value)',
-            disabled: !canEditValue,
+            disabled: !canEditValue
           },
           width: '11em',
           items: [
             {
               type: 'button',
-              icon: faPen,
+              icon: LocalPenIcon,
               text: editValueText,
               title: 'Edit the value (Double-click on the value)',
               onClick: () => onEditValue(),
-              disabled: !canEditValue,
+              disabled: !canEditValue
             },
             {
               type: 'button',
-              icon: enforceString ? faCheckSquare : faSquare,
+              icon: enforceString ? LocalCheckSquareIcon : LocalSquareIcon,
               text: 'Enforce string',
               title: 'Enforce keeping the value as string when it contains a numeric value',
               onClick: () => onToggleEnforceString(),
-              disabled: !canEnforceString,
-            },
-          ],
-        },
-      ],
+              disabled: !canEnforceString
+            }
+          ]
+        }
+      ]
     },
     { type: 'separator' },
     {
@@ -191,70 +189,70 @@ export default function ({
           main: {
             type: 'button',
             onClick: () => onCut(true),
-            icon: faCut,
+            icon: LocalCutIcon,
             text: 'Cut',
             title: 'Cut selected contents, formatted with indentation (Ctrl+X)',
-            disabled: !canCut,
+            disabled: !canCut
           },
           width: '10em',
           items: [
             {
               type: 'button',
-              icon: faCut,
+              icon: LocalCutIcon,
               text: 'Cut formatted',
               title: 'Cut selected contents, formatted with indentation (Ctrl+X)',
               onClick: () => onCut(true),
-              disabled: !canCut,
+              disabled: !canCut
             },
             {
               type: 'button',
-              icon: faCut,
+              icon: LocalCutIcon,
               text: 'Cut compacted',
               title: 'Cut selected contents, without indentation (Ctrl+Shift+X)',
               onClick: () => onCut(false),
-              disabled: !canCut,
-            },
-          ],
+              disabled: !canCut
+            }
+          ]
         },
         {
           type: 'dropdown-button',
           main: {
             type: 'button',
             onClick: () => onCopy(true),
-            icon: faCopy,
+            icon: LocalCopyIcon,
             text: 'Copy',
             title: 'Copy selected contents, formatted with indentation (Ctrl+C)',
-            disabled: !canCopy,
+            disabled: !canCopy
           },
           width: '12em',
           items: [
             {
               type: 'button',
-              icon: faCopy,
+              icon: LocalCopyIcon,
               text: 'Copy formatted',
               title: 'Copy selected contents, formatted with indentation (Ctrl+C)',
               onClick: () => onCopy(true),
-              disabled: !canCopy,
+              disabled: !canCopy
             },
             {
               type: 'button',
-              icon: faCopy,
+              icon: LocalCopyIcon,
               text: 'Copy compacted',
               title: 'Copy selected contents, without indentation (Ctrl+Shift+C)',
               onClick: () => onCopy(false),
-              disabled: !canCopy,
-            },
-          ],
+              disabled: !canCopy
+            }
+          ]
         },
         {
           type: 'button',
           onClick: () => onPaste(),
-          icon: faPaste,
+          icon: LocalPasteIcon,
           text: 'Paste',
           title: 'Paste clipboard contents (Ctrl+V)',
-          disabled: !canPaste,
-        },
-      ],
+          disabled: !canPaste
+        }
+      ]
     },
     { type: 'separator' },
     {
@@ -266,36 +264,36 @@ export default function ({
             {
               type: 'button',
               onClick: () => onDuplicate(),
-              icon: faClone,
+              icon: LocalCloneIcon,
               text: 'Duplicate',
               title: 'Duplicate selected contents (Ctrl+D)',
-              disabled: !canDuplicate,
+              disabled: !canDuplicate
             },
             {
               type: 'button',
               onClick: () => onExtract(),
-              icon: faCropAlt,
+              icon: LocalCropAltIcon,
               text: 'Extract',
               title: 'Extract selected contents',
-              disabled: !canExtract,
+              disabled: !canExtract
             },
             {
               type: 'button',
               onClick: () => onSort(),
-              icon: faSortAmountDownAlt,
+              icon: LocalSortAmountDownAltIcon,
               text: 'Sort',
               title: 'Sort array or object contents',
-              disabled: readOnly || !hasSelectionContents,
+              disabled: readOnly || !hasSelectionContents
             },
             {
               type: 'button',
               onClick: () => onRemove(),
-              icon: faTrashCan,
+              icon: LocalTrashCanIcon,
               text: 'Remove',
               title: 'Remove selected contents (Delete)',
-              disabled: readOnly || !hasSelectionContents,
-            },
-          ],
+              disabled: readOnly || !hasSelectionContents
+            }
+          ]
         },
         {
           type: 'column',
@@ -304,41 +302,41 @@ export default function ({
             {
               type: 'button',
               onClick: () => handleInsertOrConvert('structure'),
-              icon: convertMode ? faArrowRightArrowLeft : faPlus,
+              icon: convertMode ? LocalArrowRightArrowLeftIcon : LocalPlusIcon,
               text: 'Structure',
               title: insertOrConvertText + ' structure like the first item in the array',
-              disabled: !canInsertOrConvertStructure,
+              disabled: !canInsertOrConvertStructure
             },
             {
               type: 'button',
               onClick: () => handleInsertOrConvert('object'),
-              icon: convertMode ? faArrowRightArrowLeft : faPlus,
+              icon: convertMode ? LocalArrowRightArrowLeftIcon : LocalPlusIcon,
               text: 'Object',
               title: insertOrConvertText + ' object',
-              disabled: !canInsertOrConvertObject,
+              disabled: !canInsertOrConvertObject
             },
             {
               type: 'button',
               onClick: () => handleInsertOrConvert('array'),
-              icon: convertMode ? faArrowRightArrowLeft : faPlus,
+              icon: convertMode ? LocalArrowRightArrowLeftIcon : LocalPlusIcon,
               text: 'Array',
               title: insertOrConvertText + ' array',
-              disabled: !canInsertOrConvertArray,
+              disabled: !canInsertOrConvertArray
             },
             {
               type: 'button',
               onClick: () => handleInsertOrConvert('value'),
-              icon: convertMode ? faArrowRightArrowLeft : faPlus,
+              icon: convertMode ? LocalArrowRightArrowLeftIcon : LocalPlusIcon,
               text: 'Value',
               title: insertOrConvertText + ' value',
-              disabled: !canInsertOrConvertValue,
-            },
-          ],
-        },
-      ],
+              disabled: !canInsertOrConvertValue
+            }
+          ]
+        }
+      ]
     },
     {
-      type: 'separator',
+      type: 'separator'
     },
     {
       type: 'row',
@@ -346,20 +344,20 @@ export default function ({
         {
           type: 'button',
           onClick: () => onInsertBefore(),
-          icon: faCaretSquareUp,
+          icon: LocalCaretSquareUpIcon,
           text: 'Insert before',
           title: 'Select area before current entry to insert or paste contents',
-          disabled: readOnly || !hasSelectionContents || rootSelected,
+          disabled: readOnly || !hasSelectionContents || rootSelected
         },
         {
           type: 'button',
           onClick: () => onInsertAfter(),
-          icon: faCaretSquareDown,
+          icon: LocalCaretSquareDownIcon,
           text: 'Insert after',
           title: 'Select area after current entry to insert or paste contents',
-          disabled: readOnly || !hasSelectionContents || rootSelected,
-        },
-      ],
-    },
+          disabled: readOnly || !hasSelectionContents || rootSelected
+        }
+      ]
+    }
   ]
 }

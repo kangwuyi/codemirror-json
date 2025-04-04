@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { MenuDropDownButton } from '$lib/types'
   import DropdownButton from '../DropdownButton.svelte'
-  import Icon from 'svelte-awesome'
   import { classnames } from '$lib/utils/cssUtils.js'
 
   export let item: MenuDropDownButton
@@ -30,7 +29,7 @@
     disabled={item.main.disabled || false}
   >
     {#if item.main.icon}
-      <Icon data={item.main.icon} />
+      {@html item.main.icon}
     {/if}
     {item.main.text}
   </button>

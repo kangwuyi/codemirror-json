@@ -1,10 +1,11 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import { faCheckSquare, faSquare } from '@fortawesome/free-regular-svg-icons'
+  import LocalCheckSquareIcon from '$lib/assets/icon/square-check-solid.svg?raw'
+  import LocalSquareIcon from '$lib/assets/icon/square-solid.svg?raw'
+
   import type { JSONPath } from 'immutable-json-patch'
   import { compileJSONPointer } from 'immutable-json-patch'
-  import Icon from 'svelte-awesome'
   import type { OnPatch } from '$lib/types.js'
 
   export let path: JSONPath
@@ -41,7 +42,7 @@
   on:mousedown={toggleBooleanValue}
   title={!readOnly ? 'Click to toggle this boolean value' : `Boolean value ${value}`}
 >
-  <Icon data={value === true ? faCheckSquare : faSquare} />
+  {@html value === true ? LocalCheckSquareIcon : LocalSquareIcon}
 </div>
 
 <style src="./BooleanToggle.scss"></style>

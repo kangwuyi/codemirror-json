@@ -1,8 +1,7 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import Icon from 'svelte-awesome'
-  import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
+  import LocalCaretDownIcon from '$lib/assets/icon/caret-down-solid.svg?raw'
   import { onDestroy, onMount } from 'svelte'
   import { keyComboFromEvent } from '$lib/utils/keyBindings.js'
   import type { MenuButton } from '$lib/types.js'
@@ -57,7 +56,7 @@
     on:click={toggleShow}
     disabled={allItemsDisabled}
   >
-    <Icon data={faCaretDown} />
+    {@html LocalCaretDownIcon}
   </button>
 
   <div class="jse-dropdown-items" class:jse-visible={visible} style="width: {width};">
@@ -72,7 +71,7 @@
             class={item.className}
           >
             {#if item.icon}
-              <Icon data={item.icon} />
+              {@html item.icon}
             {/if}
             {item.text}
           </button>

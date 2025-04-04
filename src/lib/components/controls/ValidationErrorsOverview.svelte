@@ -1,13 +1,10 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import {
-    faAngleDown,
-    faAngleRight,
-    faExclamationTriangle
-  } from '@fortawesome/free-solid-svg-icons'
+  import LocalAngleDownIcon from '$lib/assets/icon/angle-down-solid.svg?raw'
+  import LocalAngleRightIcon from '$lib/assets/icon/angle-right-solid.svg?raw'
+  import LocalExclamationTriangleIcon from '$lib/assets/icon/triangle-exclamation-solid.svg?raw'
   import { isEmpty } from 'lodash-es'
-  import Icon from 'svelte-awesome'
   import { stringifyJSONPath } from '$lib/utils/pathUtils.js'
   import { ValidationSeverity, type ValidationError } from '$lib/types.js'
   import { MAX_VALIDATION_ERRORS } from '$lib/constants.js'
@@ -54,7 +51,7 @@
               }}
             >
               <td class="jse-validation-error-icon">
-                <Icon data={faExclamationTriangle} />
+                {@html LocalExclamationTriangleIcon}
               </td>
               <td class="jse-validation-error-path">
                 {stringifyJSONPath(validationError.path)}
@@ -70,7 +67,7 @@
                     on:click|stopPropagation={collapse}
                     title="Collapse validation errors"
                   >
-                    <Icon data={faAngleDown} />
+                    {@html LocalAngleDownIcon}
                   </button>
                 {/if}
               </td>
@@ -92,12 +89,12 @@
         <tbody>
           <tr class="jse-validation-{getMaxSeverity(validationErrors)}" on:click={expand}>
             <td class="jse-validation-error-icon">
-              <Icon data={faExclamationTriangle} />
+              {@html LocalExclamationTriangleIcon}
             </td>
             <td class="jse-validation-error-count">
               {count} validation errors
               <div class="jse-validation-errors-expand">
-                <Icon data={faAngleRight} />
+                {@html LocalAngleRightIcon}
               </div>
             </td>
           </tr>

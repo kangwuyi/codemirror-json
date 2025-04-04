@@ -1,12 +1,11 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import {
-    faExclamationTriangle,
-    faEye,
-    faTimes,
-    faWrench
-  } from '@fortawesome/free-solid-svg-icons'
+  import LocalExclamationTriangleIcon from '$lib/assets/icon/triangle-exclamation-solid.svg?raw'
+  import LocalEyeIcon from '$lib/assets/icon/eye-solid.svg?raw'
+  import LocalTimesIcon from '$lib/assets/icon/circle-xmark-solid.svg?raw'
+  import LocalWrenchIcon from '$lib/assets/icon/wrench-solid.svg?raw'
+
   import { createDebug } from '$lib/utils/debug.js'
   import type { JSONPatchDocument, JSONPath } from 'immutable-json-patch'
   import { immutableJSONPatch, revertJSONPatch } from 'immutable-json-patch'
@@ -120,7 +119,7 @@
   import memoizeOne from 'memoize-one'
   import { validateText } from '$lib/logic/validation.js'
   import { truncate } from '$lib/utils/stringUtils.js'
-  import { faJSONEditorFormat } from '$lib/img/customFontawesomeIcons.js'
+  import LocalFormatIcon from '$lib/assets/icon/expand-solid.svg?raw'
   import { indentationMarkers } from '@replit/codemirror-indentation-markers'
   import { isTextSelection } from '$lib/logic/selection.js'
   import { wrappedLineIndent } from 'codemirror-wrapped-line-indent/dist/index.js' // ensure loading ESM, otherwise the vitest test fail
@@ -423,7 +422,7 @@
   function handleEditModal() {
     const path = [] as JSONPath
     const codeMirrorText = getCodeMirrorValue()
-      openJSONEditorModal(path, codeMirrorText)
+    openJSONEditorModal(path, codeMirrorText)
   }
 
   function openJSONEditorModal(path: JSONPath, value: string) {
@@ -440,7 +439,10 @@
         modalOpen = false
         setTimeout(focus)
       },
-      onPatch: function (operations: JSONPatchDocument, afterPatch?: AfterPatchCallback): JSONPatchResult {
+      onPatch: function (
+        operations: JSONPatchDocument,
+        afterPatch?: AfterPatchCallback
+      ): JSONPatchResult {
         throw new Error('Function not implemented.')
       }
     })
@@ -1042,7 +1044,7 @@
   }
 
   const repairActionShowMe = {
-    icon: faEye,
+    icon: LocalEyeIcon,
     text: 'Show me',
     title: 'Move to the parse error location',
     onClick: handleShowMe
@@ -1052,7 +1054,7 @@
     jsonStatus === JSON_STATUS_REPAIRABLE && !readOnly
       ? [
           {
-            icon: faWrench,
+            icon: LocalWrenchIcon,
             text: 'Auto repair',
             title: 'Automatically repair JSON',
             onClick: handleRepair
@@ -1091,7 +1093,7 @@
 
     {#if editorDisabled}
       <Message
-        icon={faExclamationTriangle}
+        icon={LocalExclamationTriangleIcon}
         type="error"
         message={`The JSON document is larger than ${formatSize(MAX_DOCUMENT_SIZE_TEXT_MODE)}, ` +
           `and may crash your browser when loading it in text mode. Actual size: ${formatSize(text.length)}.`}
@@ -1128,7 +1130,7 @@
       {#if jsonParseError}
         <Message
           type="error"
-          icon={faExclamationTriangle}
+          icon={LocalExclamationTriangleIcon}
           message={jsonParseError.message}
           actions={repairActions}
           onClick={handleShowMe}
@@ -1142,13 +1144,13 @@
           message="Do you want to format the JSON?"
           actions={[
             {
-              icon: faJSONEditorFormat,
+              icon: LocalFormatIcon,
               text: 'Format',
               title: 'Format JSON: add proper indentation and new lines (Ctrl+I)',
               onClick: handleFormat
             },
             {
-              icon: faTimes,
+              icon: LocalTimesIcon,
               text: 'No thanks',
               title: 'Close this message',
               onClick: () => (askToFormatApplied = false)

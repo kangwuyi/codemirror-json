@@ -1,8 +1,7 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import Icon from 'svelte-awesome'
-  import { faRotate } from '@fortawesome/free-solid-svg-icons'
+  import LocalRotateIcon from '$lib/assets/icon/rotate-solid.svg?raw'
 
   export let count: number
   export let maxSampleCount: number
@@ -19,7 +18,7 @@
     'This is slower.'}
   on:click={() => onRefresh()}
 >
-  <Icon data={faRotate} />
+  {@html LocalRotateIcon}
 </button>
 
 <style src="./RefreshColumnHeader.scss"></style>

@@ -1,16 +1,16 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import {
-    faCopy,
-    faEllipsisV,
-    faRedo,
-    faSortAmountDownAlt,
-    faExpand,
-    faUndo
-  } from '@fortawesome/free-solid-svg-icons'
+  import LocalCopyIcon from '$lib/assets/icon/copy-solid.svg?raw'
+  import LocalEllipsisVIcon from '$lib/assets/icon/ellipsis-vertical-solid.svg?raw'
+  import LocalRedoIcon from '$lib/assets/icon/rotate-left-solid.svg?raw'
+  import LocalUndoIcon from '$lib/assets/icon/rotate-right-solid.svg?raw'
+  import LocalExpandIcon from '$lib/assets/icon/expand-solid.svg?raw'
+  import LocalCompressIcon from '$lib/assets/icon/compress-solid.svg?raw'
+  import LocalSortAmountDownAltIcon from '$lib/assets/icon/arrow-down-short-wide-solid.svg?raw'
+
   import { CONTEXT_MENU_EXPLANATION } from '$lib/constants.js'
-  import { faJSONEditorCollapse, faJSONEditorExpand } from '$lib/img/customFontawesomeIcons.js'
+
   import { isObjectOrArray } from '$lib/utils/typeUtils.js'
   import Menu from '../../../controls/Menu.svelte'
   import type {
@@ -38,7 +38,7 @@
   export let onRenderMenu: OnRenderMenuInternal
   export let onOpenEditorModal: () => void
   export let isModalLayer: boolean
-  
+
   $: hasJson = json !== undefined
   $: hasSelectionContents =
     hasJson &&
@@ -47,7 +47,7 @@
   let expandMenuItem: MenuItem
   $: expandMenuItem = {
     type: 'button',
-    icon: faJSONEditorExpand,
+    icon: LocalExpandIcon,
     title: 'Expand all',
     className: 'jse-expand-all',
     onClick: onExpandAll,
@@ -57,7 +57,7 @@
   let collapseMenuItem: MenuItem
   $: collapseMenuItem = {
     type: 'button',
-    icon: faJSONEditorCollapse,
+    icon: LocalCompressIcon,
     title: 'Collapse all',
     className: 'jse-collapse-all',
     onClick: onCollapseAll,
@@ -74,7 +74,7 @@
         },
         {
           type: 'button',
-          icon: faSortAmountDownAlt,
+          icon: LocalSortAmountDownAltIcon,
           title: 'Sort',
           className: 'jse-sort',
           onClick: onSort,
@@ -82,7 +82,7 @@
         },
         {
           type: 'button',
-          icon: faEllipsisV,
+          icon: LocalEllipsisVIcon,
           title: CONTEXT_MENU_EXPLANATION,
           className: 'jse-contextmenu',
           onClick: onContextMenu
@@ -92,7 +92,7 @@
         },
         {
           type: 'button',
-          icon: faUndo,
+          icon: LocalUndoIcon,
           title: 'Undo (Ctrl+Z)',
           className: 'jse-undo',
           onClick: onUndo,
@@ -100,7 +100,7 @@
         },
         {
           type: 'button',
-          icon: faRedo,
+          icon: LocalRedoIcon,
           title: 'Redo (Ctrl+Shift+Z)',
           className: 'jse-redo',
           onClick: onRedo,
@@ -118,7 +118,7 @@
         },
         {
           type: 'button',
-          icon: faCopy,
+          icon: LocalCopyIcon,
           title: 'Copy (Ctrl+C)',
           className: 'jse-copy',
           onClick: onCopy,
@@ -138,14 +138,16 @@
 
   // header right menu
   let rightItems: MenuItem[]
-  $: rightItems =  [{
-    type: 'button',
-    icon: faExpand,
-    title: '全屏',
-    className: 'jse-fullscreen',
-    onClick: onOpenEditorModal,
-    disabled: false
-  }]
+  $: rightItems = [
+    {
+      type: 'button',
+      icon: LocalExpandIcon,
+      title: '全屏',
+      className: 'jse-fullscreen',
+      onClick: onOpenEditorModal,
+      disabled: false
+    }
+  ]
 </script>
 
-<Menu {items} {rightItems} {isModalLayer}/>
+<Menu {items} {rightItems} {isModalLayer} />
