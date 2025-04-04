@@ -6,7 +6,7 @@
   import LocalEllipsisVIcon from '$lib/assets/icon/ellipsis-vertical-solid.svelte'
   import LocalRedoIcon from '$lib/assets/icon/rotate-left-solid.svelte'
   import LocalUndoIcon from '$lib/assets/icon/rotate-right-solid.svelte'
-  import LocalExpandIcon from '$lib/assets/icon/expand-solid.svelte'
+  import LocalExpandWindowIcon from '$lib/assets/icon/expand-window-solid.svelte'
   import LocalSortAmountDownAltIcon from '$lib/assets/icon/arrow-down-short-wide-solid.svelte'
 
   import { CONTEXT_MENU_EXPLANATION } from '$lib/constants.js'
@@ -76,7 +76,7 @@
   $: rightItems = [
     {
       type: 'button',
-      icon: LocalExpandIcon,
+      icon: LocalExpandWindowIcon,
       title: '全屏',
       className: 'jse-fullscreen',
       onClick: onOpenEditorModal,
