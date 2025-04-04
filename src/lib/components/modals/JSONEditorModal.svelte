@@ -26,7 +26,7 @@
   import { stringifyJSONPath } from '$lib/utils/pathUtils.js'
   import { initial, isEmpty, last } from 'lodash-es'
   import { isJSONContent, toJSONContent } from '$lib/utils/jsonUtils.js'
-  import LocalCaretLeftIcon from '$lib/assets/icon/caret-left-solid.svg?raw'
+  import LocalCaretLeftIcon from '$lib/assets/icon/caret-left-solid.svelte'
 
   import memoizeOne from 'memoize-one'
   import { getFocusPath, isJSONSelection } from '$lib/logic/selection.js'

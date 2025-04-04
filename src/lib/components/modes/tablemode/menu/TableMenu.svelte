@@ -3,11 +3,11 @@
 <script lang="ts">
   import type { HistoryItem, History, MenuItem, OnRenderMenuInternal } from '$lib/types'
   import Menu from '../../../controls/Menu.svelte'
-  import LocalEllipsisVIcon from '$lib/assets/icon/ellipsis-vertical-solid.svg?raw'
-  import LocalRedoIcon from '$lib/assets/icon/rotate-left-solid.svg?raw'
-  import LocalUndoIcon from '$lib/assets/icon/rotate-right-solid.svg?raw'
-  import LocalExpandIcon from '$lib/assets/icon/expand-solid.svg?raw'
-  import LocalSortAmountDownAltIcon from '$lib/assets/icon/arrow-down-short-wide-solid.svg?raw'
+  import LocalEllipsisVIcon from '$lib/assets/icon/ellipsis-vertical-solid.svelte'
+  import LocalRedoIcon from '$lib/assets/icon/rotate-left-solid.svelte'
+  import LocalUndoIcon from '$lib/assets/icon/rotate-right-solid.svelte'
+  import LocalExpandIcon from '$lib/assets/icon/expand-solid.svelte'
+  import LocalSortAmountDownAltIcon from '$lib/assets/icon/arrow-down-short-wide-solid.svelte'
 
   import { CONTEXT_MENU_EXPLANATION } from '$lib/constants.js'
 

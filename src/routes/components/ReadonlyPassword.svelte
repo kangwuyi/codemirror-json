@@ -1,7 +1,7 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import LocalLockIcon from '$lib/assets/icon/lock-solid.svg?raw'
+  import LocalLockIcon from '$lib/assets/icon/lock-solid.svelte'
   import { createEditValueSelection, type OnSelect } from 'codemirror-json'
   import type { JSONPath } from 'immutable-json-patch'
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import LocalCopyIcon from '$lib/assets/icon/copy-solid.svg?raw'
+  import LocalCopyIcon from '$lib/assets/icon/copy-solid.svelte'
 
   import {
     JSONEditor,

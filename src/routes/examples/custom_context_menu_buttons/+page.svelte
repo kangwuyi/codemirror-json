@@ -5,7 +5,7 @@
     type RenderMenuContext,
     toTextContent
   } from 'codemirror-json'
-  import LocalCalculateIcon from './calculator-solid.svg?raw'
+  import LocalCalculateIcon from './calculator-solid.svelte'
   import LocalCalculateIcon2 from './calculator-solid.svg'
 
   let content = $state({
