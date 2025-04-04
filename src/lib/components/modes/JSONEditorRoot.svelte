@@ -30,6 +30,7 @@
     ModeHistoryItem
   } from '$lib/types'
   import { Mode } from '$lib/types.js'
+  import JsMode from './jsmode/JsMode.svelte'
   import TextMode from './textmode/TextMode.svelte'
   import TableMode from './tablemode/TableMode.svelte'
   import TreeMode from './treemode/TreeMode.svelte'
@@ -375,7 +376,7 @@
     {onJSONEditorModal}
     {isModalLayer}
   />
-{:else}
+{:else if mode === Mode.tree}
   <!-- mode === Mode.tree -->
   <TreeMode
     bind:this={refTreeMode}
@@ -404,6 +405,35 @@
     {onBlur}
     onRenderMenu={handleRenderMenu}
     onRenderContextMenu={handleRenderContextMenu}
+    {onSortModal}
+    {onJSONEditorModal}
+    {isModalLayer}
+  />
+{:else}
+  <JsMode
+    bind:this={refTextMode}
+    externalContent={content}
+    externalSelection={selection}
+    {history}
+    {readOnly}
+    {indentation}
+    {tabSize}
+    {mainMenuBar}
+    {statusBar}
+    {askToFormat}
+    {escapeUnicodeCharacters}
+    {parser}
+    {validator}
+    {validationParser}
+    {onChange}
+    {onChangeMode}
+    {onSelect}
+    onUndo={handleUndo}
+    onRedo={handleRedo}
+    {onError}
+    {onFocus}
+    {onBlur}
+    onRenderMenu={handleRenderMenu}
     {onSortModal}
     {onJSONEditorModal}
     {isModalLayer}

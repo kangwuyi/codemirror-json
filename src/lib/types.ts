@@ -38,6 +38,9 @@ export interface VisibleSection {
 }
 
 export enum Mode {
+  // JAVASCRIPT
+  javascript = 'javascript',
+  // JSON
   text = 'text',
   tree = 'tree',
   table = 'table'

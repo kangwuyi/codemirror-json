@@ -419,6 +419,7 @@
     sortModalProps = props
   }
 
+  // 弹出层
   // The onJSONEditorModal method is located in JSONEditor to prevent circular references:
   //     JSONEditor -> TableMode -> JSONEditorModal -> JSONEditor
   function onJSONEditorModal({ content, path, onPatch, onClose }: JSONEditorModalCallback) {

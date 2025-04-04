@@ -77,12 +77,10 @@ export default function ({
   const hasJson = json !== undefined
   const hasSelection = !!selection
   const rootSelected = selection ? isEmpty(getFocusPath(selection)) : false
+  // @focusValue 判断选中区域类型
+  // 判断数组 Array.isArray(focusValue)
+  // 判断对象 isObject(focusValue)
   const focusValue = selection ? getIn(json, getFocusPath(selection)) : undefined
-  const editValueText = Array.isArray(focusValue)
-    ? 'Edit array'
-    : isObject(focusValue)
-      ? 'Edit object'
-      : 'Edit value'
 
   const hasSelectionContents =
     hasJson &&
@@ -110,7 +108,7 @@ export default function ({
     !rootSelected // must not be root
 
   const convertMode = hasSelectionContents
-  const insertOrConvertText = convertMode ? 'Convert to:' : 'Insert:'
+  const insertOrConvertText = convertMode ? '转换为:' : '插入:'
 
   const canInsertOrConvertStructure =
     !readOnly &&
@@ -144,7 +142,7 @@ export default function ({
           type: 'button',
           onClick: () => onEditKey(),
           icon: LocalPenIcon,
-          text: 'Edit key',
+          text: '编辑-字段',
           title: 'Edit the key (Double-click on the key)',
           disabled: !canEditKey
         },
@@ -154,7 +152,7 @@ export default function ({
             type: 'button',
             onClick: () => onEditValue(),
             icon: LocalPenIcon,
-            text: editValueText,
+            text: '编辑-值',
             title: 'Edit the value (Double-click on the value)',
             disabled: !canEditValue
           },
@@ -163,7 +161,7 @@ export default function ({
             {
               type: 'button',
               icon: LocalPenIcon,
-              text: editValueText,
+              text: '编辑-值',
               title: 'Edit the value (Double-click on the value)',
               onClick: () => onEditValue(),
               disabled: !canEditValue
@@ -171,7 +169,7 @@ export default function ({
             {
               type: 'button',
               icon: enforceString ? LocalCheckSquareIcon : LocalSquareIcon,
-              text: 'Enforce string',
+              text: '强转字符串',
               title: 'Enforce keeping the value as string when it contains a numeric value',
               onClick: () => onToggleEnforceString(),
               disabled: !canEnforceString
@@ -190,7 +188,7 @@ export default function ({
             type: 'button',
             onClick: () => onCut(true),
             icon: LocalCutIcon,
-            text: 'Cut',
+            text: '剪切',
             title: 'Cut selected contents, formatted with indentation (Ctrl+X)',
             disabled: !canCut
           },
@@ -220,7 +218,7 @@ export default function ({
             type: 'button',
             onClick: () => onCopy(true),
             icon: LocalCopyIcon,
-            text: 'Copy',
+            text: '复制',
             title: 'Copy selected contents, formatted with indentation (Ctrl+C)',
             disabled: !canCopy
           },
@@ -248,7 +246,7 @@ export default function ({
           type: 'button',
           onClick: () => onPaste(),
           icon: LocalPasteIcon,
-          text: 'Paste',
+          text: '粘贴',
           title: 'Paste clipboard contents (Ctrl+V)',
           disabled: !canPaste
         }
@@ -265,7 +263,7 @@ export default function ({
               type: 'button',
               onClick: () => onDuplicate(),
               icon: LocalCloneIcon,
-              text: 'Duplicate',
+              text: '复制插入',
               title: 'Duplicate selected contents (Ctrl+D)',
               disabled: !canDuplicate
             },
@@ -273,7 +271,7 @@ export default function ({
               type: 'button',
               onClick: () => onExtract(),
               icon: LocalCropAltIcon,
-              text: 'Extract',
+              text: '截取覆盖',
               title: 'Extract selected contents',
               disabled: !canExtract
             },
@@ -281,7 +279,7 @@ export default function ({
               type: 'button',
               onClick: () => onSort(),
               icon: LocalSortAmountDownAltIcon,
-              text: 'Sort',
+              text: '排序',
               title: 'Sort array or object contents',
               disabled: readOnly || !hasSelectionContents
             },
@@ -289,7 +287,7 @@ export default function ({
               type: 'button',
               onClick: () => onRemove(),
               icon: LocalTrashCanIcon,
-              text: 'Remove',
+              text: '删除',
               title: 'Remove selected contents (Delete)',
               disabled: readOnly || !hasSelectionContents
             }
@@ -303,7 +301,7 @@ export default function ({
               type: 'button',
               onClick: () => handleInsertOrConvert('structure'),
               icon: convertMode ? LocalArrowRightArrowLeftIcon : LocalPlusIcon,
-              text: 'Structure',
+              text: '自定义',
               title: insertOrConvertText + ' structure like the first item in the array',
               disabled: !canInsertOrConvertStructure
             },
@@ -311,24 +309,24 @@ export default function ({
               type: 'button',
               onClick: () => handleInsertOrConvert('object'),
               icon: convertMode ? LocalArrowRightArrowLeftIcon : LocalPlusIcon,
-              text: 'Object',
-              title: insertOrConvertText + ' object',
+              text: '对象',
+              title: insertOrConvertText + ' 对象',
               disabled: !canInsertOrConvertObject
             },
             {
               type: 'button',
               onClick: () => handleInsertOrConvert('array'),
               icon: convertMode ? LocalArrowRightArrowLeftIcon : LocalPlusIcon,
-              text: 'Array',
-              title: insertOrConvertText + ' array',
+              text: '数组',
+              title: insertOrConvertText + ' 数组',
               disabled: !canInsertOrConvertArray
             },
             {
               type: 'button',
               onClick: () => handleInsertOrConvert('value'),
               icon: convertMode ? LocalArrowRightArrowLeftIcon : LocalPlusIcon,
-              text: 'Value',
-              title: insertOrConvertText + ' value',
+              text: '值',
+              title: insertOrConvertText + ' 值',
               disabled: !canInsertOrConvertValue
             }
           ]
@@ -345,7 +343,7 @@ export default function ({
           type: 'button',
           onClick: () => onInsertBefore(),
           icon: LocalCaretSquareUpIcon,
-          text: 'Insert before',
+          text: '之前插入',
           title: 'Select area before current entry to insert or paste contents',
           disabled: readOnly || !hasSelectionContents || rootSelected
         },
@@ -353,7 +351,7 @@ export default function ({
           type: 'button',
           onClick: () => onInsertAfter(),
           icon: LocalCaretSquareDownIcon,
-          text: 'Insert after',
+          text: '之后插入',
           title: 'Select area after current entry to insert or paste contents',
           disabled: readOnly || !hasSelectionContents || rootSelected
         }
