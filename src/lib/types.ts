@@ -250,7 +250,7 @@ export type ClipboardValues = Array<{ key: string; value: unknown }>
 export interface MenuButton {
   type: 'button'
   onClick: (event: MouseEvent) => void
-  icon?: HTMLOrSVGElement
+  icon?: string
   text?: string
   title?: string
   className?: string
@@ -292,7 +292,7 @@ export type ContextMenuItem = MenuButton | MenuDropDownButton | MenuSeparator | 
 export interface MessageAction {
   text: string
   title: string
-  icon?: HTMLOrSVGElement
+  icon?: string
   onClick?: () => void
   onMouseDown?: () => void
   disabled?: boolean
