@@ -40,7 +40,6 @@
   import { indentWithTab, defaultKeymap, historyKeymap } from '@codemirror/commands'
   import type { Diagnostic } from '@codemirror/lint'
   import { linter, lintGutter, lintKeymap } from '@codemirror/lint'
-  import { json as jsonLang } from '@codemirror/lang-json'
   import {
     closeSearchPanel,
     highlightSelectionMatches,
@@ -79,7 +78,7 @@
   import { createFocusTracker } from '../../controls/createFocusTracker.js'
   import Message from '../../controls/Message.svelte'
   import ValidationErrorsOverview from '../../controls/ValidationErrorsOverview.svelte'
-  import TextMenu from './menu/TextMenu.svelte'
+  import JsMenu from './menu/JsMenu.svelte'
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
@@ -104,7 +103,6 @@
     OnRedo,
     OnRenderMenuInternal,
     OnSelect,
-    OnSortModal,
     OnUndo,
     ParseError,
     RichValidationError,
@@ -149,18 +147,10 @@
   export let onFocus: OnFocus
   export let onBlur: OnBlur
   export let onRenderMenu: OnRenderMenuInternal
-  export let onSortModal: OnSortModal
   export let onJSONEditorModal: OnJSONEditorModal
   export let isModalLayer: boolean
 
-  const debug = createDebug('jsoneditor:TextMode')
-
-  const formatCompactKeyBinding = {
-    key: 'Mod-i',
-    run: handleFormat,
-    shift: handleCompact,
-    preventDefault: true
-  }
+  const debug = createDebug('jsoneditor:JsMode')
 
   const isSSR = typeof window === 'undefined'
   debug('isSSR:', isSSR)
@@ -323,56 +313,6 @@
     }
   }
 
-  function handleFormat(): boolean {
-    debug('format')
-
-    if (readOnly) {
-      return false
-    }
-
-    try {
-      const updatedJson = parser.parse(text)
-      const updatedContent = {
-        text: parser.stringify(updatedJson, null, indentation) as string
-      }
-
-      setCodeMirrorContent(updatedContent, true, false)
-
-      askToFormatApplied = askToFormat // reset to the original value
-
-      return true
-    } catch (err) {
-      onError(err as Error)
-    }
-
-    return false
-  }
-
-  function handleCompact(): boolean {
-    debug('compact')
-
-    if (readOnly) {
-      return false
-    }
-
-    try {
-      const updatedJson = parser.parse(text)
-      const updatedContent = {
-        text: parser.stringify(updatedJson) as string
-      }
-
-      setCodeMirrorContent(updatedContent, true, false)
-
-      askToFormatApplied = false
-
-      return true
-    } catch (err) {
-      onError(err as Error)
-    }
-
-    return false
-  }
-
   function handleRepair() {
     debug('repair')
 
@@ -389,34 +329,6 @@
 
       jsonStatus = JSON_STATUS_VALID
       jsonParseError = undefined
-    } catch (err) {
-      onError(err as Error)
-    }
-  }
-
-  function handleSort() {
-    if (readOnly) {
-      return
-    }
-
-    try {
-      const json = parser.parse(text)
-
-      modalOpen = true
-
-      onSortModal({
-        id: sortModalId,
-        json,
-        rootPath: [],
-        onSort: async ({ operations }) => {
-          debug('onSort', operations)
-          handlePatch(operations, true)
-        },
-        onClose: () => {
-          modalOpen = false
-          focus()
-        }
-      })
     } catch (err) {
       onError(err as Error)
     }
@@ -610,18 +522,18 @@
       doc: initialText,
       selection,
       extensions: [
-        keymap.of([indentWithTab, formatCompactKeyBinding]),
+        lineNumbers(),
         linterCompartment.of(createLinter()),
         lintGutter(),
-        lineNumbers(),
         highlightActiveLineGutter(),
         highlightSpecialChars(),
+        // history(),
         foldGutter(),
         drawSelection(),
         dropCursor(),
+        indentUnit.of('    '),
         EditorState.allowMultipleSelections.of(true),
         indentOnInput(),
-        syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
         bracketMatching(),
         closeBrackets(),
         autocompletion(),
@@ -630,16 +542,19 @@
         highlightActiveLine(),
         highlightSelectionMatches(),
         keymap.of([
+          indentWithTab,
           ...closeBracketsKeymap,
           ...defaultKeymap,
+          ...historyKeymap,
+          ...foldKeymap,
+          ...completionKeymap,
           ...searchKeymap,
           { key: 'Mod-z', run: handleUndo, preventDefault: true },
           { key: 'Mod-y', mac: 'Mod-Shift-z', run: handleRedo, preventDefault: true },
           { key: 'Ctrl-Shift-z', run: handleRedo, preventDefault: true },
-          ...foldKeymap,
-          ...completionKeymap,
           ...lintKeymap
         ]),
+        syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
         highlighter,
         indentationMarkers({ hideFirstIndent: true }),
         EditorView.domEventHandlers({
@@ -666,7 +581,7 @@
             emitOnSelect()
           }
         }),
-        jsonLang(),
+        javascript(),
         search({
           top: true
         }),
@@ -1071,16 +986,10 @@
   {#if mainMenuBar}
     {@const isNewDocument = text.length === 0}
 
-    <TextMenu
+    <JsMenu
       {readOnly}
-      onFormat={handleFormat}
-      onCompact={handleCompact}
-      onSort={handleSort}
       onUndo={handleUndo}
       onRedo={handleRedo}
-      canFormat={!isNewDocument}
-      canCompact={!isNewDocument}
-      canSort={!isNewDocument}
       canUndo={history.canUndo}
       canRedo={history.canRedo}
       {onRenderMenu}
@@ -1137,28 +1046,6 @@
           message={jsonParseError.message}
           actions={repairActions}
           onClick={handleShowMe}
-          onClose={focus}
-        />
-      {/if}
-
-      {#if !jsonParseError && askToFormatApplied && needsFormatting(text)}
-        <Message
-          type="success"
-          message="Do you want to format the JSON?"
-          actions={[
-            {
-              icon: LocalFormatIcon,
-              text: 'Format',
-              title: 'Format JSON: add proper indentation and new lines (Ctrl+I)',
-              onClick: handleFormat
-            },
-            {
-              icon: LocalTimesIcon,
-              text: 'No thanks',
-              title: 'Close this message',
-              onClick: () => (askToFormatApplied = false)
-            }
-          ]}
           onClose={focus}
         />
       {/if}
