@@ -1,7 +1,8 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import LocalCaretDownIcon from 'codemirror-json/components/icon/caret-down-solid.svelte'
+  import LocalCaretDownIcon from '../icon/caret-down-solid.svelte'
+  // --------------
   import { onDestroy, onMount } from 'svelte'
   import { keyComboFromEvent } from '$lib/utils/keyBindings.js'
   import type { MenuButton } from '$lib/types.js'

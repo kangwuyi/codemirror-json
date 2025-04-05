@@ -1,8 +1,8 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import LocalCaretDownIcon from 'codemirror-json/components/icon/caret-down-solid.svelte'
-  import LocalCaretRightIcon from 'codemirror-json/components/icon/caret-right-solid.svelte'
+  import LocalCaretDownIcon from '../../icon/caret-down-solid.svelte'
+  import LocalCaretRightIcon from '../../icon/caret-right-solid.svelte'
   import type { JSONPath, JSONPointer } from 'immutable-json-patch'
   import { appendToJSONPointer, parseJSONPointer } from 'immutable-json-patch'
   import { initial, isEqual, last, range } from 'lodash-es'

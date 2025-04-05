@@ -1,11 +1,11 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import LocalArrowDownIcon from 'codemirror-json/components/icon/angle-down-solid.svelte'
-  import LocalCheckIcon from 'codemirror-json/components/icon/check-solid.svelte'
-  import LocalExclamationTriangleIcon from 'codemirror-json/components/icon/triangle-exclamation-solid.svelte'
-  import LocalTimesIcon from 'codemirror-json/components/icon/circle-xmark-solid.svelte'
-  import LocalWrenchIcon from 'codemirror-json/components/icon/wrench-solid.svelte'
+  import LocalArrowDownIcon from '../../icon/angle-down-solid.svelte'
+  import LocalCheckIcon from '../../icon/check-solid.svelte'
+  import LocalExclamationTriangleIcon from '../../icon/triangle-exclamation-solid.svelte'
+  import LocalTimesIcon from '../../icon/circle-xmark-solid.svelte'
+  import LocalWrenchIcon from '../../icon/wrench-solid.svelte'
 
   import { createDebug } from '$lib/utils/debug.js'
   import Message from '../../controls/Message.svelte'

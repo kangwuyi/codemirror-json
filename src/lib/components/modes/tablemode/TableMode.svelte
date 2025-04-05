@@ -1,9 +1,9 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import LocalCheckIcon from 'codemirror-json/components/icon/check-solid.svelte'
-  import LocalCodeIcon from 'codemirror-json/components/icon/code-solid.svelte'
-  import LocalWrenchIcon from 'codemirror-json/components/icon/wrench-solid.svelte'
+  import LocalCheckIcon from '../../icon/check-solid.svelte'
+  import LocalCodeIcon from '../../icon/code-solid.svelte'
+  import LocalWrenchIcon from '../../icon/wrench-solid.svelte'
   import type {
     AbsolutePopupContext,
     AbsolutePopupOptions,

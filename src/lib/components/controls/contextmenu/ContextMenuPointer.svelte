@@ -1,7 +1,7 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import LocalCaretDownIcon from 'codemirror-json/components/icon/caret-down-solid.svelte'
+  import LocalCaretDownIcon from '../../icon/caret-down-solid.svelte'
   import {
     CONTEXT_MENU_EXPLANATION,
     CONTEXT_MENU_HEIGHT,

@@ -1,14 +1,14 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import LocalCopyIcon from 'codemirror-json/components/icon/copy-solid.svelte'
-  import LocalEllipsisVIcon from 'codemirror-json/components/icon/ellipsis-vertical-solid.svelte'
-  import LocalRedoIcon from 'codemirror-json/components/icon/rotate-left-solid.svelte'
-  import LocalUndoIcon from 'codemirror-json/components/icon/rotate-right-solid.svelte'
-  import LocalExpandIcon from 'codemirror-json/components/icon/expand-solid.svelte'
-  import LocalExpandWindowIcon from 'codemirror-json/components/icon/expand-window-solid.svelte'
-  import LocalCompressIcon from 'codemirror-json/components/icon/compress-solid.svelte'
-  import LocalSortAmountDownAltIcon from 'codemirror-json/components/icon/arrow-down-short-wide-solid.svelte'
+  import LocalCopyIcon from '../../../icon/copy-solid.svelte'
+  import LocalEllipsisVIcon from '../../../icon/ellipsis-vertical-solid.svelte'
+  import LocalRedoIcon from '../../../icon/rotate-left-solid.svelte'
+  import LocalUndoIcon from '../../../icon/rotate-right-solid.svelte'
+  import LocalExpandIcon from '../../../icon/expand-solid.svelte'
+  import LocalExpandWindowIcon from '../../../icon/expand-window-solid.svelte'
+  import LocalCompressIcon from '../../../icon/compress-solid.svelte'
+  import LocalSortAmountDownAltIcon from '../../../icon/arrow-down-short-wide-solid.svelte'
 
   import { CONTEXT_MENU_EXPLANATION } from '$lib/constants.js'
 

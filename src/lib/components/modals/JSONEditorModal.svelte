@@ -1,6 +1,8 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
+  import LocalCaretLeftIcon from '../icon/caret-left-solid.svelte'
+  // -------------
   import { flushSync, onMount } from 'svelte'
   import Header from './Header.svelte'
   import type { JSONPatchDocument, JSONPath } from 'immutable-json-patch'
@@ -26,7 +28,6 @@
   import { stringifyJSONPath } from '$lib/utils/pathUtils.js'
   import { initial, isEmpty, last } from 'lodash-es'
   import { isJSONContent, toJSONContent } from '$lib/utils/jsonUtils.js'
-  import LocalCaretLeftIcon from 'codemirror-json/components/icon/caret-left-solid.svelte'
 
   import memoizeOne from 'memoize-one'
   import { getFocusPath, isJSONSelection } from '$lib/logic/selection.js'

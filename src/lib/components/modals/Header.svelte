@@ -1,9 +1,9 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import LocalDownLeftAndUpRightToCenterIcon from 'codemirror-json/components/icon/down-left-and-up-right-to-center-solid.svelte'
-  import LocalUpRightAndDownLeftFromCenterIcon from 'codemirror-json/components/icon/up-right-and-down-left-from-center-solid.svelte'
-  import LocalTimesIcon from 'codemirror-json/components/icon/circle-xmark-solid.svelte'
+  import LocalDownLeftAndUpRightToCenterIcon from '../icon/down-left-and-up-right-to-center-solid.svelte'
+  import LocalUpRightAndDownLeftFromCenterIcon from '../icon/up-right-and-down-left-from-center-solid.svelte'
+  import LocalTimesIcon from '../icon/circle-xmark-solid.svelte'
 
   export let title = 'Modal'
   export let fullScreenButton: boolean = false

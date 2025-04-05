@@ -1,7 +1,7 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import LocalRotateIcon from 'codemirror-json/components/icon/rotate-solid.svelte'
+  import LocalRotateIcon from '../../icon/rotate-solid.svelte'
 
   export let count: number
   export let maxSampleCount: number

@@ -1,7 +1,7 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import LocalClockIcon from 'codemirror-json/components/icon/clock-solid.svelte'
+  import LocalClockIcon from '../../../components/icon/clock-solid.svelte'
 
   import { getContext } from 'svelte'
   import { tooltip } from '$lib/components/controls/tooltip/tooltip.js'

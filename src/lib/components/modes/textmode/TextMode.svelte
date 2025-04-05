@@ -1,10 +1,10 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import LocalExclamationTriangleIcon from 'codemirror-json/components/icon/triangle-exclamation-solid.svelte'
-  import LocalEyeIcon from 'codemirror-json/components/icon/eye-solid.svelte'
-  import LocalTimesIcon from 'codemirror-json/components/icon/circle-xmark-solid.svelte'
-  import LocalWrenchIcon from 'codemirror-json/components/icon/wrench-solid.svelte'
+  import LocalExclamationTriangleIcon from '../../icon/triangle-exclamation-solid.svelte'
+  import LocalEyeIcon from '../../icon/eye-solid.svelte'
+  import LocalTimesIcon from '../../icon/circle-xmark-solid.svelte'
+  import LocalWrenchIcon from '../../icon/wrench-solid.svelte'
 
   import { createDebug } from '$lib/utils/debug.js'
   import type { JSONPatchDocument, JSONPath } from 'immutable-json-patch'
@@ -119,7 +119,7 @@
   import memoizeOne from 'memoize-one'
   import { validateText } from '$lib/logic/validation.js'
   import { truncate } from '$lib/utils/stringUtils.js'
-  import LocalFormatIcon from 'codemirror-json/components/icon/expand-solid.svelte'
+  import LocalFormatIcon from '../../icon/expand-solid.svelte'
   import { indentationMarkers } from '@replit/codemirror-indentation-markers'
   import { isTextSelection } from '$lib/logic/selection.js'
   import { wrappedLineIndent } from 'codemirror-wrapped-line-indent/dist/index.js' // ensure loading ESM, otherwise the vitest test fail

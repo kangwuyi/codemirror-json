@@ -1,12 +1,13 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
+  import LocalCaretDownIcon from '../../icon/caret-down-solid.svelte'
+  import LocalCaretUpIcon from '../../icon/caret-up-solid.svelte'
+  // -------------
   import type { JSONPath } from 'immutable-json-patch'
   import type { SortedColumn } from '$lib/types.js'
   import { SortDirection } from '$lib/types.js'
   import { stringifyJSONPath } from '$lib/utils/pathUtils.js'
-  import LocalCaretDownIcon from 'codemirror-json/components/icon/caret-down-solid.svelte'
-  import LocalCaretUpIcon from 'codemirror-json/components/icon/caret-up-solid.svelte'
 
   import { isEmpty, isEqual } from 'lodash-es'
   import { MAX_HEADER_NAME_CHARACTERS, SORT_DIRECTION_NAMES } from '$lib/constants.js'
