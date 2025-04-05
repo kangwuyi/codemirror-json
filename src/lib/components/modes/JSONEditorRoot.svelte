@@ -255,8 +255,6 @@
       return refTreeMode.validate()
     } else if (refTableMode) {
       return refTableMode.validate()
-    } else if (refJsMode) {
-      return refJsMode.validate()
     } else {
       throw new Error(`Method validate is not available in mode "${mode}"`)
     }
@@ -430,16 +428,11 @@
     {mainMenuBar}
     {escapeUnicodeCharacters}
     {parser}
-    {validator}
-    {validationParser}
     {onChange}
-    {onChangeMode}
     {onSelect}
     onUndo={handleUndo}
     onRedo={handleRedo}
-    {onError}
     {onFocus}
     {onBlur}
-    {onJSONEditorModal}
   />
 {/if}

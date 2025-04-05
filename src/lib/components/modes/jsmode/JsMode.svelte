@@ -1,11 +1,10 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import LocalExclamationTriangleIcon from '$lib/assets/icon/triangle-exclamation-solid.svelte'
-  import LocalEyeIcon from '$lib/assets/icon/eye-solid.svelte'
-  import LocalWrenchIcon from '$lib/assets/icon/wrench-solid.svelte'
   // ---------------
-  import Linter from 'eslint4b-prebuilt'
+  import globals from 'globals'
+  // Uses linter.mjs
+  import * as eslint from 'eslint-linter-browserify'
   // ----------
   import { javascript, esLint } from '@codemirror/lang-javascript'
   import {
@@ -40,8 +39,7 @@
   } from '@codemirror/view'
   import { indentWithTab, defaultKeymap, historyKeymap } from '@codemirror/commands'
   import { linter, lintGutter, lintKeymap } from '@codemirror/lint'
-  import type { Diagnostic } from '@codemirror/lint'
-  import { highlightSelectionMatches, search, searchKeymap } from '@codemirror/search'
+  import { highlightSelectionMatches, searchKeymap } from '@codemirror/search'
   import {
     autocompletion,
     closeBrackets,
@@ -50,64 +48,38 @@
   } from '@codemirror/autocomplete'
   // --------------
   import { createDebug } from '$lib/utils/debug.js'
-  import type { JSONPath } from 'immutable-json-patch'
-  import { jsonrepair } from 'jsonrepair'
-  import { debounce, isEqual, uniqueId } from 'lodash-es'
+  import { debounce, isEqual } from 'lodash-es'
   import { flushSync, onDestroy, onMount } from 'svelte'
-  import {
-    JSON_STATUS_INVALID,
-    JSON_STATUS_REPAIRABLE,
-    JSON_STATUS_VALID,
-    MAX_CHARACTERS_TEXT_PREVIEW,
-    MAX_DOCUMENT_SIZE_TEXT_MODE,
-    TEXT_MODE_ONCHANGE_DELAY
-  } from '$lib/constants.js'
+  import { MAX_DOCUMENT_SIZE_TEXT_MODE, TEXT_MODE_ONCHANGE_DELAY } from '$lib/constants.js'
   import {
     activeElementIsChildOf,
     createNormalizationFunctions,
     getWindow
   } from '$lib/utils/domUtils.js'
-  import { formatSize } from '$lib/utils/fileUtils.js'
   import { findTextLocation, getText } from '$lib/utils/jsonUtils.js'
   import { createFocusTracker } from '../../controls/createFocusTracker.js'
-  import Message from '../../controls/Message.svelte'
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   import { highlighter } from './codemirror/codemirror-theme.js'
   import type {
     Content,
-    ContentErrors,
     History,
     HistoryItem,
     JSONParser,
-    JSONPatchResult,
     OnBlur,
     OnChange,
-    OnChangeMode,
-    OnError,
     OnFocus,
-    OnJSONEditorModal,
     OnRedo,
-    OnRenderMenuInternal,
     OnSelect,
     OnUndo,
-    ParseError,
     RichValidationError,
     TextHistoryItem,
     TextSelection,
-    ValidationError,
-    Validator
+    ValidationError
   } from '$lib/types.js'
-  import { Mode, SelectionType, ValidationSeverity } from '$lib/types.js'
-  import {
-    isContentParseError,
-    isContentValidationErrors,
-    isTextHistoryItem
-  } from '$lib/typeguards.js'
-  import memoizeOne from 'memoize-one'
-  import { validateText } from '$lib/logic/validation.js'
-  import { truncate } from '$lib/utils/stringUtils.js'
+  import { SelectionType } from '$lib/types.js'
+  import { isTextHistoryItem } from '$lib/typeguards.js'
   import { indentationMarkers } from '@replit/codemirror-indentation-markers'
   import { wrappedLineIndent } from 'codemirror-wrapped-line-indent/dist/index.js' // ensure loading ESM, otherwise the vitest test fail
 
@@ -119,17 +91,12 @@
   export let tabSize: number
   export let escapeUnicodeCharacters: boolean
   export let parser: JSONParser
-  export let validator: Validator | undefined
-  export let validationParser: JSONParser
   export let onChange: OnChange
-  export let onChangeMode: OnChangeMode
   export let onSelect: OnSelect
   export let onUndo: OnUndo
   export let onRedo: OnRedo
-  export let onError: OnError
   export let onFocus: OnFocus
   export let onBlur: OnBlur
-  export let onJSONEditorModal: OnJSONEditorModal
 
   const debug = createDebug('jsoneditor:JsMode')
 
@@ -143,8 +110,6 @@
 
   let acceptTooLarge = false
 
-  let validationErrors: ValidationError[] = []
-  const linterCompartment = new Compartment()
   const readOnlyCompartment = new Compartment()
   const indentCompartment = new Compartment()
   const tabSizeCompartment = new Compartment()
@@ -156,6 +121,22 @@
   let historyAnnotation = Annotation.define()
 
   let historyUpdatesQueue: ViewUpdate[] | null = null
+
+  const eslintConfig = {
+    // eslint configuration
+    languageOptions: {
+      globals: {
+        ...globals.node
+      },
+      parserOptions: {
+        ecmaVersion: 2022,
+        sourceType: 'module'
+      }
+    },
+    rules: {
+      semi: ['error', 'never']
+    }
+  }
 
   function addHistoryItem(): boolean {
     if (!historyUpdatesQueue || historyUpdatesQueue.length === 0) {
@@ -199,7 +180,6 @@
   // eslint-disable-next-line svelte/no-unused-svelte-ignore
   // svelte-ignore reactive_declaration_non_reactive_property
   $: setCodeMirrorContent(externalContent, false, false)
-  $: updateLinter(validator)
   $: updateIndentation(indentation)
   $: updateTabSize(tabSize)
   $: updateReadOnly(readOnly)
@@ -265,53 +245,6 @@
     }
   })
 
-  function handleRepair() {
-    debug('repair')
-
-    if (readOnly) {
-      return
-    }
-
-    try {
-      const updatedContent = {
-        text: jsonrepair(text)
-      }
-
-      setCodeMirrorContent(updatedContent, true, false)
-
-      jsonStatus = JSON_STATUS_VALID
-      jsonParseError = undefined
-    } catch (err) {
-      onError(err as Error)
-    }
-  }
-
-  function handleEditModal() {
-    const path = [] as JSONPath
-    const codeMirrorText = getCodeMirrorValue()
-    openJSONEditorModal(path, codeMirrorText)
-  }
-
-  function openJSONEditorModal(path: JSONPath, value: string) {
-    debug('openJSONEditorModal', { path, value })
-
-    modalOpen = true
-
-    onJSONEditorModal({
-      content: {
-        text: value || ''
-      },
-      path,
-      onClose: () => {
-        modalOpen = false
-        setTimeout(focus)
-      },
-      onPatch: function (): JSONPatchResult {
-        throw new Error('Function not implemented.')
-      }
-    })
-  }
-
   function handleUndo(): boolean {
     if (readOnly) {
       return false
@@ -364,51 +297,6 @@
     return true
   }
 
-  function handleAcceptTooLarge() {
-    acceptTooLarge = true
-    setCodeMirrorContent(externalContent, true, true)
-  }
-
-  function handleSwitchToTreeMode() {
-    onChangeMode(Mode.tree)
-  }
-
-  function cancelLoadTooLarge() {
-    // copy the latest contents of the text editor again into text
-    onChangeCodeMirrorValue()
-  }
-
-  function handleSelectValidationError(validationError: ValidationError) {
-    debug('select validation error', validationError)
-
-    const { from, to } = toRichValidationError(validationError)
-    if (from === undefined || to === undefined) {
-      return
-    }
-
-    // we take "to" as head, not as anchor, because the scrollIntoView will
-    // move to the head, and when a large whole object is selected as a whole,
-    // we want to scroll to the start of the object and not the end
-    setSelection(from, to)
-
-    focus()
-  }
-
-  function handleSelectParseError(parseError: ParseError) {
-    debug('select parse error', parseError)
-
-    const richParseError = toRichParseError(parseError, false)
-    const from = richParseError.from != null ? richParseError.from : 0
-    const to = richParseError.to != null ? richParseError.to : 0
-
-    // we take "to" as head, not as anchor, because the scrollIntoView will
-    // move to the head, and when a large whole object is selected as a whole,
-    // we want to scroll to the start of the object and not the end
-    setSelection(from, to)
-
-    focus()
-  }
-
   function setSelection(anchor: number, head: number) {
     debug('setSelection', { anchor, head })
 
@@ -420,10 +308,6 @@
         })
       )
     }
-  }
-
-  function createLinter() {
-    return linter(linterCallback, { delay: TEXT_MODE_ONCHANGE_DELAY })
   }
 
   function createCodeMirrorView({
@@ -442,10 +326,9 @@
     const state = EditorState.create({
       doc: initialText,
       extensions: [
-        linter(esLint(new Linter())),
+        linter(esLint(new eslint.Linter(), eslintConfig)),
         // 显示行号
         lineNumbers(),
-        linterCompartment.of(createLinter()),
         // 显示行号和折叠区域
         lintGutter(),
         highlightActiveLineGutter(),
@@ -529,55 +412,6 @@
     return codeMirrorRef
       ? getComputedStyle(codeMirrorRef).getPropertyValue('--jse-theme').includes('dark')
       : false
-  }
-
-  function toRichValidationError(validationError: ValidationError): RichValidationError {
-    const { path, message, severity } = validationError
-    const { line, column, from, to } = findTextLocation(normalization.escapeValue(text), path)
-
-    return {
-      path,
-      line,
-      column,
-      from,
-      to,
-      message,
-      severity,
-      actions: []
-    }
-  }
-
-  function toRichParseError(parseError: ParseError, isRepairable: boolean): RichValidationError {
-    const { line, column, position, message } = parseError
-
-    return {
-      path: [] as JSONPath,
-      line,
-      column,
-      from: position,
-      to: position,
-      severity: ValidationSeverity.error,
-      message,
-      actions:
-        isRepairable && !readOnly
-          ? [
-              {
-                name: 'Auto repair',
-                apply: () => handleRepair()
-              }
-            ]
-          : undefined
-    }
-  }
-
-  function toDiagnostic(error: RichValidationError): Diagnostic {
-    return {
-      from: error.from || 0,
-      to: error.to || 0,
-      message: error.message || '',
-      actions: error.actions as Diagnostic['actions'],
-      severity: error.severity
-    }
   }
 
   function setCodeMirrorContent(newContent: Content, emitChange: boolean, forceUpdate: boolean) {
@@ -669,18 +503,6 @@
     emitOnSelect()
   }
 
-  function updateLinter(validator: Validator | undefined) {
-    debug('updateLinter', validator)
-
-    if (!codeMirrorView) {
-      return
-    }
-
-    codeMirrorView.dispatch({
-      effects: linterCompartment.reconfigure(createLinter())
-    })
-  }
-
   function updateIndentation(indentation: number | string) {
     if (codeMirrorView) {
       debug('updateIndentation', indentation)
@@ -759,7 +581,7 @@
   function emitOnChange(content: Content, previousContent: Content) {
     if (onChange) {
       onChange(content, previousContent, {
-        contentErrors: validate(),
+        contentErrors: undefined,
         patchResult: undefined
       })
     }
@@ -780,88 +602,6 @@
     const tooLarge = text ? text.length > MAX_DOCUMENT_SIZE_TEXT_MODE : false
     return tooLarge && !acceptTooLarge
   }
-
-  let jsonStatus = JSON_STATUS_VALID
-
-  let jsonParseError: ParseError | undefined
-
-  function linterCallback(): Diagnostic[] {
-    if (disableTextEditor(text, acceptTooLarge)) {
-      return []
-    }
-
-    const contentErrors = validate()
-
-    if (isContentParseError(contentErrors)) {
-      const { parseError, isRepairable } = contentErrors
-
-      return [toDiagnostic(toRichParseError(parseError, isRepairable))]
-    }
-
-    if (isContentValidationErrors(contentErrors)) {
-      return contentErrors.validationErrors.map(toRichValidationError).map(toDiagnostic)
-    }
-
-    return []
-  }
-
-  export function validate(): ContentErrors | undefined {
-    debug('validate:start')
-    console.log('validate:start')
-
-    flush()
-
-    const contentErrors = memoizedValidateText(
-      normalization.escapeValue(text),
-      validator,
-      parser,
-      validationParser
-    )
-
-    if (isContentParseError(contentErrors)) {
-      jsonStatus = contentErrors.isRepairable ? JSON_STATUS_REPAIRABLE : JSON_STATUS_INVALID
-      jsonParseError = contentErrors.parseError
-      validationErrors = []
-    } else {
-      jsonStatus = JSON_STATUS_VALID
-      jsonParseError = undefined
-      validationErrors = contentErrors?.validationErrors || []
-    }
-
-    debug('validate:end')
-
-    return contentErrors
-  }
-
-  // because onChange returns the validation errors and there is also a separate listener,
-  // we would execute validation twice. Memoizing the last result solves this.
-  const memoizedValidateText = memoizeOne(validateText)
-
-  function handleShowMe() {
-    if (jsonParseError) {
-      handleSelectParseError(jsonParseError)
-    }
-  }
-
-  const repairActionShowMe = {
-    icon: LocalEyeIcon,
-    text: 'Show me',
-    title: 'Move to the parse error location',
-    onClick: handleShowMe
-  }
-
-  $: repairActions =
-    jsonStatus === JSON_STATUS_REPAIRABLE && !readOnly
-      ? [
-          {
-            icon: LocalWrenchIcon,
-            text: 'Auto repair',
-            title: 'Automatically repair JSON',
-            onClick: handleRepair
-          },
-          repairActionShowMe
-        ]
-      : [repairActionShowMe]
 </script>
 
 <div class="jse-text-mode" class:no-main-menu={!mainMenuBar} bind:this={domTextMode}>
@@ -869,37 +609,6 @@
     {@const editorDisabled = disableTextEditor(text, acceptTooLarge)}
 
     <div class="jse-contents" class:jse-hidden={editorDisabled} bind:this={codeMirrorRef}></div>
-
-    {#if editorDisabled}
-      <Message
-        icon={LocalExclamationTriangleIcon}
-        type="error"
-        message={`The JSON document is larger than ${formatSize(MAX_DOCUMENT_SIZE_TEXT_MODE)}, ` +
-          `and may crash your browser when loading it in text mode. Actual size: ${formatSize(text.length)}.`}
-        actions={[
-          {
-            text: 'Open anyway',
-            title: 'Open the document in text mode. This may freeze or crash your browser.',
-            onClick: handleAcceptTooLarge
-          },
-          {
-            text: 'Open in tree mode',
-            title: 'Open the document in tree mode. Tree mode can handle large documents.',
-            onClick: handleSwitchToTreeMode
-          },
-          {
-            text: 'Cancel',
-            title: 'Cancel opening this large document.',
-            onClick: cancelLoadTooLarge
-          }
-        ]}
-        onClose={focus}
-      />
-
-      <div class="jse-contents jse-preview">
-        {truncate(text || '', MAX_CHARACTERS_TEXT_PREVIEW)}
-      </div>
-    {/if}
   {:else}
     <div class="jse-contents">
       <div class="jse-loading-space"></div>
