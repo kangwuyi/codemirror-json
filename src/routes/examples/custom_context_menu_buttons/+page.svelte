@@ -6,7 +6,6 @@
     toTextContent
   } from 'codemirror-json'
   import LocalCalculateIcon from './calculator-solid.svelte'
-  import LocalCalculateIcon2 from './calculator-solid.svg'
 
   let content = $state({
     text: undefined, // can be used to pass a stringified JSON document instead
@@ -58,7 +57,6 @@
 </svelte:head>
 
 <h1>Custom context menu buttons</h1>
-<LocalCalculateIcon2 />
 <p>
   You can add/remove buttons from the context menu using <code>onRenderContextMenu</code>. The
   context menu can be opened by right-clicking on a key or value in the editor. In this example a
