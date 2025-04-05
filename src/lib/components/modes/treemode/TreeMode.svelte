@@ -1,9 +1,9 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import LocalCheckIcon from '$lib/assets/icon/check-solid.svelte'
-  import LocalCodeIcon from '$lib/assets/icon/code-solid.svelte'
-  import LocalWrenchIcon from '$lib/assets/icon/wrench-solid.svelte'
+  import LocalCheckIcon from 'codemirror-json/components/icon/check-solid.svelte'
+  import LocalCodeIcon from 'codemirror-json/components/icon/code-solid.svelte'
+  import LocalWrenchIcon from 'codemirror-json/components/icon/wrench-solid.svelte'
 
   import { createAutoScrollHandler } from '../../controls/createAutoScrollHandler.js'
   import { createDebug } from '$lib/utils/debug.js'

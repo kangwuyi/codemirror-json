@@ -1,12 +1,12 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import LocalRedoIcon from '$lib/assets/icon/rotate-left-solid.svelte'
-  import LocalUndoIcon from '$lib/assets/icon/rotate-right-solid.svelte'
-  import LocalExpandWindowIcon from '$lib/assets/icon/expand-window-solid.svelte'
-  import LocalSortAmountDownAltIcon from '$lib/assets/icon/arrow-down-short-wide-solid.svelte'
-  import LocalFormatIcon from '$lib/assets/icon/expand-solid.svelte'
-  import LocalCompactIcon from '$lib/assets/icon/expand-solid.svelte'
+  import LocalRedoIcon from 'codemirror-json/components/icon/rotate-left-solid.svelte'
+  import LocalUndoIcon from 'codemirror-json/components/icon/rotate-right-solid.svelte'
+  import LocalExpandWindowIcon from 'codemirror-json/components/icon/expand-window-solid.svelte'
+  import LocalSortAmountDownAltIcon from 'codemirror-json/components/icon/arrow-down-short-wide-solid.svelte'
+  import LocalFormatIcon from 'codemirror-json/components/icon/expand-solid.svelte'
+  import LocalCompactIcon from 'codemirror-json/components/icon/expand-solid.svelte'
 
   import Menu from '../../../controls/Menu.svelte'
   import type { MenuItem, OnRenderMenuInternal } from '$lib/types'

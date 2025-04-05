@@ -1,5 +1,5 @@
 <script lang="ts">
-  import LocalCopyIcon from '$lib/assets/icon/copy-solid.svelte'
+  import LocalCopyIcon from 'codemirror-json/components/icon/copy-solid.svelte'
 
   import {
     JSONEditor,

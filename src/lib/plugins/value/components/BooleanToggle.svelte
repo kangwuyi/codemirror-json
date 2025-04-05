@@ -1,8 +1,8 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import LocalCheckSquareIcon from '$lib/assets/icon/square-check-solid.svelte'
-  import LocalSquareIcon from '$lib/assets/icon/square-solid.svelte'
+  import LocalCheckSquareIcon from 'codemirror-json/components/icon/square-check-solid.svelte'
+  import LocalSquareIcon from 'codemirror-json/components/icon/square-solid.svelte'
 
   import type { JSONPath } from 'immutable-json-patch'
   import { compileJSONPointer } from 'immutable-json-patch'

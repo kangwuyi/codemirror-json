@@ -1,5 +1,5 @@
 <script lang="ts">
-  import LocalExclamationTriangleIcon from '$lib/assets/icon/triangle-exclamation-solid.svelte'
+  import LocalExclamationTriangleIcon from 'codemirror-json/components/icon/triangle-exclamation-solid.svelte'
   import { getContext } from 'svelte'
   import { tooltip } from '../../controls/tooltip/tooltip.js'
   import type { AbsolutePopupContext, NestedValidationError, ValidationError } from '$lib/types.js'

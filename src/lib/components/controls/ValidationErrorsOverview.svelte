@@ -1,9 +1,9 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import LocalAngleDownIcon from '$lib/assets/icon/angle-down-solid.svelte'
-  import LocalAngleRightIcon from '$lib/assets/icon/angle-right-solid.svelte'
-  import LocalExclamationTriangleIcon from '$lib/assets/icon/triangle-exclamation-solid.svelte'
+  import LocalAngleDownIcon from 'codemirror-json/components/icon/angle-down-solid.svelte'
+  import LocalAngleRightIcon from 'codemirror-json/components/icon/angle-right-solid.svelte'
+  import LocalExclamationTriangleIcon from 'codemirror-json/components/icon/triangle-exclamation-solid.svelte'
   import { isEmpty } from 'lodash-es'
   import { stringifyJSONPath } from '$lib/utils/pathUtils.js'
   import { ValidationSeverity, type ValidationError } from '$lib/types.js'
