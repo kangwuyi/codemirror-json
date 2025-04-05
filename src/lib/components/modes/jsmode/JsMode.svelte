@@ -3,10 +3,11 @@
 <script lang="ts">
   import LocalExclamationTriangleIcon from '$lib/assets/icon/triangle-exclamation-solid.svelte'
   import LocalEyeIcon from '$lib/assets/icon/eye-solid.svelte'
-  import LocalTimesIcon from '$lib/assets/icon/circle-xmark-solid.svelte'
   import LocalWrenchIcon from '$lib/assets/icon/wrench-solid.svelte'
+  // ---------------
+  import Linter from 'eslint4b-prebuilt'
   // ----------
-  import { javascript } from '@codemirror/lang-javascript'
+  import { javascript, esLint } from '@codemirror/lang-javascript'
   import {
     bracketMatching,
     defaultHighlightStyle,
@@ -38,15 +39,9 @@
     type ViewUpdate
   } from '@codemirror/view'
   import { indentWithTab, defaultKeymap, historyKeymap } from '@codemirror/commands'
-  import type { Diagnostic } from '@codemirror/lint'
   import { linter, lintGutter, lintKeymap } from '@codemirror/lint'
-  import {
-    closeSearchPanel,
-    highlightSelectionMatches,
-    openSearchPanel,
-    search,
-    searchKeymap
-  } from '@codemirror/search'
+  import type { Diagnostic } from '@codemirror/lint'
+  import { highlightSelectionMatches, search, searchKeymap } from '@codemirror/search'
   import {
     autocompletion,
     closeBrackets,
@@ -55,8 +50,7 @@
   } from '@codemirror/autocomplete'
   // --------------
   import { createDebug } from '$lib/utils/debug.js'
-  import type { JSONPatchDocument, JSONPath } from 'immutable-json-patch'
-  import { immutableJSONPatch, revertJSONPatch } from 'immutable-json-patch'
+  import type { JSONPath } from 'immutable-json-patch'
   import { jsonrepair } from 'jsonrepair'
   import { debounce, isEqual, uniqueId } from 'lodash-es'
   import { flushSync, onDestroy, onMount } from 'svelte'
@@ -74,24 +68,18 @@
     getWindow
   } from '$lib/utils/domUtils.js'
   import { formatSize } from '$lib/utils/fileUtils.js'
-  import { findTextLocation, getText, needsFormatting } from '$lib/utils/jsonUtils.js'
+  import { findTextLocation, getText } from '$lib/utils/jsonUtils.js'
   import { createFocusTracker } from '../../controls/createFocusTracker.js'
   import Message from '../../controls/Message.svelte'
-  import ValidationErrorsOverview from '../../controls/ValidationErrorsOverview.svelte'
-  import JsMenu from './menu/JsMenu.svelte'
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  import jsonSourceMap from 'json-source-map'
-  import StatusBar from './StatusBar.svelte'
   import { highlighter } from './codemirror/codemirror-theme.js'
   import type {
-    AfterPatchCallback,
     Content,
     ContentErrors,
     History,
     HistoryItem,
-    JSONEditorSelection,
     JSONParser,
     JSONPatchResult,
     OnBlur,
@@ -120,17 +108,12 @@
   import memoizeOne from 'memoize-one'
   import { validateText } from '$lib/logic/validation.js'
   import { truncate } from '$lib/utils/stringUtils.js'
-  import LocalFormatIcon from '$lib/assets/icon/expand-solid.svelte'
   import { indentationMarkers } from '@replit/codemirror-indentation-markers'
-  import { isTextSelection } from '$lib/logic/selection.js'
   import { wrappedLineIndent } from 'codemirror-wrapped-line-indent/dist/index.js' // ensure loading ESM, otherwise the vitest test fail
 
   export let readOnly: boolean
   export let mainMenuBar: boolean
-  export let statusBar: boolean
-  export let askToFormat: boolean
   export let externalContent: Content
-  export let externalSelection: JSONEditorSelection | undefined
   export let history: History<HistoryItem>
   export let indentation: number | string
   export let tabSize: number
@@ -146,9 +129,7 @@
   export let onError: OnError
   export let onFocus: OnFocus
   export let onBlur: OnBlur
-  export let onRenderMenu: OnRenderMenuInternal
   export let onJSONEditorModal: OnJSONEditorModal
-  export let isModalLayer: boolean
 
   const debug = createDebug('jsoneditor:JsMode')
 
@@ -161,7 +142,6 @@
   let editorState: EditorState
 
   let acceptTooLarge = false
-  let askToFormatApplied = askToFormat
 
   let validationErrors: ValidationError[] = []
   const linterCompartment = new Compartment()
@@ -219,7 +199,6 @@
   // eslint-disable-next-line svelte/no-unused-svelte-ignore
   // svelte-ignore reactive_declaration_non_reactive_property
   $: setCodeMirrorContent(externalContent, false, false)
-  $: applyExternalSelection(externalSelection)
   $: updateLinter(validator)
   $: updateIndentation(indentation)
   $: updateTabSize(tabSize)
@@ -263,9 +242,6 @@
     }
   })
 
-  const sortModalId = uniqueId()
-  const transformModalId = uniqueId()
-
   export function focus() {
     if (codeMirrorView) {
       debug('focus')
@@ -288,30 +264,6 @@
       onBlur()
     }
   })
-
-  export function patch(operations: JSONPatchDocument): JSONPatchResult {
-    return handlePatch(operations, false)
-  }
-
-  export function handlePatch(operations: JSONPatchDocument, emitChange: boolean): JSONPatchResult {
-    debug('handlePatch', operations, emitChange)
-
-    const previousJson = parser.parse(text)
-    const updatedJson = immutableJSONPatch(previousJson, operations)
-    const undo = revertJSONPatch(previousJson, operations)
-    const updatedContent = {
-      text: parser.stringify(updatedJson, null, indentation) as string
-    }
-
-    setCodeMirrorContent(updatedContent, emitChange, false)
-
-    return {
-      json: updatedJson,
-      previousJson,
-      undo,
-      redo: operations
-    }
-  }
 
   function handleRepair() {
     debug('repair')
@@ -354,10 +306,7 @@
         modalOpen = false
         setTimeout(focus)
       },
-      onPatch: function (
-        operations: JSONPatchDocument,
-        afterPatch?: AfterPatchCallback
-      ): JSONPatchResult {
+      onPatch: function (): JSONPatchResult {
         throw new Error('Function not implemented.')
       }
     })
@@ -473,30 +422,6 @@
     }
   }
 
-  function handleDoubleClick(_event: MouseEvent, view: EditorView) {
-    // When the user double-clicked right from a bracket [ or {,
-    // select the contents of the array or object
-    if (view.state.selection.ranges.length === 1) {
-      const range = view.state.selection.ranges[0]
-      const selectedText = text.slice(range.from, range.to)
-      if (selectedText === '{' || selectedText === '[') {
-        const jsmap = jsonSourceMap.parse(text)
-        const path = Object.keys(jsmap.pointers).find((path) => {
-          const pointer = jsmap.pointers[path]
-          return pointer.value?.pos === range.from
-        })
-        const pointer = jsmap.pointers[path]
-
-        if (path && pointer && pointer.value && pointer.valueEnd) {
-          debug('pointer found, selecting inner contents of path:', path, pointer)
-          const anchor = pointer.value.pos + 1
-          const head = pointer.valueEnd.pos - 1
-          setSelection(anchor, head)
-        }
-      }
-    }
-  }
-
   function createLinter() {
     return linter(linterCallback, { delay: TEXT_MODE_ONCHANGE_DELAY })
   }
@@ -514,16 +439,14 @@
   }): EditorView {
     debug('Create CodeMirror editor', { readOnly, indentation })
 
-    const selection = isValidSelection(externalSelection, initialText)
-      ? fromTextSelection(externalSelection)
-      : undefined
-
     const state = EditorState.create({
       doc: initialText,
-      selection,
       extensions: [
+        linter(esLint(new Linter())),
+        // 显示行号
         lineNumbers(),
         linterCompartment.of(createLinter()),
+        // 显示行号和折叠区域
         lintGutter(),
         highlightActiveLineGutter(),
         highlightSpecialChars(),
@@ -542,6 +465,7 @@
         highlightActiveLine(),
         highlightSelectionMatches(),
         keymap.of([
+          // 缩进替换tab为空格
           indentWithTab,
           ...closeBracketsKeymap,
           ...defaultKeymap,
@@ -557,9 +481,6 @@
         syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
         highlighter,
         indentationMarkers({ hideFirstIndent: true }),
-        EditorView.domEventHandlers({
-          dblclick: handleDoubleClick
-        }),
         EditorView.updateListener.of((update) => {
           editorState = update.state
 
@@ -582,11 +503,10 @@
           }
         }),
         javascript(),
-        search({
-          top: true
-        }),
+        // 自动换行
         EditorView.lineWrapping,
         readOnlyCompartment.of(EditorState.readOnly.of(readOnly)),
+        // 设置Tab键的缩进大小
         tabSizeCompartment.of(EditorState.tabSize.of(tabSize)),
         indentCompartment.of(createIndent(indentation)),
         themeCompartment.of(EditorView.theme({}, { dark: hasDarkTheme() }))
@@ -597,17 +517,6 @@
       state,
       parent: target
     })
-
-    if (selection) {
-      // important to do via dispatch, since that is executed on the next tick.
-      // Otherwise, the editor is not scrolled down enough when the statusbar is rendered on the next tick
-      codeMirrorView.dispatch(
-        codeMirrorView.state.update({
-          selection: selection.main,
-          scrollIntoView: true // FIXME: scrollIntoView also affects scroll of the main page, possibly causing the main page to scroll when jsoneditor has an initial selection
-        })
-      )
-    }
 
     return codeMirrorView
   }
@@ -620,14 +529,6 @@
     return codeMirrorRef
       ? getComputedStyle(codeMirrorRef).getPropertyValue('--jse-theme').includes('dark')
       : false
-  }
-
-  function isValidSelection(selection: JSONEditorSelection | undefined, text: string): boolean {
-    if (!isTextSelection(selection)) {
-      return false
-    }
-
-    return selection.ranges.every((range) => range.anchor < text.length && range.head < text.length)
   }
 
   function toRichValidationError(validationError: ValidationError): RichValidationError {
@@ -710,26 +611,6 @@
     if (isChanged && emitChange) {
       emitOnChange(content, previousContent)
     }
-  }
-
-  function applyExternalSelection(externalSelection: JSONEditorSelection | undefined) {
-    if (!isTextSelection(externalSelection)) {
-      return
-    }
-
-    const selection = fromTextSelection(externalSelection)
-    if (codeMirrorView && selection && (!editorState || !editorState.selection.eq(selection))) {
-      debug('applyExternalSelection', selection)
-
-      // note that we cannot clear the selection (we could maybe set the cursor to 0 but that's not really what we want)
-      codeMirrorView.dispatch({ selection })
-    }
-  }
-
-  function fromTextSelection(
-    selection: JSONEditorSelection | undefined
-  ): EditorSelection | undefined {
-    return isTextSelection(selection) ? EditorSelection.fromJSON(selection) : undefined
   }
 
   /**
@@ -926,6 +807,7 @@
 
   export function validate(): ContentErrors | undefined {
     debug('validate:start')
+    console.log('validate:start')
 
     flush()
 
@@ -983,21 +865,6 @@
 </script>
 
 <div class="jse-text-mode" class:no-main-menu={!mainMenuBar} bind:this={domTextMode}>
-  {#if mainMenuBar}
-    {@const isNewDocument = text.length === 0}
-
-    <JsMenu
-      {readOnly}
-      onUndo={handleUndo}
-      onRedo={handleRedo}
-      canUndo={history.canUndo}
-      canRedo={history.canRedo}
-      {onRenderMenu}
-      onOpenEditorModal={handleEditModal}
-      {isModalLayer}
-    />
-  {/if}
-
   {#if !isSSR}
     {@const editorDisabled = disableTextEditor(text, acceptTooLarge)}
 
@@ -1032,25 +899,6 @@
       <div class="jse-contents jse-preview">
         {truncate(text || '', MAX_CHARACTERS_TEXT_PREVIEW)}
       </div>
-    {/if}
-
-    {#if !editorDisabled}
-      {#if statusBar}
-        <StatusBar {editorState} />
-      {/if}
-
-      {#if jsonParseError}
-        <Message
-          type="error"
-          icon={LocalExclamationTriangleIcon}
-          message={jsonParseError.message}
-          actions={repairActions}
-          onClick={handleShowMe}
-          onClose={focus}
-        />
-      {/if}
-
-      <ValidationErrorsOverview {validationErrors} selectError={handleSelectValidationError} />
     {/if}
   {:else}
     <div class="jse-contents">

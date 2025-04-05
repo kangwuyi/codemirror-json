@@ -80,6 +80,7 @@
   let refTreeMode: TreeMode | undefined
   let refTableMode: TableMode | undefined
   let refTextMode: TextMode | undefined
+  let refJsMode: JsMode | undefined
 
   const debug = createDebug('jsoneditor:JSONEditorRoot')
 
@@ -105,6 +106,9 @@
     if (mode === 'text' && refTextMode) {
       // flush pending changes before adding a new history item
       refTextMode.flush()
+    } else if (mode === 'javascript' && refJsMode) {
+      // flush pending changes before adding a new history item
+      refJsMode.flush()
     }
 
     debug('add history item', item)
@@ -251,6 +255,8 @@
       return refTreeMode.validate()
     } else if (refTableMode) {
       return refTableMode.validate()
+    } else if (refJsMode) {
+      return refJsMode.validate()
     } else {
       throw new Error(`Method validate is not available in mode "${mode}"`)
     }
@@ -299,6 +305,8 @@
   export function focus() {
     if (refTextMode) {
       refTextMode.focus()
+    } else if (refJsMode) {
+      refJsMode.focus()
     } else if (refTreeMode) {
       refTreeMode.focus()
     } else if (refTableMode) {
@@ -309,6 +317,8 @@
   export async function refresh(): Promise<void> {
     if (refTextMode) {
       await refTextMode.refresh()
+    } else if (refJsMode) {
+      await refJsMode.refresh()
     } else {
       // nothing to do in tree or table mode (also: don't throw an exception or so,
       // that annoying having to reckon with that when using .refresh()).
@@ -411,16 +421,13 @@
   />
 {:else}
   <JsMode
-    bind:this={refTextMode}
+    bind:this={refJsMode}
     externalContent={content}
-    externalSelection={selection}
     {history}
     {readOnly}
     {indentation}
     {tabSize}
     {mainMenuBar}
-    {statusBar}
-    {askToFormat}
     {escapeUnicodeCharacters}
     {parser}
     {validator}
@@ -433,9 +440,6 @@
     {onError}
     {onFocus}
     {onBlur}
-    onRenderMenu={handleRenderMenu}
-    {onSortModal}
     {onJSONEditorModal}
-    {isModalLayer}
   />
 {/if}
