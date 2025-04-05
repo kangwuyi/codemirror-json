@@ -5,7 +5,56 @@
   import LocalEyeIcon from '$lib/assets/icon/eye-solid.svelte'
   import LocalTimesIcon from '$lib/assets/icon/circle-xmark-solid.svelte'
   import LocalWrenchIcon from '$lib/assets/icon/wrench-solid.svelte'
-
+  // ----------
+  import { javascript } from '@codemirror/lang-javascript'
+  import {
+    bracketMatching,
+    defaultHighlightStyle,
+    foldGutter,
+    foldKeymap,
+    indentOnInput,
+    indentUnit,
+    syntaxHighlighting
+  } from '@codemirror/language'
+  import {
+    Annotation,
+    ChangeSet,
+    Compartment,
+    EditorSelection,
+    EditorState,
+    type Extension
+  } from '@codemirror/state'
+  import {
+    crosshairCursor,
+    drawSelection,
+    dropCursor,
+    EditorView,
+    highlightActiveLine,
+    highlightActiveLineGutter,
+    highlightSpecialChars,
+    keymap,
+    lineNumbers,
+    rectangularSelection,
+    type ViewUpdate
+  } from '@codemirror/view'
+  import { indentWithTab, defaultKeymap, historyKeymap } from '@codemirror/commands'
+  import type { Diagnostic } from '@codemirror/lint'
+  import { linter, lintGutter, lintKeymap } from '@codemirror/lint'
+  import { json as jsonLang } from '@codemirror/lang-json'
+  import {
+    closeSearchPanel,
+    highlightSelectionMatches,
+    openSearchPanel,
+    search,
+    searchKeymap
+  } from '@codemirror/search'
+  import {
+    autocompletion,
+    closeBrackets,
+    closeBracketsKeymap,
+    completionKeymap
+  } from '@codemirror/autocomplete'
+  // --------------
   import { createDebug } from '$lib/utils/debug.js'
   import type { JSONPatchDocument, JSONPath } from 'immutable-json-patch'
   import { immutableJSONPatch, revertJSONPatch } from 'immutable-json-patch'
@@ -31,53 +80,7 @@
   import Message from '../../controls/Message.svelte'
   import ValidationErrorsOverview from '../../controls/ValidationErrorsOverview.svelte'
   import TextMenu from './menu/TextMenu.svelte'
-  import {
-    Annotation,
-    ChangeSet,
-    Compartment,
-    EditorSelection,
-    EditorState,
-    type Extension
-  } from '@codemirror/state'
-  import {
-    crosshairCursor,
-    drawSelection,
-    dropCursor,
-    EditorView,
-    highlightActiveLine,
-    highlightActiveLineGutter,
-    highlightSpecialChars,
-    keymap,
-    lineNumbers,
-    rectangularSelection,
-    type ViewUpdate
-  } from '@codemirror/view'
-  import { defaultKeymap, indentWithTab } from '@codemirror/commands'
-  import type { Diagnostic } from '@codemirror/lint'
-  import { linter, lintGutter, lintKeymap } from '@codemirror/lint'
-  import { json as jsonLang } from '@codemirror/lang-json'
-  import {
-    bracketMatching,
-    defaultHighlightStyle,
-    foldGutter,
-    foldKeymap,
-    indentOnInput,
-    indentUnit,
-    syntaxHighlighting
-  } from '@codemirror/language'
-  import {
-    closeSearchPanel,
-    highlightSelectionMatches,
-    openSearchPanel,
-    search,
-    searchKeymap
-  } from '@codemirror/search'
-  import {
-    autocompletion,
-    closeBrackets,
-    closeBracketsKeymap,
-    completionKeymap
-  } from '@codemirror/autocomplete'
+
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   import jsonSourceMap from 'json-source-map'
