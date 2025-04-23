@@ -1,6 +1,7 @@
 <svelte:options accessors={false} immutable={true} />
 
 <script lang="ts">
+  import emitter from '../event/bus.js'
   import { createDebug } from '../utils/debug.js'
   import { uniqueId } from '../utils/uniqueId.js'
   import { isEqualParser, isJSONContent, validateContentType } from '../utils/jsonUtils.js'
@@ -108,6 +109,7 @@
   export let onError: OnError = onErrorDefault
   export let onFocus: OnFocus = onFocusDefault
   export let onBlur: OnBlur = onBlurDefault
+  export let onSetMitt: any | undefined = onChangeDefault
 
   let instanceId = uniqueId()
   let hasFocus = false
@@ -375,6 +377,11 @@
     }
   }
 
+  function handleSetMitt() {
+    onSetMitt(emitter)
+  }
+  handleSetMitt()
+
   function handleSelect(updatedSelection: JSONEditorSelection | undefined) {
     selection = updatedSelection
 
@@ -460,6 +467,7 @@
     event.stopPropagation()
   }
 
+  // --------------
   $: debug('mode changed to', mode)
 </script>
 

@@ -14,7 +14,7 @@ let callbacks: WeakMap<Element, (element: Element) => void>
  *      My width is: {clientWidth}
  *   </div>
  */
-export function resizeObserver(element: Element, onResize: (element: Element) => void) {
+export function resizeObserver(e: Element, onResize: (element: Element) => void) {
   if (!observer) {
     callbacks = new WeakMap()
     observer = new ResizeObserver((entries) => {
@@ -27,13 +27,13 @@ export function resizeObserver(element: Element, onResize: (element: Element) =>
     })
   }
 
-  callbacks.set(element, onResize)
-  observer.observe(element)
+  callbacks.set(e, onResize)
+  observer.observe(e)
 
   return {
     destroy: () => {
-      callbacks.delete(element)
-      observer.unobserve(element)
-    }
+      callbacks.delete(e)
+      observer.unobserve(e)
+    },
   }
 }

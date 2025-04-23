@@ -1,6 +1,8 @@
 <script>
   import { JSONEditor } from 'codemirror-json'
 
+  let emitter = null
+
   let content = $state({
     text: undefined, // can be used to pass a stringified JSON document instead
     json: {
@@ -18,6 +20,35 @@
     console.log('contents changed:', updatedContent)
     content = updatedContent
   }
+  // ------------
+  function handleSetMitt(o) {
+    emitter = o
+    console.log('-------------------------------emitter', emitter)
+  }
+  function handleExpandAll() {
+    emitter.emit('onExpandAll', 'tree')
+  }
+  function handleCollapseAll() {
+    emitter.emit('onCollapseAll', 'tree')
+  }
+  function handleSortAll() {
+    emitter.emit('onSortAll', 'tree')
+  }
+  function handleUndo() {
+    emitter.emit('onUndo', 'tree')
+  }
+  function handleRedo() {
+    emitter.emit('onRedo', 'tree')
+  }
+  function handleFullscreen() {
+    emitter.emit('onFullscreen', 'tree')
+  }
+  function handleCopy() {
+    emitter.emit('onCopy', 'tree')
+  }
+  function handleChangeMode(mode) {
+    emitter.emit('onChangeMode', mode)
+  }
 </script>
 
 <svelte:head>
@@ -31,8 +62,20 @@
   <code>onChange</code> callback function to receive changes.
 </p>
 
+<button onclick={() => handleChangeMode('text')}>text</button>
+<button onclick={() => handleChangeMode('tree')}>tree</button>
+<button onclick={() => handleChangeMode('table')}>table</button>
+<br />
+<button onclick={handleExpandAll}>onExpandAll</button>
+<button onclick={handleCollapseAll}>onExpandAll</button>
+<button onclick={handleSortAll}>onSortAll</button>
+<button onclick={handleUndo}>onUndo</button>
+<button onclick={handleRedo}>onRedo</button>
+<button onclick={handleFullscreen}>onFullscreen</button>
+<button onclick={handleCopy}>onCopy</button>
+
 <div class="editor">
-  <JSONEditor {content} onChange={handleChange} />
+  <JSONEditor {content} onChange={handleChange} onSetMitt={handleSetMitt} />
 </div>
 
 <style>

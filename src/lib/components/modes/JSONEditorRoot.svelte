@@ -1,4 +1,5 @@
 <script lang="ts">
+  import emitter from '../../event/bus.js'
   import type {
     Content,
     ContentErrors,
@@ -155,6 +156,13 @@
       onChangeMode(mode)
     }
   }
+
+  emitter.on('onChangeMode', (type: Mode | unknown) => {
+    console.log('root::thisis emitter.on onChangeMode', type)
+    if (typeof type === 'string') {
+      onChangeMode(type as Mode)
+    }
+  })
 
   let modeMenuItems: MenuItem[]
   $: modeMenuItems = [

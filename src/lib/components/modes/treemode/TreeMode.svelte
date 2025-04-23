@@ -1,6 +1,7 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
+  import emitter from '../../../event/bus.js'
   import LocalCheckIcon from '../../icon/check-solid.svelte'
   import LocalCodeIcon from '../../icon/code-solid.svelte'
   import LocalWrenchIcon from '../../icon/wrench-solid.svelte'
@@ -103,52 +104,53 @@
   import JSONNode from './JSONNode.svelte'
   import TreeMenu from './menu/TreeMenu.svelte'
   import Welcome from './Welcome.svelte'
-  import type {
-    AbsolutePopupContext,
-    AbsolutePopupOptions,
-    AfterPatchCallback,
-    Content,
-    ContentErrors,
-    ContextMenuItem,
-    ConvertType,
-    DocumentState,
-    History,
-    HistoryItem,
-    InsertType,
-    JSONEditorSelection,
-    JSONParser,
-    JSONPatchResult,
-    JSONPathParser,
-    JSONRepairModalProps,
-    JSONSelection,
-    OnBlur,
-    OnChange,
-    OnChangeMode,
-    OnClassName,
-    OnError,
-    OnExpand,
-    OnFocus,
-    OnJSONEditorModal,
-    OnRedo,
-    OnRenderContextMenuInternal,
-    OnRenderMenuInternal,
-    OnRenderValue,
-    OnSelect,
-    OnSortModal,
-    OnUndo,
-    ParseError,
-    PastedJson,
-    ScrollToOptions,
-    SearchResultDetails,
-    SearchResults,
-    Section,
-    TreeModeContext,
-    ValidationError,
-    ValidationErrors,
-    Validator,
-    ValueNormalization
-  } from '$lib/types'
-  import { Mode, ValidationSeverity } from '$lib/types.js'
+  import {
+    Mode,
+    type AbsolutePopupContext,
+    type AbsolutePopupOptions,
+    type AfterPatchCallback,
+    type Content,
+    type ContentErrors,
+    type ContextMenuItem,
+    type ConvertType,
+    type DocumentState,
+    type History,
+    type HistoryItem,
+    type InsertType,
+    type JSONEditorSelection,
+    type JSONParser,
+    type JSONPatchResult,
+    type JSONPathParser,
+    type JSONRepairModalProps,
+    type JSONSelection,
+    type OnBlur,
+    type OnChange,
+    type OnChangeMode,
+    type OnClassName,
+    type OnError,
+    type OnExpand,
+    type OnFocus,
+    type OnJSONEditorModal,
+    type OnRedo,
+    type OnRenderContextMenuInternal,
+    type OnRenderMenuInternal,
+    type OnRenderValue,
+    type OnSelect,
+    type OnSortModal,
+    type OnUndo,
+    type ParseError,
+    type PastedJson,
+    type ScrollToOptions,
+    type SearchResultDetails,
+    type SearchResults,
+    type Section,
+    type TreeModeContext,
+    type ValidationError,
+    type ValidationErrors,
+    type Validator,
+    type ValueNormalization,
+    type ValidationSeverity
+  } from '$lib/types.js'
   import memoizeOne from 'memoize-one'
   import { measure } from '$lib/utils/timeUtils.js'
   import {
@@ -631,6 +633,11 @@
     selection = createEditKeySelection(getFocusPath(selection))
   }
 
+  emitter.on('onFullscreen', (type: Mode | unknown) => {
+    console.log('tree::thisis emitter.on onFullscreen', type)
+    if (Mode.tree === type) handleEditModal()
+  })
+
   function handleEditModal() {
     // selection 选中的key，比如选中字段 color
     // eq: {type: 'key', path: ['color']}
@@ -709,6 +716,18 @@
       onPatch: handlePatch
     })
   }
+
+  emitter.on('onCopy', (type: Mode | unknown) => {
+    console.log('tree::thisis emitter.on onCopy', type)
+
+    if (Mode.tree === type) {
+      const hasSelectionContents =
+        json !== void 0 &&
+        (isMultiSelection(selection) || isKeySelection(selection) || isValueSelection(selection))
+      if (!hasSelectionContents) return console.log('需要选中文字区域才能进行复制')
+      handleCopy()
+    }
+  })
 
   async function handleCopy(indent = true) {
     if (json === undefined) {
@@ -948,7 +967,13 @@
       onSelect: handleSelect
     })
   }
-
+  emitter.on('onUndo', (type: Mode | unknown) => {
+    console.log('tree::thisis emitter.on onUndo', type)
+    if (Mode.tree === type) {
+      if (!history.canUndo) return console.log('已经回退到起点')
+      handleUndo()
+    }
+  })
   function handleUndo() {
     if (readOnly) {
       return
@@ -993,7 +1018,13 @@
       scrollTo(getFocusPath(selection), { scrollToWhenVisible: false })
     }
   }
-
+  emitter.on('onRedo', (type: Mode | unknown) => {
+    console.log('tree::thisis emitter.on onRedo', type)
+    if (Mode.tree === type) {
+      if (!history.canRedo) return console.log('已经重做到终点')
+      handleRedo()
+    }
+  })
   function handleRedo() {
     if (readOnly) {
       return
@@ -1072,11 +1103,6 @@
     }
 
     const rootPath = findRootPath(json, selection)
-    openSortModal(rootPath)
-  }
-
-  function handleSortAll() {
-    const rootPath: JSONPath = []
     openSortModal(rootPath)
   }
 
@@ -1340,6 +1366,32 @@
     focus()
   }
 
+  emitter.on('onExpandAll', (type: Mode | unknown) => {
+    console.log('tree::thisis emitter.on onExpandAll', type)
+    if (Mode.tree === type) {
+      if (!isObjectOrArray(json)) return console.log('需要 JSON 格式')
+      handleExpand([], true, true)
+    }
+  })
+  emitter.on('onCollapseAll', (type: Mode | unknown) => {
+    console.log('tree::thisis emitter.on onCollapseAll', type)
+    if (Mode.tree === type) {
+      if (!isObjectOrArray(json)) return console.log('需要 JSON 格式')
+      handleExpand([], false, true)
+    }
+  })
+  emitter.on('onSortAll', (type: Mode | unknown) => {
+    console.log('tree::thisis emitter.on onSortAll', type)
+    if (Mode.tree === type) {
+      if (readOnly || json === undefined) return console.log('只读模式或空值不允许操作此行为')
+      const rootPath: JSONPath = []
+      openSortModal(rootPath)
+    }
+  })
+  function handleSortAll() {
+    const rootPath: JSONPath = []
+    openSortModal(rootPath)
+  }
   function handleExpandAll() {
     handleExpand([], true, true)
   }
