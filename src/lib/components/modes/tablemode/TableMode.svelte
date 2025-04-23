@@ -1495,6 +1495,7 @@
 
     // open a popup where you can edit the nested object/array
     onJSONEditorModal({
+      cacheMode: Mode.table,
       content: {
         json: getIn(json, path)
       },

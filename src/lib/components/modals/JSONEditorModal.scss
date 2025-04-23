@@ -11,18 +11,6 @@
   .jse-modal-contents {
     @include styles.jse-modal-contents;
 
-    .jse-label {
-      font-weight: bold;
-      display: block;
-      box-sizing: border-box;
-
-      .jse-label-inner {
-        margin-top: styles.$padding-double;
-        margin-bottom: styles.$padding-half;
-        box-sizing: border-box;
-      }
-    }
-
     .jse-modal-inline-editor {
       flex: 1;
       min-height: 150px;

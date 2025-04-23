@@ -439,13 +439,12 @@
 
   emitter.on('onFullscreen', (type: Mode | unknown) => {
     console.log('text::thisis emitter.on onFullscreen', type)
-    if (Mode.text === type) handleEditModal()
+    if (Mode.text === type) {
+      const path = [] as JSONPath
+      const codeMirrorText = getCodeMirrorValue()
+      openJSONEditorModal(path, codeMirrorText)
+    }
   })
-  function handleEditModal() {
-    const path = [] as JSONPath
-    const codeMirrorText = getCodeMirrorValue()
-    openJSONEditorModal(path, codeMirrorText)
-  }
 
   function openJSONEditorModal(path: JSONPath, value: string) {
     debug('openJSONEditorModal', { path, value })
@@ -453,6 +452,7 @@
     modalOpen = true
 
     onJSONEditorModal({
+      cacheMode: Mode.text,
       content: {
         text: value || ''
       },

@@ -595,10 +595,10 @@ export interface JSONEditorPropsOptional {
 }
 
 export interface JSONEditorModalProps {
+  cacheMode: Mode
   content: Content
   path: JSONPath
   onPatch: OnPatch
-
   readOnly: boolean
   indentation: number | string
   tabSize: number
@@ -716,6 +716,7 @@ export interface JSONRepairModalProps {
 }
 
 export interface JSONEditorModalCallback {
+  cacheMode: Mode
   content: Content
   path: JSONPath
   onPatch: OnPatch

@@ -417,14 +417,20 @@
   // 弹出层
   // The onJSONEditorModal method is located in JSONEditor to prevent circular references:
   //     JSONEditor -> TableMode -> JSONEditorModal -> JSONEditor
-  function onJSONEditorModal({ content, path, onPatch, onClose }: JSONEditorModalCallback) {
+  function onJSONEditorModal({
+    cacheMode,
+    content,
+    path,
+    onPatch,
+    onClose
+  }: JSONEditorModalCallback) {
     debug('onJSONEditorModal', { content, path })
 
     jsonEditorModalProps = {
+      cacheMode,
       content,
       path,
       onPatch,
-
       readOnly,
       indentation,
       tabSize,

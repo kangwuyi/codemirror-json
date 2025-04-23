@@ -35,6 +35,7 @@
 
   const debug = createDebug('jsoneditor:JSONEditorModal')
 
+  export let cacheMode: Mode
   export let content: Content // the nested document
   export let path: JSONPath
   export let onPatch: OnPatch
@@ -64,6 +65,7 @@
   export let isModalLayer: boolean
 
   console.log('modal isModalLayer', isModalLayer)
+  console.log('modal path', path)
 
   interface ModalState {
     mode: Mode
@@ -76,7 +78,7 @@
   let fullscreen: boolean
 
   const rootState: ModalState = {
-    mode: determineMode(content),
+    mode: cacheMode || Mode.text,
     content,
     selection: undefined,
     relativePath: path
@@ -86,10 +88,6 @@
   console.log('rootState', rootState)
   console.log('content', content)
   $: currentState = lodash.last(stack) || rootState
-  $: absolutePath = stack.flatMap((state) => state.relativePath)
-  $: pathDescription = !lodash.isEmpty(absolutePath)
-    ? stringifyJSONPath(absolutePath)
-    : '(document root)'
 
   // not relevant in this Modal setting, but well
   $: parseMemoizeOne = memoizeOne(parser.parse)
@@ -99,10 +97,6 @@
   onMount(() => {
     refEditor?.focus()
   })
-
-  function determineMode(content: Content): Mode {
-    return isJSONContent(content) && isJSONArray(content.json) ? Mode.table : Mode.tree
-  }
 
   function scrollToSelection() {
     const selection: JSONEditorSelection | undefined = lodash.last(stack)?.selection
@@ -205,7 +199,7 @@
     debug('handleJSONEditorModal', { content, path })
 
     const nestedModalState = {
-      mode: determineMode(content),
+      mode: cacheMode || Mode.text,
       content,
       selection: undefined,
       relativePath: path
@@ -232,21 +226,6 @@
       />
 
       <div class="jse-modal-contents">
-        <div class="jse-label">
-          <div class="jse-label-inner">Path</div>
-        </div>
-        <input
-          class="jse-path"
-          type="text"
-          readonly
-          title="Selected path"
-          value={pathDescription}
-        />
-
-        <div class="jse-label">
-          <div class="jse-label-inner">Contents</div>
-        </div>
-
         <div class="jse-modal-inline-editor">
           <JSONEditorRoot
             bind:this={refEditor}

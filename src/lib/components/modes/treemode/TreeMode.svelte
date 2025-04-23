@@ -1109,6 +1109,7 @@
 
     // open a popup where you can edit the nested object/array
     onJSONEditorModal({
+      cacheMode: Mode.tree,
       content: {
         json: value
       },
