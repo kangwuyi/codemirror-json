@@ -145,7 +145,7 @@
     type ValidationErrors,
     type Validator,
     type ValueNormalization,
-    type ValidationSeverity
+    ValidationSeverity
   } from '$lib/types.js'
   import memoizeOne from 'memoize-one'
   import { measure } from '$lib/utils/timeUtils.js'

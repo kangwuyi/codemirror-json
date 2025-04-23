@@ -1,7 +1,7 @@
 {
   "name": "@kangwuyi/codemirror-json",
   "description": "A web-based tool to view, edit, format, transform, and validate JSON",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "homepage": "https://github.com/kangwuyi/codemirror-json",
   "repository": {
     "type": "git",
