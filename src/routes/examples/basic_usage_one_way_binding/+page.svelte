@@ -25,29 +25,35 @@
     emitter = o
     console.log('-------------------------------emitter', emitter)
   }
-  function handleExpandAll() {
-    emitter.emit('onExpandAll', 'tree')
+  function handleExpandAll(mode) {
+    emitter.emit('onExpandAll', mode)
   }
-  function handleCollapseAll() {
-    emitter.emit('onCollapseAll', 'tree')
+  function handleCollapseAll(mode) {
+    emitter.emit('onCollapseAll', mode)
   }
-  function handleSortAll() {
-    emitter.emit('onSortAll', 'tree')
+  function handleSortAll(mode) {
+    emitter.emit('onSortAll', mode)
   }
   function handleUndo() {
     emitter.emit('onUndo', 'tree')
   }
-  function handleRedo() {
-    emitter.emit('onRedo', 'tree')
+  function handleRedo(mode) {
+    emitter.emit('onRedo', mode)
   }
-  function handleFullscreen() {
-    emitter.emit('onFullscreen', 'tree')
+  function handleFullscreen(mode) {
+    emitter.emit('onFullscreen', mode)
   }
-  function handleCopy() {
-    emitter.emit('onCopy', 'tree')
+  function handleCopy(mode) {
+    emitter.emit('onCopy', mode)
   }
   function handleChangeMode(mode) {
     emitter.emit('onChangeMode', mode)
+  }
+  function handleFormat(mode) {
+    emitter.emit('onFormat', mode)
+  }
+  function handleCompact(mode) {
+    emitter.emit('onCompact', mode)
   }
 </script>
 
@@ -66,13 +72,30 @@
 <button onclick={() => handleChangeMode('tree')}>tree</button>
 <button onclick={() => handleChangeMode('table')}>table</button>
 <br />
-<button onclick={handleExpandAll}>onExpandAll</button>
-<button onclick={handleCollapseAll}>onExpandAll</button>
-<button onclick={handleSortAll}>onSortAll</button>
-<button onclick={handleUndo}>onUndo</button>
-<button onclick={handleRedo}>onRedo</button>
-<button onclick={handleFullscreen}>onFullscreen</button>
-<button onclick={handleCopy}>onCopy</button>
+tree
+<button onclick={() => handleExpandAll('tree')}>onExpandAll</button>
+<button onclick={() => handleCollapseAll('tree')}>onCollapseAll</button>
+<button onclick={() => handleSortAll('tree')}>onSortAll</button>
+<button onclick={() => handleUndo('tree')}>onUndo</button>
+<button onclick={() => handleRedo('tree')}>onRedo</button>
+<button onclick={() => handleFullscreen('tree')}>onFullscreen</button>
+<button onclick={() => handleCopy('tree')}>onCopy</button>
+<br />
+text
+<button onclick={() => handleFormat('text')}>onFormat</button>
+<button onclick={() => handleCompact('text')}>onCompact</button>
+<button onclick={() => handleSortAll('text')}>onSortAll</button>
+<button onclick={() => handleUndo('text')}>onUndo</button>
+<button onclick={() => handleRedo('text')}>onRedo</button>
+<button onclick={() => handleFullscreen('text')}>onFullscreen</button>
+<br />
+table
+<button onclick={() => handleSortAll('table')}>onSortAll</button>
+<button onclick={() => handleUndo('table')}>onUndo</button>
+<button onclick={() => handleRedo('table')}>onRedo</button>
+<button onclick={() => handleFullscreen('table')}>onFullscreen</button>
+<button onclick={() => handleCopy('table')}>onCopy</button>
+<br />
 
 <div class="editor">
   <JSONEditor {content} onChange={handleChange} onSetMitt={handleSetMitt} />

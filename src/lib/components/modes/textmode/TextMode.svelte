@@ -1,6 +1,7 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
+  import emitter from '../../../event/bus.js'
   import LocalExclamationTriangleIcon from '../../icon/triangle-exclamation-solid.svelte'
   import LocalEyeIcon from '../../icon/eye-solid.svelte'
   import LocalTimesIcon from '../../icon/circle-xmark-solid.svelte'
@@ -320,6 +321,13 @@
     }
   }
 
+  emitter.on('onFormat', (type: Mode | unknown) => {
+    console.log('text::thisis emitter.on onFormat', type)
+    if (Mode.text === type && text.length !== 0 && !readOnly) {
+      handleFormat()
+    }
+  })
+
   function handleFormat(): boolean {
     debug('format')
 
@@ -344,6 +352,13 @@
 
     return false
   }
+
+  emitter.on('onCompact', (type: Mode | unknown) => {
+    console.log('text::thisis emitter.on onCompact', type)
+    if (Mode.text === type && text.length !== 0 && !readOnly) {
+      handleCompact()
+    }
+  })
 
   function handleCompact(): boolean {
     debug('compact')
@@ -391,6 +406,13 @@
     }
   }
 
+  emitter.on('onSortAll', (type: Mode | unknown) => {
+    console.log('text::thisis emitter.on onSortAll', type)
+    if (Mode.text === type && text.length !== 0 && !readOnly) {
+      if (readOnly) return console.log('只读模式不允许操作此行为')
+      handleSort()
+    }
+  })
   function handleSort() {
     if (readOnly) {
       return
@@ -419,6 +441,10 @@
     }
   }
 
+  emitter.on('onFullscreen', (type: Mode | unknown) => {
+    console.log('text::thisis emitter.on onFullscreen', type)
+    if (Mode.text === type) handleEditModal()
+  })
   function handleEditModal() {
     const path = [] as JSONPath
     const codeMirrorText = getCodeMirrorValue()
@@ -448,6 +474,14 @@
     })
   }
 
+  emitter.on('onUndo', (type: Mode | unknown) => {
+    console.log('text::thisis emitter.on onUndo', type)
+    if (Mode.text === type) {
+      if (!history.canUndo) return console.log('已经回退到起点')
+      handleUndo()
+    }
+  })
+
   function handleUndo(): boolean {
     if (readOnly) {
       return false
@@ -474,6 +508,13 @@
     return true
   }
 
+  emitter.on('onRedo', (type: Mode | unknown) => {
+    console.log('text::thisis emitter.on onRedo', type)
+    if (Mode.text === type) {
+      if (!history.canRedo) return console.log('已经重做到终点')
+      handleRedo()
+    }
+  })
   function handleRedo(): boolean {
     if (readOnly) {
       return false

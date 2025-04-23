@@ -1,6 +1,7 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
+  import emitter from '../../../event/bus.js'
   import LocalCheckIcon from '../../icon/check-solid.svelte'
   import LocalCodeIcon from '../../icon/code-solid.svelte'
   import LocalWrenchIcon from '../../icon/wrench-solid.svelte'
@@ -1003,6 +1004,10 @@
     })
   }
 
+  emitter.on('onFullscreen', (type: Mode | unknown) => {
+    console.log('table::thisis emitter.on onFullscreen', type)
+    if (Mode.table === type) handleEditModal()
+  })
   // 打开 modal 编辑器
   function handleEditModal() {
     const path = [] as JSONPath
@@ -1110,6 +1115,14 @@
       onPatch: handlePatch
     })
   }
+
+  emitter.on('onCopy', (type: Mode | unknown) => {
+    console.log('table::thisis emitter.on onCopy', type)
+
+    if (Mode.table === type) {
+      handleCopy()
+    }
+  })
 
   async function handleCopy(indent = true) {
     if (json === undefined) {
@@ -1508,10 +1521,22 @@
     }
   }
 
+  emitter.on('onSortAll', (type: Mode | unknown) => {
+    console.log('table::thisis emitter.on onSortAll', type)
+    if (Mode.table === type && !(readOnly || !containsValidArray)) handleSortAll()
+  })
   function handleSortAll() {
     const rootPath: JSONPath = []
     openSortModal(rootPath)
   }
+
+  emitter.on('onUndo', (type: Mode | unknown) => {
+    console.log('table::thisis emitter.on onUndo', type)
+    if (Mode.table === type) {
+      if (!history.canUndo) return console.log('已经回退到起点')
+      handleUndo()
+    }
+  })
 
   function handleUndo() {
     if (readOnly) {
@@ -1557,6 +1582,14 @@
       scrollTo(getFocusPath(selection), { scrollToWhenVisible: false })
     }
   }
+
+  emitter.on('onRedo', (type: Mode | unknown) => {
+    console.log('table::thisis emitter.on onRedo', type)
+    if (Mode.table === type) {
+      if (!history.canRedo) return console.log('已经重做到终点')
+      handleRedo()
+    }
+  })
 
   function handleRedo() {
     if (readOnly) {
