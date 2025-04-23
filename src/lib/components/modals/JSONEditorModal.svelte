@@ -1,7 +1,7 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import { IconCaretLeft } from '@tabler/icons-svelte'
+  import { IconArrowNarrowLeft } from '@tabler/icons-svelte'
   // -------------
   import { flushSync, onMount } from 'svelte'
   import Header from './Header.svelte'
@@ -267,12 +267,12 @@
 
           {#if stack.length > 1}
             <button type="button" class="jse-secondary" on:click={handleClose}>
-              <IconCaretLeft />Back
+              <IconArrowNarrowLeft />返回
             </button>
           {/if}
           {#if !readOnly}
             <button type="button" class="jse-primary" on:click={handleApply} use:focus>
-              Apply
+              应用
             </button>
           {:else}
             <button type="button" class="jse-primary" on:click={handleClose}> Close </button>

@@ -34,7 +34,6 @@ $errors-overview-max-height: 25%;
 
   flex: 1;
   white-space: nowrap;
-  padding: defaults.$padding;
   color: inherit;
 
   &:hover {
@@ -81,7 +80,6 @@ $errors-overview-max-height: 25%;
 
   background: defaults.$button-secondary-background;
   color: defaults.$button-secondary-color;
-  padding: defaults.$padding $padding-double;
   border-radius: $border-radius;
 
   &:hover {

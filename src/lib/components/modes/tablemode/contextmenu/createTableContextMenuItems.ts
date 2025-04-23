@@ -76,14 +76,14 @@ export default function ({
         {
           type: 'column',
           items: [
-            { type: 'label', text: 'Table cell:' },
+            { type: 'label', text: '单元格:' },
             {
               type: 'dropdown-button',
               main: {
                 type: 'button',
                 onClick: () => onEditValue(),
                 icon: IconPencil,
-                text: 'Edit',
+                text: '编辑-值',
                 title: 'Edit the value (Double-click on the value)',
                 disabled: !canEditValue
               },
@@ -92,7 +92,7 @@ export default function ({
                 {
                   type: 'button',
                   icon: IconPencil,
-                  text: 'Edit',
+                  text: '编辑-值',
                   title: 'Edit the value (Double-click on the value)',
                   onClick: () => onEditValue(),
                   disabled: !canEditValue
@@ -100,7 +100,7 @@ export default function ({
                 {
                   type: 'button',
                   icon: enforceString ? IconChecks : IconSquare,
-                  text: 'Enforce string',
+                  text: '强转字符串',
                   title: 'Enforce keeping the value as string when it contains a numeric value',
                   onClick: () => onToggleEnforceString(),
                   disabled: !canEnforceString
@@ -113,7 +113,7 @@ export default function ({
                 type: 'button',
                 onClick: () => onCut(true),
                 icon: IconCut,
-                text: 'Cut',
+                text: '剪切',
                 title: 'Cut selected contents, formatted with indentation (Ctrl+X)',
                 disabled: !canCut
               },
@@ -143,7 +143,7 @@ export default function ({
                 type: 'button',
                 onClick: () => onCopy(true),
                 icon: IconCopy,
-                text: 'Copy',
+                text: '复制',
                 title: 'Copy selected contents, formatted with indentation (Ctrl+C)',
                 disabled: !hasSelectionContents
               },
@@ -171,7 +171,7 @@ export default function ({
               type: 'button',
               onClick: () => onPaste(),
               icon: IconClipboard,
-              text: 'Paste',
+              text: '粘贴',
               title: 'Paste clipboard contents (Ctrl+V)',
               disabled: readOnly || !hasSelection
             },
@@ -179,7 +179,7 @@ export default function ({
               type: 'button',
               onClick: () => onRemove(),
               icon: IconTrash,
-              text: 'Remove',
+              text: '删除',
               title: 'Remove selected contents (Delete)',
               disabled: readOnly || !hasSelectionContents
             }
@@ -188,12 +188,12 @@ export default function ({
         {
           type: 'column',
           items: [
-            { type: 'label', text: 'Table row:' },
+            { type: 'label', text: '行:' },
             {
               type: 'button',
               onClick: () => onEditRow(),
               icon: IconPencil,
-              text: 'Edit row',
+              text: '编辑-行',
               title: 'Edit the current row',
               disabled: readOnly || !hasSelection || !hasJson
             },
@@ -201,7 +201,7 @@ export default function ({
               type: 'button',
               onClick: () => onDuplicateRow(),
               icon: IconCopyCheck,
-              text: 'Duplicate row',
+              text: '复制行',
               title: 'Duplicate the current row (Ctrl+D)',
               disabled: readOnly || !hasSelection || !hasJson
             },
@@ -209,7 +209,7 @@ export default function ({
               type: 'button',
               onClick: () => onInsertBeforeRow(),
               icon: IconPlus,
-              text: 'Insert before',
+              text: '之前插入',
               title: 'Insert a row before the current row',
               disabled: readOnly || !hasSelection || !hasJson
             },
@@ -217,7 +217,7 @@ export default function ({
               type: 'button',
               onClick: () => onInsertAfterRow(),
               icon: IconPlus,
-              text: 'Insert after',
+              text: '之后插入',
               title: 'Insert a row after the current row',
               disabled: readOnly || !hasSelection || !hasJson
             },
@@ -225,7 +225,7 @@ export default function ({
               type: 'button',
               onClick: () => onRemoveRow(),
               icon: IconTrash,
-              text: 'Remove row',
+              text: '删除行',
               title: 'Remove current row',
               disabled: readOnly || !hasSelection || !hasJson
             }
