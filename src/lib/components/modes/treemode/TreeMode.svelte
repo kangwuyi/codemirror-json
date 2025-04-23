@@ -188,7 +188,6 @@
   export let externalSelection: JSONEditorSelection | undefined
   export let history: History<HistoryItem>
   export let truncateTextSize: number
-  export let mainMenuBar: boolean
   export let escapeControlCharacters: boolean
   export let escapeUnicodeCharacters: boolean
   export let parser: JSONParser
@@ -1823,14 +1822,11 @@
   role="tree"
   tabindex="-1"
   class="jse-tree-mode"
-  class:no-main-menu={!mainMenuBar}
   on:keydown={handleKeyDown}
   on:mousedown={handleMouseDown}
   on:contextmenu={handleContextMenu}
   bind:this={refJsonEditor}
 >
-  {#if mainMenuBar}{/if}
-
   {#if !isSSR}
     <label class="jse-hidden-input-label">
       <input

@@ -49,7 +49,6 @@
   export let tabSize: number
   export let truncateTextSize: number
   export let externalMode: Mode
-  export let mainMenuBar: boolean
   export let statusBar: boolean
   export let askToFormat: boolean
   export let escapeControlCharacters: boolean
@@ -341,7 +340,6 @@
     {readOnly}
     {indentation}
     {tabSize}
-    {mainMenuBar}
     {statusBar}
     {askToFormat}
     {escapeUnicodeCharacters}
@@ -369,7 +367,6 @@
     {history}
     {readOnly}
     {truncateTextSize}
-    {mainMenuBar}
     {escapeControlCharacters}
     {escapeUnicodeCharacters}
     {flattenColumns}
@@ -402,7 +399,6 @@
     {readOnly}
     {indentation}
     {truncateTextSize}
-    {mainMenuBar}
     {escapeControlCharacters}
     {escapeUnicodeCharacters}
     {parser}
@@ -433,7 +429,6 @@
     {readOnly}
     {indentation}
     {tabSize}
-    {mainMenuBar}
     {escapeUnicodeCharacters}
     {parser}
     {onChange}

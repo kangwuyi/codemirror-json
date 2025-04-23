@@ -125,7 +125,6 @@
   import { wrappedLineIndent } from 'codemirror-wrapped-line-indent/dist/index.js' // ensure loading ESM, otherwise the vitest test fail
 
   export let readOnly: boolean
-  export let mainMenuBar: boolean
   export let statusBar: boolean
   export let askToFormat: boolean
   export let externalContent: Content
@@ -1104,9 +1103,7 @@
       : [repairActionShowMe]
 </script>
 
-<div class="jse-text-mode" class:no-main-menu={!mainMenuBar} bind:this={domTextMode}>
-  {#if mainMenuBar}{/if}
-
+<div class="jse-text-mode" bind:this={domTextMode}>
   {#if !isSSR}
     {@const editorDisabled = disableTextEditor(text, acceptTooLarge)}
 

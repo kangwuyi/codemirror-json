@@ -75,9 +75,6 @@
     <button id="selectPath">select ["array", "3", "time"]</button>
   </p>
   <p>
-    <label for="mainMenuBar">
-      <input id="mainMenuBar" type="checkbox" checked /> mainMenuBar
-    </label>
     <label for="readOnly"> <input id="readOnly" type="checkbox" /> readOnly </label>
     <label for="escapeControlCharacters">
       <input id="escapeControlCharacters" type="checkbox" /> escapeControlCharacters
@@ -308,12 +305,6 @@
         type: 'value',
         path: ['array', '3', 'time'],
         edit: false
-      })
-    }
-
-    document.getElementById('mainMenuBar').onclick = function (event) {
-      testEditor.updateProps({
-        mainMenuBar: event.target.checked
       })
     }
 

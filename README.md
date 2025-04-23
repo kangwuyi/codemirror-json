@@ -23,7 +23,6 @@ const supportedPropNames = [
   'indentation',
   'tabSize',
   'mode',
-  'mainMenuBar',
   'navigationBar',
   'statusBar',
   'askToFormat',

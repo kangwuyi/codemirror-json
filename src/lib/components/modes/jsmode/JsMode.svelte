@@ -84,7 +84,6 @@
   import { wrappedLineIndent } from 'codemirror-wrapped-line-indent/dist/index.js' // ensure loading ESM, otherwise the vitest test fail
 
   export let readOnly: boolean
-  export let mainMenuBar: boolean
   export let externalContent: Content
   export let history: History<HistoryItem>
   export let indentation: number | string
@@ -604,7 +603,7 @@
   }
 </script>
 
-<div class="jse-text-mode" class:no-main-menu={!mainMenuBar} bind:this={domTextMode}>
+<div class="jse-text-mode" bind:this={domTextMode}>
   {#if !isSSR}
     {@const editorDisabled = disableTextEditor(text, acceptTooLarge)}
 

@@ -170,7 +170,6 @@
   export let externalSelection: JSONEditorSelection | undefined
   export let history: History<HistoryItem>
   export let truncateTextSize: number
-  export let mainMenuBar: boolean
   export let escapeControlCharacters: boolean
   export let escapeUnicodeCharacters: boolean
   export let flattenColumns: boolean
@@ -1650,14 +1649,11 @@
 <div
   role="table"
   class="jse-table-mode"
-  class:no-main-menu={!mainMenuBar}
   on:mousedown={handleMouseDown}
   on:keydown={handleKeyDown}
   on:contextmenu={handleContextMenu}
   bind:this={refJsonEditor}
 >
-  {#if mainMenuBar}{/if}
-
   {#if !isSSR}
     <label class="jse-hidden-input-label">
       <input
