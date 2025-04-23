@@ -132,7 +132,6 @@
     type OnJSONEditorModal,
     type OnRedo,
     type OnRenderContextMenuInternal,
-    type OnRenderMenuInternal,
     type OnRenderValue,
     type OnSelect,
     type OnSortModal,
@@ -202,7 +201,6 @@
   export let onUndo: OnUndo
   export let onRedo: OnRedo
   export let onRenderValue: OnRenderValue
-  export let onRenderMenu: OnRenderMenuInternal
   export let onRenderContextMenu: OnRenderContextMenuInternal
   export let onClassName: OnClassName | undefined
   export let onFocus: OnFocus

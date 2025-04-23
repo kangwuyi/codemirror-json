@@ -99,7 +99,6 @@
     OnFocus,
     OnJSONEditorModal,
     OnRedo,
-    OnRenderMenuInternal,
     OnSelect,
     OnSortModal,
     OnUndo,
@@ -144,7 +143,6 @@
   export let onError: OnError
   export let onFocus: OnFocus
   export let onBlur: OnBlur
-  export let onRenderMenu: OnRenderMenuInternal
   export let onSortModal: OnSortModal
   export let onJSONEditorModal: OnJSONEditorModal
   export let isModalLayer: boolean

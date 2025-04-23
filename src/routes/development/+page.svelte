@@ -279,14 +279,6 @@
       : [{ component: ReadonlyValue, props }]
   }
 
-  function onRenderMenu(items: MenuItem[], { mode }: RenderMenuContext) {
-    if (!import.meta.env.SSR) {
-      console.log('onRenderMenu', mode, items)
-    }
-
-    return items
-  }
-
   function onChangeTree(
     content: Content,
     previousContent: Content,
@@ -703,7 +695,6 @@
               parser={selectedParser}
               pathParser={selectedPathParser}
               validator={selectedValidator}
-              {onRenderMenu}
               onChange={onChangeTree}
               onSelect={onSelectTree}
               onRenderValue={$useCustomValueRenderer ? customRenderValue : renderValue}
@@ -763,7 +754,6 @@
               parser={selectedParser}
               pathParser={selectedPathParser}
               validator={selectedValidator}
-              {onRenderMenu}
               onChange={onChangeText}
               onSelect={onSelectText}
               onRenderValue={$useCustomValueRenderer ? customRenderValue : renderValue}

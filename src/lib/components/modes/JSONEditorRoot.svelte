@@ -22,8 +22,6 @@
     OnJSONEditorModal,
     OnRenderContextMenu,
     OnRenderContextMenuInternal,
-    OnRenderMenu,
-    OnRenderMenuInternal,
     OnRenderValue,
     OnSelect,
     OnSortModal,
@@ -66,7 +64,6 @@
   export let onSelect: OnSelect
   export let onRenderValue: OnRenderValue
   export let onClassName: OnClassName
-  export let onRenderMenu: OnRenderMenu
   export let onRenderContextMenu: OnRenderContextMenu
   export let onError: OnError
   export let onFocus: OnFocus
@@ -190,19 +187,6 @@
 
   const separatorMenuItem: MenuSeparator = {
     type: 'separator'
-  }
-
-  let handleRenderMenu: OnRenderMenuInternal
-  $: handleRenderMenu = (items: MenuItem[]) => {
-    const updatedItems = isMenuSpace(items[0])
-      ? modeMenuItems.concat(items) // menu is empty, readOnly mode
-      : modeMenuItems.concat(separatorMenuItem, items)
-
-    const updatedItemsOriginal = cloneDeep(updatedItems) // the user may change updatedItems in the callback
-
-    return (
-      onRenderMenu(updatedItems, { mode, modal: insideModal, readOnly }) || updatedItemsOriginal
-    )
   }
 
   let handleRenderContextMenu: OnRenderContextMenuInternal
@@ -354,7 +338,6 @@
     {onError}
     {onFocus}
     {onBlur}
-    onRenderMenu={handleRenderMenu}
     {onSortModal}
     {onJSONEditorModal}
     {isModalLayer}
@@ -383,7 +366,6 @@
     {onRenderValue}
     {onFocus}
     {onBlur}
-    onRenderMenu={handleRenderMenu}
     onRenderContextMenu={handleRenderContextMenu}
     {onSortModal}
     {onJSONEditorModal}
@@ -415,7 +397,6 @@
     {onClassName}
     {onFocus}
     {onBlur}
-    onRenderMenu={handleRenderMenu}
     onRenderContextMenu={handleRenderContextMenu}
     {onSortModal}
     {onJSONEditorModal}

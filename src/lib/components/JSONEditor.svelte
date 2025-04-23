@@ -28,7 +28,6 @@
     OnError,
     OnExpand,
     OnFocus,
-    OnRenderMenu,
     OnRenderValue,
     OnSelect,
     SortModalCallback,
@@ -71,7 +70,6 @@
   const onSelectDefault = undefined
   const onRenderValueDefault = renderValue
   const onClassNameDefault = noop
-  const onRenderMenuDefault = noop
   const onRenderContextMenuDefault = noop
   const onChangeModeDefault = noop
   const onErrorDefault: OnError = (err) => {
@@ -101,7 +99,6 @@
   export let onSelect: OnSelect | undefined = onSelectDefault
   export let onRenderValue: OnRenderValue = onRenderValueDefault
   export let onClassName: OnClassName = onClassNameDefault
-  export let onRenderMenu: OnRenderMenu = onRenderMenuDefault
   export let onRenderContextMenu: OnRenderContextMenu = onRenderContextMenuDefault
   export let onChangeMode: OnChangeMode = onChangeModeDefault
   export let onError: OnError = onErrorDefault
@@ -321,9 +318,6 @@
         case 'onClassName':
           onClassName = props[name] ?? onClassNameDefault
           break
-        case 'onRenderMenu':
-          onRenderMenu = props[name] ?? onRenderMenuDefault
-          break
         case 'onRenderContextMenu':
           onRenderContextMenu = props[name] ?? onRenderContextMenuDefault
           break
@@ -446,7 +440,6 @@
       pathParser,
       onRenderValue,
       onClassName,
-      onRenderMenu,
       onRenderContextMenu,
       onSortModal,
       onClose,
@@ -462,6 +455,7 @@
 
   // --------------
   $: debug('mode changed to', mode)
+  console.log('mode changed to', mode)
 </script>
 
 <AbsolutePopup>
@@ -495,7 +489,6 @@
         {onClassName}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        {onRenderMenu}
         {onRenderContextMenu}
         {onSortModal}
         {onJSONEditorModal}

@@ -392,8 +392,6 @@ export type RenderMenuContext = {
   modal: boolean
   readOnly: boolean
 }
-export type OnRenderMenu = (items: MenuItem[], context: RenderMenuContext) => MenuItem[] | undefined
-export type OnRenderMenuInternal = (items: MenuItem[]) => MenuItem[] | undefined
 export type RenderContextMenuContext = RenderMenuContext & {
   selection: JSONEditorSelection | undefined
 }
@@ -588,7 +586,6 @@ export interface JSONEditorPropsOptional {
   onChange?: OnChange
   onRenderValue?: OnRenderValue
   onClassName?: OnClassName
-  onRenderMenu?: OnRenderMenu
   onRenderContextMenu?: OnRenderContextMenu
   onChangeMode?: OnChangeMode
   onSelect?: OnSelect
@@ -618,7 +615,6 @@ export interface JSONEditorModalProps {
 
   onRenderValue: OnRenderValue
   onClassName: OnClassName
-  onRenderMenu: OnRenderMenu
   onRenderContextMenu: OnRenderContextMenu
   onSortModal: (props: SortModalCallback) => void
   onClose: () => void

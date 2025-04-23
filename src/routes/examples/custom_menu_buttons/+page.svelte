@@ -66,7 +66,7 @@
 </p>
 
 <div class="editor">
-  <JSONEditor bind:content onRenderMenu={handleRenderMenu} />
+  <JSONEditor bind:content />
 </div>
 
 <style>

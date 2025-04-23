@@ -17,7 +17,6 @@
     OnClassName,
     OnPatch,
     OnRenderContextMenu,
-    OnRenderMenu,
     OnRenderValue,
     OnSortModal,
     Validator
@@ -26,7 +25,7 @@
   import JSONEditorRoot from '../modes/JSONEditorRoot.svelte'
   import { noop } from '$lib/utils/noop.js'
   import { stringifyJSONPath } from '$lib/utils/pathUtils.js'
-  import { initial, isEmpty, last } from 'lodash-es'
+  import * as lodash from 'lodash-es'
   import { isJSONContent, toJSONContent } from '$lib/utils/jsonUtils.js'
 
   import memoizeOne from 'memoize-one'
@@ -56,7 +55,6 @@
 
   export let onRenderValue: OnRenderValue
   export let onClassName: OnClassName
-  export let onRenderMenu: OnRenderMenu
   export let onRenderContextMenu: OnRenderContextMenu
 
   export let onSortModal: OnSortModal
@@ -85,9 +83,13 @@
   }
   let stack: ModalState[] = [rootState]
 
-  $: currentState = last(stack) || rootState
+  console.log('rootState', rootState)
+  console.log('content', content)
+  $: currentState = lodash.last(stack) || rootState
   $: absolutePath = stack.flatMap((state) => state.relativePath)
-  $: pathDescription = !isEmpty(absolutePath) ? stringifyJSONPath(absolutePath) : '(document root)'
+  $: pathDescription = !lodash.isEmpty(absolutePath)
+    ? stringifyJSONPath(absolutePath)
+    : '(document root)'
 
   // not relevant in this Modal setting, but well
   $: parseMemoizeOne = memoizeOne(parser.parse)
@@ -103,7 +105,7 @@
   }
 
   function scrollToSelection() {
-    const selection: JSONEditorSelection | undefined = last(stack)?.selection
+    const selection: JSONEditorSelection | undefined = lodash.last(stack)?.selection
     if (isJSONSelection(selection)) {
       refEditor.scrollTo(getFocusPath(selection))
     }
@@ -160,7 +162,7 @@
       fullscreen = false
     } else if (stack.length > 1) {
       // remove the last item from the stack
-      stack = initial(stack)
+      stack = lodash.initial(stack)
       flushSync()
       refEditor?.focus()
       scrollToSelection()
@@ -189,9 +191,9 @@
   }
 
   function updateState(callback: (state: ModalState) => ModalState) {
-    const state = last(stack) as ModalState
+    const state = lodash.last(stack) as ModalState
     const updatedState = callback(state)
-    stack = [...initial(stack), updatedState]
+    stack = [...lodash.initial(stack), updatedState]
   }
 
   function handleError(newError: Error) {
@@ -274,7 +276,6 @@
             {onClassName}
             onFocus={noop}
             onBlur={noop}
-            {onRenderMenu}
             {onRenderContextMenu}
             {onSortModal}
             onJSONEditorModal={handleJSONEditorModal}

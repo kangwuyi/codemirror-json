@@ -39,7 +39,6 @@ const supportedPropNames = [
   'onChange',
   'onRenderValue',
   'onClassName',
-  'onRenderMenu',
   'onRenderContextMenu',
   'onChangeMode',
   'onSelect',

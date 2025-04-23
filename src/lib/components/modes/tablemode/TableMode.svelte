@@ -28,7 +28,6 @@
     OnJSONEditorModal,
     OnRedo,
     OnRenderContextMenuInternal,
-    OnRenderMenuInternal,
     OnRenderValue,
     OnSelect,
     OnSortModal,
@@ -184,7 +183,6 @@
   export let onUndo: OnUndo
   export let onRedo: OnRedo
   export let onRenderValue: OnRenderValue
-  export let onRenderMenu: OnRenderMenuInternal
   export let onRenderContextMenu: OnRenderContextMenuInternal
   export let onFocus: OnFocus
   export let onBlur: OnBlur
