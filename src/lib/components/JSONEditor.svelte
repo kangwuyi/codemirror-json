@@ -42,7 +42,7 @@
   import JSONEditorRoot from './modes/JSONEditorRoot.svelte'
   import JSONEditorModal from './modals/JSONEditorModal.svelte'
   import memoizeOne from 'memoize-one'
-  import { cloneDeep } from 'lodash-es'
+  import * as lodash from 'lodash-es'
   import SortModal from './modals/SortModal.svelte'
 
   // TODO: document how to enable debugging in the readme: localStorage.debug="jsoneditor:*", then reload
@@ -251,8 +251,7 @@
   }
 
   export function focus(): void {
-    refJSONEditorRoot.focus()
-
+    if (lodash.has(refJSONEditorRoot, 'focus')) refJSONEditorRoot.focus()
     flushSync()
   }
 
@@ -381,7 +380,7 @@
     selection = updatedSelection
 
     if (onSelect) {
-      onSelect(cloneDeep(updatedSelection))
+      onSelect(lodash.cloneDeep(updatedSelection))
     }
   }
 

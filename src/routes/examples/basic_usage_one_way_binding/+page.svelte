@@ -68,6 +68,7 @@
   <code>onChange</code> callback function to receive changes.
 </p>
 
+<button onclick={() => handleChangeMode('javascript')}>javascript</button>
 <button onclick={() => handleChangeMode('text')}>text</button>
 <button onclick={() => handleChangeMode('tree')}>tree</button>
 <button onclick={() => handleChangeMode('table')}>table</button>
