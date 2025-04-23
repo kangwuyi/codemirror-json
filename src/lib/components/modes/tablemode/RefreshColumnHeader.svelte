@@ -18,7 +18,7 @@
     'This is slower.'}
   on:click={() => onRefresh()}
 >
-  <IconRotate />
+  <IconRotate size={16} />
 </button>
 
 <style src="./RefreshColumnHeader.scss"></style>

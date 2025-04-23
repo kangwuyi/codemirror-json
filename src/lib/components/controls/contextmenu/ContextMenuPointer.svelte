@@ -43,7 +43,7 @@
   title={CONTEXT_MENU_EXPLANATION}
   on:click={handleClick}
 >
-  <IconCaretDown />
+  <IconCaretDown size={16} />
 </button>
 
 <style src="./ContextMenuPointer.scss"></style>

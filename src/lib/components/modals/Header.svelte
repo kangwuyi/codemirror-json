@@ -22,14 +22,14 @@
       on:click={() => (fullscreen = !fullscreen)}
     >
       {#if fullscreen}
-        <IconArrowsDiagonalMinimize2 />
+        <IconArrowsDiagonalMinimize2 size={16} />
       {:else}
-        <IconArrowsDiagonal />
+        <IconArrowsDiagonal size={16} />
       {/if}
     </button>
   {/if}
   <button type="button" class="jse-close" on:click={() => onClose?.()}>
-    <IconX />
+    <IconX size={16} />
   </button>
 </div>
 

@@ -1,7 +1,7 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import { IconSquare, IconChecks } from '@tabler/icons-svelte'
+  import { IconSquare, IconSquareCheck } from '@tabler/icons-svelte'
 
   import type { JSONPath } from 'immutable-json-patch'
   import { compileJSONPointer } from 'immutable-json-patch'
@@ -42,9 +42,9 @@
   title={!readOnly ? 'Click to toggle this boolean value' : `Boolean value ${value}`}
 >
   {#if value === true}
-    <IconChecks />
+    <IconSquareCheck size={16} />
   {:else}
-    <IconSquare />
+    <IconSquare size={16} />
   {/if}
 </div>
 

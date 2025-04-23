@@ -2,6 +2,9 @@
 @use '../../../themes/defaults';
 
 .jse-expand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: defaults.$indent-size;
   padding: 0;
   margin: 0;

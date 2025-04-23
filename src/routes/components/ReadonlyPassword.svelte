@@ -31,7 +31,7 @@
   data-type="selectable-value"
   on:dblclick={handleValueDoubleClick}
 >
-  <IconLock />
+  <IconLock size={16} />
   {hiddenValue}
 </div>
 

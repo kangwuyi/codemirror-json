@@ -267,7 +267,7 @@
 
           {#if stack.length > 1}
             <button type="button" class="jse-secondary" on:click={handleClose}>
-              <IconArrowNarrowLeft />返回
+              <IconArrowNarrowLeft size={16} />返回
             </button>
           {/if}
           {#if !readOnly}

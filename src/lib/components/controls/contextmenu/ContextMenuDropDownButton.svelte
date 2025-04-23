@@ -29,7 +29,7 @@
     disabled={item.main.disabled || false}
   >
     {#if item.main.icon}
-      <svelte:component this={item.main.icon} />
+      <svelte:component this={item.main.icon} size={16} />
     {/if}
     {item.main.text}
   </button>

@@ -50,9 +50,9 @@
   {#if sortDirection !== undefined}
     <span class="jse-column-sort-icon" title={`Currently sorted in ${sortDirectionName} order`}>
       {#if sortDirection === SortDirection.asc}
-        <IconCaretDown />
+        <IconCaretDown size={16} />
       {:else}
-        <IconCaretUp />
+        <IconCaretUp size={16} />
       {/if}
     </span>
   {/if}

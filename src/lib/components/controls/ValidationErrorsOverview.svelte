@@ -49,7 +49,7 @@
               }}
             >
               <td class="jse-validation-error-icon">
-                <IconAlertSquareRounded />
+                <IconAlertSquareRounded size={16} />
               </td>
               <td class="jse-validation-error-path">
                 {stringifyJSONPath(validationError.path)}
@@ -65,7 +65,7 @@
                     on:click|stopPropagation={collapse}
                     title="Collapse validation errors"
                   >
-                    <IconChevronDown />
+                    <IconChevronDown size={16} />
                   </button>
                 {/if}
               </td>
@@ -87,12 +87,12 @@
         <tbody>
           <tr class="jse-validation-{getMaxSeverity(validationErrors)}" on:click={expand}>
             <td class="jse-validation-error-icon">
-              <IconAlertSquareRounded />
+              <IconAlertSquareRounded size={16} />
             </td>
             <td class="jse-validation-error-count">
               {count} validation errors
               <div class="jse-validation-errors-expand">
-                <IconChevronRight />
+                <IconChevronRight size={16} />
               </div>
             </td>
           </tr>

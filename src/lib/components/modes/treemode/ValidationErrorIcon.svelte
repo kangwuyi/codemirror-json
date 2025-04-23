@@ -22,7 +22,7 @@
   on:click={onExpand}
   use:tooltip={{ text, ...absolutePopupContext }}
 >
-  <IconAlertSquareRounded />
+  <IconAlertSquareRounded size={16} />
 </button>
 
 <style src="./ValidationErrorIcon.scss"></style>

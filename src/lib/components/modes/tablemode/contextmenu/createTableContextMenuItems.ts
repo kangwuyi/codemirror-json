@@ -1,5 +1,5 @@
 import {
-  IconChecks,
+  IconSquareCheck,
   IconTrash,
   IconSquare,
   IconPlus,
@@ -99,7 +99,7 @@ export default function ({
                 },
                 {
                   type: 'button',
-                  icon: enforceString ? IconChecks : IconSquare,
+                  icon: enforceString ? IconSquareCheck : IconSquare,
                   text: '强转字符串',
                   title: 'Enforce keeping the value as string when it contains a numeric value',
                   onClick: () => onToggleEnforceString(),
