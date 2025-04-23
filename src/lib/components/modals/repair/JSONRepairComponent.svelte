@@ -10,7 +10,6 @@
   import { createDebug } from '$lib/utils/debug.js'
   import Message from '../../controls/Message.svelte'
   import { normalizeJsonParseError } from '$lib/utils/jsonUtils.js'
-  import Menu from '../../controls/Menu.svelte'
   import type { MenuItem, ParseError } from '$lib/types.js'
 
   export let text = ''
@@ -131,10 +130,6 @@
 </script>
 
 <div class="jse-json-repair-component">
-  <Menu {items}>
-    <div slot="left" class="jse-info">Repair invalid JSON, then click apply</div>
-  </Menu>
-
   {#if error}
     <Message
       type="error"

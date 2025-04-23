@@ -71,8 +71,6 @@
   export let onSortModal: OnSortModal
   export let onJSONEditorModal: OnJSONEditorModal
 
-  export let isModalLayer: boolean
-
   console.log('pathParser', pathParser)
   let refTreeMode: TreeMode | undefined
   let refTableMode: TableMode | undefined
@@ -340,7 +338,6 @@
     {onBlur}
     {onSortModal}
     {onJSONEditorModal}
-    {isModalLayer}
   />
 {:else if mode === Mode.table}
   <TableMode
@@ -369,7 +366,6 @@
     onRenderContextMenu={handleRenderContextMenu}
     {onSortModal}
     {onJSONEditorModal}
-    {isModalLayer}
   />
 {:else if mode === Mode.tree}
   <!-- mode === Mode.tree -->
@@ -400,7 +396,6 @@
     onRenderContextMenu={handleRenderContextMenu}
     {onSortModal}
     {onJSONEditorModal}
-    {isModalLayer}
   />
 {:else}
   <JsMode

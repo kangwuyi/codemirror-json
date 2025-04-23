@@ -188,7 +188,6 @@
   export let onBlur: OnBlur
   export let onSortModal: OnSortModal
   export let onJSONEditorModal: OnJSONEditorModal
-  export let isModalLayer: boolean
 
   let normalization: ValueNormalization
   $: normalization = createNormalizationFunctions({

@@ -14,10 +14,6 @@
   color: defaults.$text-color;
   line-height: defaults.$line-height;
 
-  &.no-main-menu {
-    border-top: defaults.$main-border;
-  }
-
   .jse-hidden-input-label {
     position: fixed;
     right: 0;

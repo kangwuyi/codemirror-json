@@ -13,10 +13,6 @@
   flex-direction: column;
   background: defaults.$background-color;
 
-  &.no-main-menu {
-    border-top: defaults.$main-border;
-  }
-
   .jse-contents {
     flex: 1;
     display: flex;

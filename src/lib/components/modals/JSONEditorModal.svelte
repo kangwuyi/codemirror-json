@@ -1,6 +1,7 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
+  import { IconCaretLeft } from '@tabler/icons-svelte'
   import LocalCaretLeftIcon from '../icon/caret-left-solid.svelte'
   // -------------
   import { flushSync, onMount } from 'svelte'
@@ -62,9 +63,6 @@
 
   export let onClose: () => void
 
-  export let isModalLayer: boolean
-
-  console.log('modal isModalLayer', isModalLayer)
   console.log('modal path', path)
 
   interface ModalState {
@@ -258,7 +256,6 @@
             {onRenderContextMenu}
             {onSortModal}
             onJSONEditorModal={handleJSONEditorModal}
-            {isModalLayer}
           />
         </div>
 
