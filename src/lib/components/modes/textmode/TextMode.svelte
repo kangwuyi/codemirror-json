@@ -110,7 +110,8 @@
     TextHistoryItem,
     TextSelection,
     ValidationError,
-    Validator
+    Validator,
+    MessageAction
   } from '$lib/types.js'
   import { Mode, SelectionType, ValidationSeverity } from '$lib/types.js'
   import {

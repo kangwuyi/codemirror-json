@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { IconBrackets, IconBraces } from '@tabler/icons-svelte'
   interface Props {
     readOnly: boolean
     onCreateArray: () => void
@@ -19,23 +20,23 @@
   }
 </script>
 
-<div class="jse-welcome" onclick={() => onClick()} role="none">
-  <div class="jse-space jse-before"></div>
-  <div class="jse-contents">
-    <div class="jse-welcome-title">Empty document</div>
+<div class="empty-container" onclick={() => onClick()} role="none">
+  <div class="empty-content">
+    <div class="empty-title">空文档</div>
     {#if !readOnly}
-      <div class="jse-welcome-info">
-        You can paste clipboard data using <b>Ctrl+V</b>, or use the following options:
+      <div class="empty-info">
+        可以使用快捷键 <b>Ctrl+V</b> 粘贴 JSON 文档到此区域
       </div>
-      <button title={"Create an empty JSON object (press '{')"} onclick={handleCreateObject}
-        >Create object</button
-      >
-      <button title={"Create an empty JSON array (press '[')"} onclick={handleCreateArray}
-        >Create array</button
-      >
+      <div class="empty-button-box">
+        <button title="创建对象" onclick={handleCreateObject}
+          ><IconBraces size={16} /> 创建对象</button
+        >
+        <button title="创建数组" onclick={handleCreateArray}
+          ><IconBrackets size={16} />创建数组</button
+        >
+      </div>
     {/if}
   </div>
-  <div class="jse-space jse-after"></div>
 </div>
 
 <style src="./Welcome.scss"></style>

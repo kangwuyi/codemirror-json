@@ -2,7 +2,7 @@
 
 <script lang="ts">
   import emitter from '../../../event/bus.js'
-  import { IconCheck, IconCode, IconAlertSquareRounded } from '@tabler/icons-svelte'
+  import { IconCheck, IconTextWrap, IconAlertSquareRounded } from '@tabler/icons-svelte'
   import type {
     AbsolutePopupContext,
     AbsolutePopupOptions,
@@ -1786,9 +1786,7 @@
       {#if pastedJson}
         <Message
           type="info"
-          message={`You pasted a JSON ${
-            Array.isArray(pastedJson.contents) ? 'array' : 'object'
-          } as text`}
+          message={`粘贴 ${Array.isArray(pastedJson.contents) ? '数组' : '对象'} JSON 格式文本`}
           actions={[
             {
               icon: IconAlertSquareRounded,
@@ -1812,19 +1810,19 @@
       {#if textIsRepaired}
         <Message
           type="success"
-          message="The loaded JSON document was invalid but is successfully repaired."
+          message="加载 JSON 文档格式异常, 保持异常值?"
           actions={!readOnly
             ? [
                 {
                   icon: IconCheck,
                   text: 'Ok',
-                  title: 'Accept the repaired document',
+                  title: '',
                   onClick: acceptAutoRepair
                 },
                 {
-                  icon: IconCode,
-                  text: 'Repair manually instead',
-                  title: 'Leave the document unchanged and repair it manually instead',
+                  icon: IconTextWrap,
+                  text: '修复',
+                  title: '离开并手动修复文档',
                   onClick: handleRequestRepair
                 }
               ]
@@ -1841,7 +1839,7 @@
         actions={!readOnly
           ? [
               {
-                icon: IconCode,
+                icon: IconTextWrap,
                 text: 'Repair manually',
                 title: 'Open the document in "code" mode and repair it manually',
                 onClick: handleRequestRepair

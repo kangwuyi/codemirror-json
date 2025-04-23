@@ -42,13 +42,13 @@
 
   const documentType = $derived(
     hasNestedArrays
-      ? 'Object with nested arrays'
+      ? '对象中的数组'
       : isEmptyDocument
-        ? 'An empty document'
+        ? '空文档'
         : isJSONObject(json)
-          ? 'An object'
+          ? '对象'
           : isJSONArray(json)
-            ? 'An empty array' // note: can also be an array with objects but without properties
+            ? '空数组' // note: can also be an array with objects but without properties
             : `A ${valueType(json, parser)}`
   )
 
@@ -58,20 +58,19 @@
 </script>
 
 <div class="jse-table-mode-welcome" onclick={() => onClick()} role="none">
-  <div class="jse-space jse-before"></div>
-
   <div class="jse-nested-arrays">
     <div class="jse-nested-arrays-title">{documentType}</div>
     <div class="jse-nested-arrays-info">
-      {#if hasNestedArrays}
-        An object cannot be opened in table mode. You can open a nested array instead, or open the
-        document in tree mode.
-      {:else if isEmptyDocument && !readOnly}
-        An empty document cannot be opened in table mode. You can go to tree mode instead, or paste
-        a JSON Array using <b>Ctrl+V</b>.
-      {:else}
-        {documentType} cannot be opened in table mode. You can open the document in tree mode instead.
-      {/if}
+      <b>
+        {#if hasNestedArrays}
+          对象(缺少数组格式子属性)
+        {:else if isEmptyDocument && !readOnly}
+          空文档
+        {:else}
+          {documentType}
+        {/if}
+      </b>
+      不能在 TABLE 模式下打开, 需要在 TEXT 或 TREE 模式下编辑 JSON 文档或使用快捷键 <b>Ctrl+V</b> 粘贴文档到此处
     </div>
     {#each nestedArrayPaths as nestedArrayPath}
       {@const count = countItems(nestedArrayPath)}
@@ -87,7 +86,7 @@
           class="jse-nested-array-action"
           onclick={() => openJSONEditorModal(nestedArrayPath)}
         >
-          {readOnly ? 'View' : 'Edit'}
+          {readOnly ? '查看' : '编辑'}
         </button>
         {#if !readOnly}
           <button
@@ -95,17 +94,17 @@
             class="jse-nested-array-action"
             onclick={() => extractPath(nestedArrayPath)}
           >
-            Extract
+            提取
           </button>
         {/if}
       </div>
     {/each}
-    <button type="button" class="jse-nested-array-action" onclick={() => onChangeMode(Mode.tree)}>
-      Switch to tree mode
-    </button>
+    <div class="jse-nested-button-box">
+      <button type="button" class="jse-nested-array-action" onclick={() => onChangeMode(Mode.tree)}>
+        切换 TREE 模式
+      </button>
+    </div>
   </div>
-
-  <div class="jse-space jse-after"></div>
 </div>
 
 <style src="./TableModeWelcome.scss"></style>

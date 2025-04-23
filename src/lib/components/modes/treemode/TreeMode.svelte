@@ -1,10 +1,8 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
+  import { IconTextWrap, IconSettingsBolt, IconCheck } from '@tabler/icons-svelte'
   import emitter from '../../../event/bus.js'
-  import LocalCheckIcon from '../../icon/check-solid.svelte'
-  import LocalCodeIcon from '../../icon/code-solid.svelte'
-  import LocalWrenchIcon from '../../icon/wrench-solid.svelte'
 
   import { createAutoScrollHandler } from '../../controls/createAutoScrollHandler.js'
   import { createDebug } from '$lib/utils/debug.js'
@@ -1849,13 +1847,13 @@
       {:else}
         <Message
           type="error"
-          message="The loaded JSON document is invalid and could not be repaired automatically."
+          message="JSON 文档格式异常"
           actions={!readOnly
             ? [
                 {
-                  icon: LocalCodeIcon,
-                  text: 'Repair manually',
-                  title: 'Open the document in "code" mode and repair it manually',
+                  icon: IconTextWrap,
+                  text: '修复',
+                  title: '手动修复文档',
                   onClick: handleRequestRepair
                 }
               ]
@@ -1880,12 +1878,10 @@
       {#if pastedJson}
         <Message
           type="info"
-          message={`You pasted a JSON ${
-            Array.isArray(pastedJson.contents) ? 'array' : 'object'
-          } as text`}
+          message={`粘贴 ${Array.isArray(pastedJson.contents) ? '数组' : '对象'} JSON 格式文本`}
           actions={[
             {
-              icon: LocalWrenchIcon,
+              icon: IconSettingsBolt,
               text: 'Paste as JSON instead',
               title: 'Replace the value with the pasted JSON',
               // We use mousedown here instead of click: this message pops up
@@ -1906,19 +1902,19 @@
       {#if textIsRepaired}
         <Message
           type="success"
-          message="The loaded JSON document was invalid but is successfully repaired."
+          message="加载 JSON 文档格式异常, 保持异常值?"
           actions={!readOnly
             ? [
                 {
-                  icon: LocalCheckIcon,
+                  icon: IconCheck,
                   text: 'Ok',
-                  title: 'Accept the repaired document',
+                  title: '',
                   onClick: acceptAutoRepair
                 },
                 {
-                  icon: LocalCodeIcon,
-                  text: 'Repair manually instead',
-                  title: 'Leave the document unchanged and repair it manually instead',
+                  icon: IconTextWrap,
+                  text: '修复',
+                  title: '离开并手动修复文档',
                   onClick: handleRequestRepair
                 }
               ]
