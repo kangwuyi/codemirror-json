@@ -1000,7 +1000,6 @@
   }
 
   emitter.on('onFullscreen', (type: Mode | unknown) => {
-    console.log('table::thisis emitter.on onFullscreen', type)
     if (Mode.table === type) handleEditModal()
   })
   // 打开 modal 编辑器
@@ -1112,8 +1111,6 @@
   }
 
   emitter.on('onCopy', (type: Mode | unknown) => {
-    console.log('table::thisis emitter.on onCopy', type)
-
     if (Mode.table === type) {
       handleCopy()
     }
@@ -1518,7 +1515,6 @@
   }
 
   emitter.on('onSortAll', (type: Mode | unknown) => {
-    console.log('table::thisis emitter.on onSortAll', type)
     if (Mode.table === type && !(readOnly || !containsValidArray)) handleSortAll()
   })
   function handleSortAll() {
@@ -1527,7 +1523,6 @@
   }
 
   emitter.on('onUndo', (type: Mode | unknown) => {
-    console.log('table::thisis emitter.on onUndo', type)
     if (Mode.table === type) {
       if (!history.canUndo) return console.log('已经回退到起点')
       handleUndo()
@@ -1580,7 +1575,6 @@
   }
 
   emitter.on('onRedo', (type: Mode | unknown) => {
-    console.log('table::thisis emitter.on onRedo', type)
     if (Mode.table === type) {
       if (!history.canRedo) return console.log('已经重做到终点')
       handleRedo()

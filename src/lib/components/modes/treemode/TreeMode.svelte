@@ -629,7 +629,6 @@
   }
 
   emitter.on('onFullscreen', (type: Mode | unknown) => {
-    console.log('tree::thisis emitter.on onFullscreen', type)
     if (Mode.tree === type) handleEditModal()
   })
 
@@ -713,8 +712,6 @@
   }
 
   emitter.on('onCopy', (type: Mode | unknown) => {
-    console.log('tree::thisis emitter.on onCopy', type)
-
     if (Mode.tree === type) {
       const hasSelectionContents =
         json !== void 0 &&
@@ -963,7 +960,6 @@
     })
   }
   emitter.on('onUndo', (type: Mode | unknown) => {
-    console.log('tree::thisis emitter.on onUndo', type)
     if (Mode.tree === type) {
       if (!history.canUndo) return console.log('已经回退到起点')
       handleUndo()
@@ -1014,7 +1010,6 @@
     }
   }
   emitter.on('onRedo', (type: Mode | unknown) => {
-    console.log('tree::thisis emitter.on onRedo', type)
     if (Mode.tree === type) {
       if (!history.canRedo) return console.log('已经重做到终点')
       handleRedo()
@@ -1363,21 +1358,18 @@
   }
 
   emitter.on('onExpandAll', (type: Mode | unknown) => {
-    console.log('tree::thisis emitter.on onExpandAll', type)
     if (Mode.tree === type) {
       if (!isObjectOrArray(json)) return console.log('需要 JSON 格式')
       handleExpand([], true, true)
     }
   })
   emitter.on('onCollapseAll', (type: Mode | unknown) => {
-    console.log('tree::thisis emitter.on onCollapseAll', type)
     if (Mode.tree === type) {
       if (!isObjectOrArray(json)) return console.log('需要 JSON 格式')
       handleExpand([], false, true)
     }
   })
   emitter.on('onSortAll', (type: Mode | unknown) => {
-    console.log('tree::thisis emitter.on onSortAll', type)
     if (Mode.tree === type) {
       if (readOnly || json === undefined) return console.log('只读模式或空值不允许操作此行为')
       const rootPath: JSONPath = []

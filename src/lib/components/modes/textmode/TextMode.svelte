@@ -317,7 +317,6 @@
   }
 
   emitter.on('onFormat', (type: Mode | unknown) => {
-    console.log('text::thisis emitter.on onFormat', type)
     if (Mode.text === type && text.length !== 0 && !readOnly) {
       handleFormat()
     }
@@ -349,7 +348,6 @@
   }
 
   emitter.on('onCompact', (type: Mode | unknown) => {
-    console.log('text::thisis emitter.on onCompact', type)
     if (Mode.text === type && text.length !== 0 && !readOnly) {
       handleCompact()
     }
@@ -402,7 +400,6 @@
   }
 
   emitter.on('onSortAll', (type: Mode | unknown) => {
-    console.log('text::thisis emitter.on onSortAll', type)
     if (Mode.text === type && text.length !== 0 && !readOnly) {
       if (readOnly) return console.log('只读模式不允许操作此行为')
       handleSort()
@@ -437,7 +434,6 @@
   }
 
   emitter.on('onFullscreen', (type: Mode | unknown) => {
-    console.log('text::thisis emitter.on onFullscreen', type)
     if (Mode.text === type) {
       const path = [] as JSONPath
       const codeMirrorText = getCodeMirrorValue()
@@ -470,7 +466,6 @@
   }
 
   emitter.on('onUndo', (type: Mode | unknown) => {
-    console.log('text::thisis emitter.on onUndo', type)
     if (Mode.text === type) {
       if (!history.canUndo) return console.log('已经回退到起点')
       handleUndo()
@@ -504,7 +499,6 @@
   }
 
   emitter.on('onRedo', (type: Mode | unknown) => {
-    console.log('text::thisis emitter.on onRedo', type)
     if (Mode.text === type) {
       if (!history.canRedo) return console.log('已经重做到终点')
       handleRedo()

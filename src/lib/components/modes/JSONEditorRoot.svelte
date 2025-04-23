@@ -152,7 +152,6 @@
   }
 
   emitter.on('onChangeMode', (type: Mode | unknown) => {
-    console.log('root::thisis emitter.on onChangeMode', type)
     if (typeof type === 'string') {
       onChangeMode(type as Mode)
     }
