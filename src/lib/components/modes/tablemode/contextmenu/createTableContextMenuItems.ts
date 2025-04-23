@@ -1,13 +1,14 @@
-import LocalCheckSquareIcon from '../../../icon/square-check-solid.svelte'
-import LocalCloneIcon from '../../../icon/clone-solid.svelte'
-import LocalCopyIcon from '../../../icon/copy-solid.svelte'
-import LocalCutIcon from '../../../icon/scissors-solid.svelte'
-import LocalPasteIcon from '../../../icon/paste-solid.svelte'
-import LocalPenIcon from '../../../icon/pen-solid.svelte'
-import LocalPlusIcon from '../../../icon/plus-solid.svelte'
-import LocalSquareIcon from '../../../icon/square-solid.svelte'
-import LocalTrashCanIcon from '../../../icon/trash-can-solid.svelte'
-
+import {
+  IconChecks,
+  IconTrash,
+  IconSquare,
+  IconPlus,
+  IconCopy,
+  IconCopyCheck,
+  IconPencil,
+  IconClipboard,
+  IconCut
+} from '@tabler/icons-svelte'
 import type { ContextMenuItem, DocumentState, JSONSelection } from 'codemirror-json'
 
 import { isKeySelection, isMultiSelection, isValueSelection } from '$lib/logic/selection'
@@ -81,7 +82,7 @@ export default function ({
               main: {
                 type: 'button',
                 onClick: () => onEditValue(),
-                icon: LocalPenIcon,
+                icon: IconPencil,
                 text: 'Edit',
                 title: 'Edit the value (Double-click on the value)',
                 disabled: !canEditValue
@@ -90,7 +91,7 @@ export default function ({
               items: [
                 {
                   type: 'button',
-                  icon: LocalPenIcon,
+                  icon: IconPencil,
                   text: 'Edit',
                   title: 'Edit the value (Double-click on the value)',
                   onClick: () => onEditValue(),
@@ -98,7 +99,7 @@ export default function ({
                 },
                 {
                   type: 'button',
-                  icon: enforceString ? LocalCheckSquareIcon : LocalSquareIcon,
+                  icon: enforceString ? IconChecks : IconSquare,
                   text: 'Enforce string',
                   title: 'Enforce keeping the value as string when it contains a numeric value',
                   onClick: () => onToggleEnforceString(),
@@ -111,7 +112,7 @@ export default function ({
               main: {
                 type: 'button',
                 onClick: () => onCut(true),
-                icon: LocalCutIcon,
+                icon: IconCut,
                 text: 'Cut',
                 title: 'Cut selected contents, formatted with indentation (Ctrl+X)',
                 disabled: !canCut
@@ -120,7 +121,7 @@ export default function ({
               items: [
                 {
                   type: 'button',
-                  icon: LocalCutIcon,
+                  icon: IconCut,
                   text: 'Cut formatted',
                   title: 'Cut selected contents, formatted with indentation (Ctrl+X)',
                   onClick: () => onCut(true),
@@ -128,7 +129,7 @@ export default function ({
                 },
                 {
                   type: 'button',
-                  icon: LocalCutIcon,
+                  icon: IconCut,
                   text: 'Cut compacted',
                   title: 'Cut selected contents, without indentation (Ctrl+Shift+X)',
                   onClick: () => onCut(false),
@@ -141,7 +142,7 @@ export default function ({
               main: {
                 type: 'button',
                 onClick: () => onCopy(true),
-                icon: LocalCopyIcon,
+                icon: IconCopy,
                 text: 'Copy',
                 title: 'Copy selected contents, formatted with indentation (Ctrl+C)',
                 disabled: !hasSelectionContents
@@ -150,7 +151,7 @@ export default function ({
               items: [
                 {
                   type: 'button',
-                  icon: LocalCopyIcon,
+                  icon: IconCopy,
                   text: 'Copy formatted',
                   title: 'Copy selected contents, formatted with indentation (Ctrl+C)',
                   onClick: () => onCopy(false),
@@ -158,7 +159,7 @@ export default function ({
                 },
                 {
                   type: 'button',
-                  icon: LocalCopyIcon,
+                  icon: IconCopy,
                   text: 'Copy compacted',
                   title: 'Copy selected contents, without indentation (Ctrl+Shift+C)',
                   onClick: () => onCopy(false),
@@ -169,7 +170,7 @@ export default function ({
             {
               type: 'button',
               onClick: () => onPaste(),
-              icon: LocalPasteIcon,
+              icon: IconClipboard,
               text: 'Paste',
               title: 'Paste clipboard contents (Ctrl+V)',
               disabled: readOnly || !hasSelection
@@ -177,7 +178,7 @@ export default function ({
             {
               type: 'button',
               onClick: () => onRemove(),
-              icon: LocalTrashCanIcon,
+              icon: IconTrash,
               text: 'Remove',
               title: 'Remove selected contents (Delete)',
               disabled: readOnly || !hasSelectionContents
@@ -191,7 +192,7 @@ export default function ({
             {
               type: 'button',
               onClick: () => onEditRow(),
-              icon: LocalPenIcon,
+              icon: IconPencil,
               text: 'Edit row',
               title: 'Edit the current row',
               disabled: readOnly || !hasSelection || !hasJson
@@ -199,7 +200,7 @@ export default function ({
             {
               type: 'button',
               onClick: () => onDuplicateRow(),
-              icon: LocalCloneIcon,
+              icon: IconCopyCheck,
               text: 'Duplicate row',
               title: 'Duplicate the current row (Ctrl+D)',
               disabled: readOnly || !hasSelection || !hasJson
@@ -207,7 +208,7 @@ export default function ({
             {
               type: 'button',
               onClick: () => onInsertBeforeRow(),
-              icon: LocalPlusIcon,
+              icon: IconPlus,
               text: 'Insert before',
               title: 'Insert a row before the current row',
               disabled: readOnly || !hasSelection || !hasJson
@@ -215,7 +216,7 @@ export default function ({
             {
               type: 'button',
               onClick: () => onInsertAfterRow(),
-              icon: LocalPlusIcon,
+              icon: IconPlus,
               text: 'Insert after',
               title: 'Insert a row after the current row',
               disabled: readOnly || !hasSelection || !hasJson
@@ -223,7 +224,7 @@ export default function ({
             {
               type: 'button',
               onClick: () => onRemoveRow(),
-              icon: LocalTrashCanIcon,
+              icon: IconTrash,
               text: 'Remove row',
               title: 'Remove current row',
               disabled: readOnly || !hasSelection || !hasJson

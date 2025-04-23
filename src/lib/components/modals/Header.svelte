@@ -1,9 +1,7 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import LocalDownLeftAndUpRightToCenterIcon from '../icon/down-left-and-up-right-to-center-solid.svelte'
-  import LocalUpRightAndDownLeftFromCenterIcon from '../icon/up-right-and-down-left-from-center-solid.svelte'
-  import LocalTimesIcon from '../icon/circle-xmark-solid.svelte'
+  import { IconArrowsDiagonalMinimize2, IconArrowsDiagonal, IconX } from '@tabler/icons-svelte'
 
   export let title = 'Modal'
   export let fullScreenButton: boolean = false
@@ -24,14 +22,14 @@
       on:click={() => (fullscreen = !fullscreen)}
     >
       {#if fullscreen}
-        <LocalDownLeftAndUpRightToCenterIcon />
+        <IconArrowsDiagonalMinimize2 />
       {:else}
-        <LocalUpRightAndDownLeftFromCenterIcon />
+        <IconArrowsDiagonal />
       {/if}
     </button>
   {/if}
   <button type="button" class="jse-close" on:click={() => onClose?.()}>
-    <LocalTimesIcon />
+    <IconX />
   </button>
 </div>
 

@@ -2,7 +2,6 @@
 
 <script lang="ts">
   import { IconCaretLeft } from '@tabler/icons-svelte'
-  import LocalCaretLeftIcon from '../icon/caret-left-solid.svelte'
   // -------------
   import { flushSync, onMount } from 'svelte'
   import Header from './Header.svelte'
@@ -268,7 +267,7 @@
 
           {#if stack.length > 1}
             <button type="button" class="jse-secondary" on:click={handleClose}>
-              <LocalCaretLeftIcon />Back
+              <IconCaretLeft />Back
             </button>
           {/if}
           {#if !readOnly}

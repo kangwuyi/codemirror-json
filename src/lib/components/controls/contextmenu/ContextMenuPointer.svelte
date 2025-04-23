@@ -1,7 +1,7 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import LocalCaretDownIcon from '../../icon/caret-down-solid.svelte'
+  import { IconCaretDown } from '@tabler/icons-svelte'
   import {
     CONTEXT_MENU_EXPLANATION,
     CONTEXT_MENU_HEIGHT,
@@ -43,7 +43,7 @@
   title={CONTEXT_MENU_EXPLANATION}
   on:click={handleClick}
 >
-  <LocalCaretDownIcon />
+  <IconCaretDown />
 </button>
 
 <style src="./ContextMenuPointer.scss"></style>

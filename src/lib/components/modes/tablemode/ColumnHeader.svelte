@@ -1,8 +1,7 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import LocalCaretDownIcon from '../../icon/caret-down-solid.svelte'
-  import LocalCaretUpIcon from '../../icon/caret-up-solid.svelte'
+  import { IconCaretDown, IconCaretUp } from '@tabler/icons-svelte'
   // -------------
   import type { JSONPath } from 'immutable-json-patch'
   import type { SortedColumn } from '$lib/types.js'
@@ -51,9 +50,9 @@
   {#if sortDirection !== undefined}
     <span class="jse-column-sort-icon" title={`Currently sorted in ${sortDirectionName} order`}>
       {#if sortDirection === SortDirection.asc}
-        <LocalCaretDownIcon />
+        <IconCaretDown />
       {:else}
-        <LocalCaretUpIcon />
+        <IconCaretUp />
       {/if}
     </span>
   {/if}

@@ -1,7 +1,7 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import LocalRotateIcon from '../../icon/rotate-solid.svelte'
+  import { IconRotate } from '@tabler/icons-svelte'
 
   export let count: number
   export let maxSampleCount: number
@@ -18,7 +18,7 @@
     'This is slower.'}
   on:click={() => onRefresh()}
 >
-  <LocalRotateIcon />
+  <IconRotate />
 </button>
 
 <style src="./RefreshColumnHeader.scss"></style>

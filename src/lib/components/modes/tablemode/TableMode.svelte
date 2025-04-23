@@ -2,9 +2,7 @@
 
 <script lang="ts">
   import emitter from '../../../event/bus.js'
-  import LocalCheckIcon from '../../icon/check-solid.svelte'
-  import LocalCodeIcon from '../../icon/code-solid.svelte'
-  import LocalWrenchIcon from '../../icon/wrench-solid.svelte'
+  import { IconCheck, IconCode, IconPointerCog } from '@tabler/icons-svelte'
   import type {
     AbsolutePopupContext,
     AbsolutePopupOptions,
@@ -1793,7 +1791,7 @@
           } as text`}
           actions={[
             {
-              icon: LocalWrenchIcon,
+              icon: IconPointerCog,
               text: 'Paste as JSON instead',
               title: 'Paste the text as JSON instead of a single value',
               // We use mousedown here instead of click: this message pops up
@@ -1818,13 +1816,13 @@
           actions={!readOnly
             ? [
                 {
-                  icon: LocalCheckIcon,
+                  icon: IconCheck,
                   text: 'Ok',
                   title: 'Accept the repaired document',
                   onClick: acceptAutoRepair
                 },
                 {
-                  icon: LocalCodeIcon,
+                  icon: IconCode,
                   text: 'Repair manually instead',
                   title: 'Leave the document unchanged and repair it manually instead',
                   onClick: handleRequestRepair
@@ -1843,7 +1841,7 @@
         actions={!readOnly
           ? [
               {
-                icon: LocalCodeIcon,
+                icon: IconCode,
                 text: 'Repair manually',
                 title: 'Open the document in "code" mode and repair it manually',
                 onClick: handleRequestRepair

@@ -1,6 +1,7 @@
 import type { JSONPatchDocument, JSONPath } from 'immutable-json-patch'
 import type { Component, SvelteComponent } from 'svelte'
 import type { Action } from 'svelte/action'
+import type { Icon } from '@tabler/icons-svelte'
 
 export type TextContent = { text: string }
 
@@ -253,7 +254,7 @@ export type ClipboardValues = Array<{ key: string; value: unknown }>
 export interface MenuButton {
   type: 'button'
   onClick: (event: MouseEvent) => void
-  icon?: Component
+  icon?: Icon
   text?: string
   title?: string
   className?: string

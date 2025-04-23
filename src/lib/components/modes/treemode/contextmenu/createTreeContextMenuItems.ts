@@ -1,18 +1,19 @@
-import LocalArrowRightArrowLeftIcon from '../../../icon/arrow-right-arrow-left-solid.svelte'
-import LocalCaretSquareDownIcon from '../../../icon/square-caret-down-solid.svelte'
-import LocalCaretSquareUpIcon from '../../../icon/square-caret-up-solid.svelte'
-import LocalCheckSquareIcon from '../../../icon/square-check-solid.svelte'
-import LocalCloneIcon from '../../../icon/clone-solid.svelte'
-import LocalCopyIcon from '../../../icon/copy-solid.svelte'
-import LocalCropAltIcon from '../../../icon/crop-solid.svelte'
-import LocalCutIcon from '../../../icon/scissors-solid.svelte'
-import LocalPasteIcon from '../../../icon/paste-solid.svelte'
-import LocalPenIcon from '../../../icon/pen-solid.svelte'
-import LocalPlusIcon from '../../../icon/plus-solid.svelte'
-import LocalSortAmountDownAltIcon from '../../../icon/arrow-down-short-wide-solid.svelte'
-import LocalSquareIcon from '../../../icon/square-solid.svelte'
-import LocalTrashCanIcon from '../../../icon/trash-can-solid.svelte'
-
+import {
+  IconTrash,
+  IconSquare,
+  IconSquareFilled,
+  IconCaretUpFilled,
+  IconCaretDownFilled,
+  IconPlus,
+  IconCopy,
+  IconCopyCheck,
+  IconPencil,
+  IconClipboard,
+  IconCut,
+  IconCrop,
+  IconTransfer,
+  IconSortDescending
+} from '@tabler/icons-svelte'
 import {
   canConvert,
   getFocusPath,
@@ -141,7 +142,7 @@ export default function ({
         {
           type: 'button',
           onClick: () => onEditKey(),
-          icon: LocalPenIcon,
+          icon: IconPencil,
           text: '编辑-字段',
           title: 'Edit the key (Double-click on the key)',
           disabled: !canEditKey
@@ -151,7 +152,7 @@ export default function ({
           main: {
             type: 'button',
             onClick: () => onEditValue(),
-            icon: LocalPenIcon,
+            icon: IconPencil,
             text: '编辑-值',
             title: 'Edit the value (Double-click on the value)',
             disabled: !canEditValue
@@ -160,7 +161,7 @@ export default function ({
           items: [
             {
               type: 'button',
-              icon: LocalPenIcon,
+              icon: IconPencil,
               text: '编辑-值',
               title: 'Edit the value (Double-click on the value)',
               onClick: () => onEditValue(),
@@ -168,7 +169,7 @@ export default function ({
             },
             {
               type: 'button',
-              icon: enforceString ? LocalCheckSquareIcon : LocalSquareIcon,
+              icon: enforceString ? IconSquareFilled : IconSquare,
               text: '强转字符串',
               title: 'Enforce keeping the value as string when it contains a numeric value',
               onClick: () => onToggleEnforceString(),
@@ -187,7 +188,7 @@ export default function ({
           main: {
             type: 'button',
             onClick: () => onCut(true),
-            icon: LocalCutIcon,
+            icon: IconCut,
             text: '剪切',
             title: 'Cut selected contents, formatted with indentation (Ctrl+X)',
             disabled: !canCut
@@ -196,7 +197,7 @@ export default function ({
           items: [
             {
               type: 'button',
-              icon: LocalCutIcon,
+              icon: IconCut,
               text: 'Cut formatted',
               title: 'Cut selected contents, formatted with indentation (Ctrl+X)',
               onClick: () => onCut(true),
@@ -204,7 +205,7 @@ export default function ({
             },
             {
               type: 'button',
-              icon: LocalCutIcon,
+              icon: IconCut,
               text: 'Cut compacted',
               title: 'Cut selected contents, without indentation (Ctrl+Shift+X)',
               onClick: () => onCut(false),
@@ -217,7 +218,7 @@ export default function ({
           main: {
             type: 'button',
             onClick: () => onCopy(true),
-            icon: LocalCopyIcon,
+            icon: IconCopy,
             text: '复制',
             title: 'Copy selected contents, formatted with indentation (Ctrl+C)',
             disabled: !canCopy
@@ -226,7 +227,7 @@ export default function ({
           items: [
             {
               type: 'button',
-              icon: LocalCopyIcon,
+              icon: IconCopy,
               text: 'Copy formatted',
               title: 'Copy selected contents, formatted with indentation (Ctrl+C)',
               onClick: () => onCopy(true),
@@ -234,7 +235,7 @@ export default function ({
             },
             {
               type: 'button',
-              icon: LocalCopyIcon,
+              icon: IconCopy,
               text: 'Copy compacted',
               title: 'Copy selected contents, without indentation (Ctrl+Shift+C)',
               onClick: () => onCopy(false),
@@ -245,7 +246,7 @@ export default function ({
         {
           type: 'button',
           onClick: () => onPaste(),
-          icon: LocalPasteIcon,
+          icon: IconClipboard,
           text: '粘贴',
           title: 'Paste clipboard contents (Ctrl+V)',
           disabled: !canPaste
@@ -262,7 +263,7 @@ export default function ({
             {
               type: 'button',
               onClick: () => onDuplicate(),
-              icon: LocalCloneIcon,
+              icon: IconCopyCheck,
               text: '复制插入',
               title: 'Duplicate selected contents (Ctrl+D)',
               disabled: !canDuplicate
@@ -270,7 +271,7 @@ export default function ({
             {
               type: 'button',
               onClick: () => onExtract(),
-              icon: LocalCropAltIcon,
+              icon: IconCrop,
               text: '截取覆盖',
               title: 'Extract selected contents',
               disabled: !canExtract
@@ -278,7 +279,7 @@ export default function ({
             {
               type: 'button',
               onClick: () => onSort(),
-              icon: LocalSortAmountDownAltIcon,
+              icon: IconSortDescending,
               text: '排序',
               title: 'Sort array or object contents',
               disabled: readOnly || !hasSelectionContents
@@ -286,7 +287,7 @@ export default function ({
             {
               type: 'button',
               onClick: () => onRemove(),
-              icon: LocalTrashCanIcon,
+              icon: IconTrash,
               text: '删除',
               title: 'Remove selected contents (Delete)',
               disabled: readOnly || !hasSelectionContents
@@ -300,7 +301,7 @@ export default function ({
             {
               type: 'button',
               onClick: () => handleInsertOrConvert('structure'),
-              icon: convertMode ? LocalArrowRightArrowLeftIcon : LocalPlusIcon,
+              icon: convertMode ? IconTransfer : IconPlus,
               text: '自定义',
               title: insertOrConvertText + ' structure like the first item in the array',
               disabled: !canInsertOrConvertStructure
@@ -308,7 +309,7 @@ export default function ({
             {
               type: 'button',
               onClick: () => handleInsertOrConvert('object'),
-              icon: convertMode ? LocalArrowRightArrowLeftIcon : LocalPlusIcon,
+              icon: convertMode ? IconTransfer : IconPlus,
               text: '对象',
               title: insertOrConvertText + ' 对象',
               disabled: !canInsertOrConvertObject
@@ -316,7 +317,7 @@ export default function ({
             {
               type: 'button',
               onClick: () => handleInsertOrConvert('array'),
-              icon: convertMode ? LocalArrowRightArrowLeftIcon : LocalPlusIcon,
+              icon: convertMode ? IconTransfer : IconPlus,
               text: '数组',
               title: insertOrConvertText + ' 数组',
               disabled: !canInsertOrConvertArray
@@ -324,7 +325,7 @@ export default function ({
             {
               type: 'button',
               onClick: () => handleInsertOrConvert('value'),
-              icon: convertMode ? LocalArrowRightArrowLeftIcon : LocalPlusIcon,
+              icon: convertMode ? IconTransfer : IconPlus,
               text: '值',
               title: insertOrConvertText + ' 值',
               disabled: !canInsertOrConvertValue
@@ -342,7 +343,7 @@ export default function ({
         {
           type: 'button',
           onClick: () => onInsertBefore(),
-          icon: LocalCaretSquareUpIcon,
+          icon: IconCaretUpFilled,
           text: '之前插入',
           title: 'Select area before current entry to insert or paste contents',
           disabled: readOnly || !hasSelectionContents || rootSelected
@@ -350,7 +351,7 @@ export default function ({
         {
           type: 'button',
           onClick: () => onInsertAfter(),
-          icon: LocalCaretSquareDownIcon,
+          icon: IconCaretDownFilled,
           text: '之后插入',
           title: 'Select area after current entry to insert or paste contents',
           disabled: readOnly || !hasSelectionContents || rootSelected

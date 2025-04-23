@@ -1,6 +1,7 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
+  import { IconCaretDown } from '@tabler/icons-svelte'
   import LocalAngleDownIcon from '../icon/angle-down-solid.svelte'
   import LocalAngleRightIcon from '../icon/angle-right-solid.svelte'
   import LocalExclamationTriangleIcon from '../icon/triangle-exclamation-solid.svelte'
