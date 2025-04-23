@@ -44,7 +44,6 @@
     ValueNormalization
   } from '$lib/types'
   import { Mode, SortDirection, ValidationSeverity } from '$lib/types.js'
-  import TableMenu from './menu/TableMenu.svelte'
   import {
     compileJSONPointer,
     existsIn,
@@ -1657,20 +1656,7 @@
   on:contextmenu={handleContextMenu}
   bind:this={refJsonEditor}
 >
-  {#if mainMenuBar}
-    <TableMenu
-      {containsValidArray}
-      {readOnly}
-      {history}
-      onSort={handleSortAll}
-      onUndo={handleUndo}
-      onRedo={handleRedo}
-      onContextMenu={handleContextMenuFromTableMenu}
-      {onRenderMenu}
-      onOpenEditorModal={handleEditModal}
-      {isModalLayer}
-    />
-  {/if}
+  {#if mainMenuBar}{/if}
 
   {#if !isSSR}
     <label class="jse-hidden-input-label">

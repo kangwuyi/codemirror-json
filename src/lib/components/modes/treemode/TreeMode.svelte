@@ -102,7 +102,6 @@
   import CopyPasteModal from '../../modals/CopyPasteModal.svelte'
   import JSONRepairModal from '../../modals/JSONRepairModal.svelte'
   import JSONNode from './JSONNode.svelte'
-  import TreeMenu from './menu/TreeMenu.svelte'
   import Welcome from './Welcome.svelte'
   import {
     Mode,
@@ -1830,24 +1829,7 @@
   on:contextmenu={handleContextMenu}
   bind:this={refJsonEditor}
 >
-  {#if mainMenuBar}
-    <TreeMenu
-      {json}
-      {selection}
-      {readOnly}
-      {history}
-      onExpandAll={handleExpandAll}
-      onCollapseAll={handleCollapseAll}
-      onUndo={handleUndo}
-      onRedo={handleRedo}
-      onSort={handleSortAll}
-      onContextMenu={handleContextMenuFromTreeMenu}
-      onCopy={handleCopy}
-      onOpenEditorModal={handleEditModal}
-      {onRenderMenu}
-      {isModalLayer}
-    />
-  {/if}
+  {#if mainMenuBar}{/if}
 
   {#if !isSSR}
     <label class="jse-hidden-input-label">

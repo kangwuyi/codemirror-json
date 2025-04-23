@@ -31,7 +31,6 @@
   import { createFocusTracker } from '../../controls/createFocusTracker.js'
   import Message from '../../controls/Message.svelte'
   import ValidationErrorsOverview from '../../controls/ValidationErrorsOverview.svelte'
-  import TextMenu from './menu/TextMenu.svelte'
   import {
     Annotation,
     ChangeSet,
@@ -1106,26 +1105,7 @@
 </script>
 
 <div class="jse-text-mode" class:no-main-menu={!mainMenuBar} bind:this={domTextMode}>
-  {#if mainMenuBar}
-    {@const isNewDocument = text.length === 0}
-
-    <TextMenu
-      {readOnly}
-      onFormat={handleFormat}
-      onCompact={handleCompact}
-      onSort={handleSort}
-      onUndo={handleUndo}
-      onRedo={handleRedo}
-      canFormat={!isNewDocument}
-      canCompact={!isNewDocument}
-      canSort={!isNewDocument}
-      canUndo={history.canUndo}
-      canRedo={history.canRedo}
-      {onRenderMenu}
-      onOpenEditorModal={handleEditModal}
-      {isModalLayer}
-    />
-  {/if}
+  {#if mainMenuBar}{/if}
 
   {#if !isSSR}
     {@const editorDisabled = disableTextEditor(text, acceptTooLarge)}
