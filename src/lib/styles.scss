@@ -16,13 +16,16 @@ $contents-min-height: 150px;
 $errors-overview-max-height: 25%;
 
 @mixin jsoneditor-button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
   border: none;
   background: transparent;
   color: inherit;
   cursor: pointer;
   font-family: defaults.$font-family;
-  font-size: defaults.$font-size;
-  padding: $menu-padding;
+  font-size: 14px;
+  padding: 2px;
   margin: 0;
 }
 

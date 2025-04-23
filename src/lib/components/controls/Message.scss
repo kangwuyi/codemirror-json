@@ -23,6 +23,9 @@
     align-items: center;
 
     .jse-text-centered {
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
 
     &.jse-clickable {

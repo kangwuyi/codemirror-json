@@ -1,10 +1,9 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import { IconCaretDown } from '@tabler/icons-svelte'
+  import { IconAlertSquareRounded } from '@tabler/icons-svelte'
   import LocalAngleDownIcon from '../icon/angle-down-solid.svelte'
   import LocalAngleRightIcon from '../icon/angle-right-solid.svelte'
-  import LocalExclamationTriangleIcon from '../icon/triangle-exclamation-solid.svelte'
   import { isEmpty } from 'lodash-es'
   import { stringifyJSONPath } from '$lib/utils/pathUtils.js'
   import { ValidationSeverity, type ValidationError } from '$lib/types.js'
@@ -52,7 +51,7 @@
               }}
             >
               <td class="jse-validation-error-icon">
-                <LocalExclamationTriangleIcon />
+                <IconAlertSquareRounded />
               </td>
               <td class="jse-validation-error-path">
                 {stringifyJSONPath(validationError.path)}
@@ -90,7 +89,7 @@
         <tbody>
           <tr class="jse-validation-{getMaxSeverity(validationErrors)}" on:click={expand}>
             <td class="jse-validation-error-icon">
-              <LocalExclamationTriangleIcon />
+              <IconAlertSquareRounded />
             </td>
             <td class="jse-validation-error-count">
               {count} validation errors

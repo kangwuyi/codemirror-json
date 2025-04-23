@@ -2,7 +2,7 @@
 
 <script lang="ts">
   import emitter from '../../../event/bus.js'
-  import { IconCheck, IconCode, IconPointerCog } from '@tabler/icons-svelte'
+  import { IconCheck, IconCode, IconAlertSquareRounded } from '@tabler/icons-svelte'
   import type {
     AbsolutePopupContext,
     AbsolutePopupOptions,
@@ -1791,7 +1791,7 @@
           } as text`}
           actions={[
             {
-              icon: IconPointerCog,
+              icon: IconAlertSquareRounded,
               text: 'Paste as JSON instead',
               title: 'Paste the text as JSON instead of a single value',
               // We use mousedown here instead of click: this message pops up

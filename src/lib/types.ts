@@ -296,7 +296,7 @@ export type ContextMenuItem = MenuButton | MenuDropDownButton | MenuSeparator | 
 export interface MessageAction {
   text: string
   title: string
-  icon?: Component
+  icon?: Icon
   onClick?: () => void
   onMouseDown?: () => void
   disabled?: boolean

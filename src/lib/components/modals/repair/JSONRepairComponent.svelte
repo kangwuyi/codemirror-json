@@ -1,9 +1,9 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
+  import { IconAlertSquareRounded } from '@tabler/icons-svelte'
   import LocalArrowDownIcon from '../../icon/angle-down-solid.svelte'
   import LocalCheckIcon from '../../icon/check-solid.svelte'
-  import LocalExclamationTriangleIcon from '../../icon/triangle-exclamation-solid.svelte'
   import LocalTimesIcon from '../../icon/circle-xmark-solid.svelte'
   import LocalWrenchIcon from '../../icon/wrench-solid.svelte'
 
@@ -133,7 +133,7 @@
   {#if error}
     <Message
       type="error"
-      icon={LocalExclamationTriangleIcon}
+      icon={IconAlertSquareRounded}
       message={`Cannot parse JSON: ${error.message}`}
       actions={errorActions}
     />

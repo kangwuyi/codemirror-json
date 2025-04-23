@@ -1,11 +1,14 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
+  import {
+    IconEye,
+    IconX,
+    IconAlertSquareRounded,
+    IconSettingsBolt,
+    IconCheck
+  } from '@tabler/icons-svelte'
   import emitter from '../../../event/bus.js'
-  import LocalExclamationTriangleIcon from '../../icon/triangle-exclamation-solid.svelte'
-  import LocalEyeIcon from '../../icon/eye-solid.svelte'
-  import LocalTimesIcon from '../../icon/circle-xmark-solid.svelte'
-  import LocalWrenchIcon from '../../icon/wrench-solid.svelte'
 
   import { createDebug } from '$lib/utils/debug.js'
   import type { JSONPatchDocument, JSONPath } from 'immutable-json-patch'
@@ -118,7 +121,6 @@
   import memoizeOne from 'memoize-one'
   import { validateText } from '$lib/logic/validation.js'
   import { truncate } from '$lib/utils/stringUtils.js'
-  import LocalFormatIcon from '../../icon/expand-solid.svelte'
   import { indentationMarkers } from '@replit/codemirror-indentation-markers'
   import { isTextSelection } from '$lib/logic/selection.js'
   import { wrappedLineIndent } from 'codemirror-wrapped-line-indent/dist/index.js' // ensure loading ESM, otherwise the vitest test fail
@@ -1073,25 +1075,23 @@
     }
   }
 
-  const repairActionShowMe = {
-    icon: LocalEyeIcon,
-    text: 'Show me',
-    title: 'Move to the parse error location',
-    onClick: handleShowMe
-  }
+  const tipList: MessageAction[] = [
+    {
+      icon: IconEye,
+      text: '定位',
+      title: '定位到发生错误的行',
+      onClick: handleShowMe
+    }
+  ]
+  if (jsonStatus === JSON_STATUS_REPAIRABLE && !readOnly)
+    tipList.push({
+      icon: IconSettingsBolt,
+      text: '自动修复',
+      title: '自动修复 JSON',
+      onClick: handleRepair
+    })
 
-  $: repairActions =
-    jsonStatus === JSON_STATUS_REPAIRABLE && !readOnly
-      ? [
-          {
-            icon: LocalWrenchIcon,
-            text: 'Auto repair',
-            title: 'Automatically repair JSON',
-            onClick: handleRepair
-          },
-          repairActionShowMe
-        ]
-      : [repairActionShowMe]
+  $: tipList
 </script>
 
 <div class="jse-text-mode" bind:this={domTextMode}>
@@ -1102,24 +1102,23 @@
 
     {#if editorDisabled}
       <Message
-        icon={LocalExclamationTriangleIcon}
+        icon={IconAlertSquareRounded}
         type="error"
-        message={`The JSON document is larger than ${formatSize(MAX_DOCUMENT_SIZE_TEXT_MODE)}, ` +
-          `and may crash your browser when loading it in text mode. Actual size: ${formatSize(text.length)}.`}
+        message={`JSON 文档超过最大 ${formatSize(MAX_DOCUMENT_SIZE_TEXT_MODE)} 限制, 当前文档尺寸为: ${formatSize(text.length)}.`}
         actions={[
           {
-            text: 'Open anyway',
-            title: 'Open the document in text mode. This may freeze or crash your browser.',
+            text: '继续',
+            title: '继续在 TEXT 模式中打开文档',
             onClick: handleAcceptTooLarge
           },
           {
-            text: 'Open in tree mode',
-            title: 'Open the document in tree mode. Tree mode can handle large documents.',
+            text: '树状格式',
+            title: '在 TREE 模式中打开文档',
             onClick: handleSwitchToTreeMode
           },
           {
-            text: 'Cancel',
-            title: 'Cancel opening this large document.',
+            text: '清空',
+            title: '清空文档内容',
             onClick: cancelLoadTooLarge
           }
         ]}
@@ -1139,9 +1138,9 @@
       {#if jsonParseError}
         <Message
           type="error"
-          icon={LocalExclamationTriangleIcon}
+          icon={IconAlertSquareRounded}
           message={jsonParseError.message}
-          actions={repairActions}
+          actions={tipList}
           onClick={handleShowMe}
           onClose={focus}
         />
@@ -1150,18 +1149,18 @@
       {#if !jsonParseError && askToFormatApplied && needsFormatting(text)}
         <Message
           type="success"
-          message="Do you want to format the JSON?"
+          message="转换为 JSON 格式?"
           actions={[
             {
-              icon: LocalFormatIcon,
-              text: 'Format',
-              title: 'Format JSON: add proper indentation and new lines (Ctrl+I)',
+              icon: IconCheck,
+              text: '',
+              title: '转换为 JSON 格式',
               onClick: handleFormat
             },
             {
-              icon: LocalTimesIcon,
-              text: 'No thanks',
-              title: 'Close this message',
+              icon: IconX,
+              text: '',
+              title: '取消',
               onClick: () => (askToFormatApplied = false)
             }
           ]}

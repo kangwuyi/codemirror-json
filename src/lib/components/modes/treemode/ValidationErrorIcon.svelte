@@ -1,5 +1,5 @@
 <script lang="ts">
-  import LocalExclamationTriangleIcon from '../../icon/triangle-exclamation-solid.svelte'
+  import { IconAlertSquareRounded } from '@tabler/icons-svelte'
   import { getContext } from 'svelte'
   import { tooltip } from '../../controls/tooltip/tooltip.js'
   import type { AbsolutePopupContext, NestedValidationError, ValidationError } from '$lib/types.js'
@@ -22,7 +22,7 @@
   on:click={onExpand}
   use:tooltip={{ text, ...absolutePopupContext }}
 >
-  <LocalExclamationTriangleIcon />
+  <IconAlertSquareRounded />
 </button>
 
 <style src="./ValidationErrorIcon.scss"></style>
