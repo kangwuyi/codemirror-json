@@ -1,9 +1,7 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import { IconAlertSquareRounded } from '@tabler/icons-svelte'
-  import LocalAngleDownIcon from '../icon/angle-down-solid.svelte'
-  import LocalAngleRightIcon from '../icon/angle-right-solid.svelte'
+  import { IconChevronRight, IconChevronDown, IconAlertSquareRounded } from '@tabler/icons-svelte'
   import { isEmpty } from 'lodash-es'
   import { stringifyJSONPath } from '$lib/utils/pathUtils.js'
   import { ValidationSeverity, type ValidationError } from '$lib/types.js'
@@ -67,7 +65,7 @@
                     on:click|stopPropagation={collapse}
                     title="Collapse validation errors"
                   >
-                    <LocalAngleDownIcon />
+                    <IconChevronDown />
                   </button>
                 {/if}
               </td>
@@ -94,7 +92,7 @@
             <td class="jse-validation-error-count">
               {count} validation errors
               <div class="jse-validation-errors-expand">
-                <LocalAngleRightIcon />
+                <IconChevronRight />
               </div>
             </td>
           </tr>

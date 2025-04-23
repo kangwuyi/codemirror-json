@@ -1,8 +1,7 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import LocalCaretDownIcon from '../../icon/caret-down-solid.svelte'
-  import LocalCaretRightIcon from '../../icon/caret-right-solid.svelte'
+  import { IconCaretDown, IconCaretRight } from '@tabler/icons-svelte'
   import type { JSONPath, JSONPointer } from 'immutable-json-patch'
   import { appendToJSONPointer, parseJSONPointer } from 'immutable-json-patch'
   import { initial, isEqual, last, range } from 'lodash-es'
@@ -595,9 +594,9 @@
           title="Expand or collapse this array (Ctrl+Click to expand/collapse recursively)"
         >
           {#if expanded}
-            <LocalCaretDownIcon />
+            <IconCaretDown />
           {:else}
-            <LocalCaretRightIcon />
+            <IconCaretRight />
           {/if}
         </button>
         <slot name="identifier" />
@@ -732,9 +731,9 @@
           title="Expand or collapse this object (Ctrl+Click to expand/collapse recursively)"
         >
           {#if expanded}
-            <LocalCaretDownIcon />
+            <IconCaretDown />
           {:else}
-            <LocalCaretRightIcon />
+            <IconCaretRight />
           {/if}
         </button>
         <slot name="identifier" />

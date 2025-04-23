@@ -1,11 +1,13 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import { IconAlertSquareRounded } from '@tabler/icons-svelte'
-  import LocalArrowDownIcon from '../../icon/angle-down-solid.svelte'
-  import LocalCheckIcon from '../../icon/check-solid.svelte'
-  import LocalTimesIcon from '../../icon/circle-xmark-solid.svelte'
-  import LocalWrenchIcon from '../../icon/wrench-solid.svelte'
+  import {
+    IconSettingsBolt,
+    IconX,
+    IconCheck,
+    IconChevronDown,
+    IconAlertSquareRounded
+  } from '@tabler/icons-svelte'
 
   import { createDebug } from '$lib/utils/debug.js'
   import Message from '../../controls/Message.svelte'
@@ -95,7 +97,7 @@
     },
     {
       type: 'button',
-      icon: LocalTimesIcon,
+      icon: IconX,
       title: 'Cancel repair',
       className: 'jse-cancel',
       onClick: onCancel
@@ -103,14 +105,14 @@
   ]
 
   $: gotoAction = {
-    icon: LocalArrowDownIcon,
+    icon: IconChevronDown,
     text: 'Show me',
     title: 'Scroll to the error location',
     onClick: goToError
   }
 
   $: repairAction = {
-    icon: LocalWrenchIcon,
+    icon: IconSettingsBolt,
     text: 'Auto repair',
     title: 'Automatically repair JSON',
     onClick: handleRepair
@@ -120,7 +122,7 @@
 
   $: successActions = [
     {
-      icon: LocalCheckIcon,
+      icon: IconCheck,
       text: 'Apply',
       title: 'Apply fixed JSON',
       disabled: readOnly,

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import LocalCopyIcon from '../../../lib/components/icon/copy-solid.svelte'
+  import { IconCopy } from '@tabler/icons-svelte'
 
   import {
     JSONEditor,
@@ -42,7 +42,7 @@
     const customCopyButton: MenuButton = {
       type: 'button',
       onClick: handleCopy,
-      icon: LocalCopyIcon,
+      icon: IconCopy,
       title: 'Copy document to clipboard',
       className: 'custom-copy-button'
     }

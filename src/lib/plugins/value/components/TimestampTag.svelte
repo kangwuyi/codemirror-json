@@ -1,7 +1,7 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import LocalClockIcon from '../../../components/icon/clock-solid.svelte'
+  import { IconLock } from '@tabler/icons-svelte'
 
   import { getContext } from 'svelte'
   import { tooltip } from '$lib/components/controls/tooltip/tooltip.js'
@@ -15,7 +15,7 @@
 </script>
 
 <div class="jse-timestamp" use:tooltip={{ text, ...absolutePopupContext }}>
-  <LocalClockIcon />
+  <IconClock />
 </div>
 
 <style src="./TimestampTag.scss"></style>
