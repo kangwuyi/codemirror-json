@@ -460,7 +460,6 @@
 
   // --------------
   $: debug('mode changed to', mode)
-  console.log('mode changed to', mode)
 </script>
 
 <AbsolutePopup>

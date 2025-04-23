@@ -1,7 +1,7 @@
 {
   "name": "@kangwuyi/codemirror-json",
   "description": "A web-based tool to view, edit, format, transform, and validate JSON",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "homepage": "https://github.com/kangwuyi/codemirror-json",
   "repository": {
     "type": "git",
@@ -83,7 +83,6 @@
     "@codemirror/view": "^6.34.1",
     "@lezer/highlight": "^1.2.1",
     "@replit/codemirror-indentation-markers": "^6.5.3",
-    "@tabler/icons-svelte": "^3.31.0",
     "ajv": "^8.17.1",
     "codemirror-wrapped-line-indent": "^1.0.8",
     "diff-sequences": "^29.6.3",
