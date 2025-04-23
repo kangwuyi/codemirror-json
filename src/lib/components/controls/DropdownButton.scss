@@ -26,7 +26,7 @@
 
   button.jse-open-dropdown {
     @include styles.jsoneditor-button;
-
+    padding: 0;
     width: 2em;
     background: defaults.$context-menu-background;
     color: defaults.$context-menu-color;

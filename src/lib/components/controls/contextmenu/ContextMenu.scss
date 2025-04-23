@@ -6,7 +6,7 @@
 
   font-family: defaults.$font-family;
   font-size: defaults.$font-size;
-  background: defaults.$context-menu-background;
+  background: #333333;
   color: defaults.$context-menu-color;
 
   .jse-row {
@@ -21,6 +21,7 @@
       padding: 5px;
       color: defaults.$context-menu-color-disabled;
       line-height: normal;
+      font-size: 12px;
     }
   }
 
@@ -30,8 +31,8 @@
     flex-direction: column;
     align-items: stretch;
 
-    &:not(:last-child) {
-      border-right: 1px solid defaults.$context-menu-separator-color;
+    &:not(:first-child) {
+      border-left: 1px solid defaults.$context-menu-separator-color;
     }
   }
 
