@@ -1,6 +1,13 @@
 # fork
 fork from https://github.com/josdejong/svelte-jsoneditor
 
+# 不同之处
+因需求不同，所以借助 svelte-jsoneditor 的方案，以它为主体进行修改，预期三天时间
+
+* 第一天：修改部分 icon，增加弹出层条件，删除冗余结构（已完成）
+* 第二天：删除顶部菜单，新增 mitt，通过事件控制编辑器，将菜单按钮外置编辑器之外（已完成）
+* 第三天：大部分重构，样式主题重置（未开始，找时间再做）
+
 # useage
 use codemirror 6
 
@@ -39,7 +46,6 @@ const supportedPropNames = [
   'onChange',
   'onRenderValue',
   'onClassName',
-  'onRenderContextMenu',
   'onChangeMode',
   'onSelect',
   'onError',
