@@ -9,9 +9,6 @@
 
   <ul>
     <li>
-      <a href="examples/basic_usage_mode_javascript">Basic usage javascript mode</a>
-    </li>
-    <li>
       <a href="examples/basic_usage_one_way_binding">Basic usage (one-way binding)</a>
     </li>
     <li>

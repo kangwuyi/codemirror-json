@@ -66,6 +66,8 @@
     parse: parseJSONPath,
     stringify: stringifyJSONPath
   }
+  
+  const onSetMittDefault = undefined
   const onChangeDefault = undefined
   const onSelectDefault = undefined
   const onRenderValueDefault = renderValue
@@ -104,7 +106,7 @@
   export let onError: OnError = onErrorDefault
   export let onFocus: OnFocus = onFocusDefault
   export let onBlur: OnBlur = onBlurDefault
-  export let onSetMitt: any | undefined = onChangeDefault
+  export let onSetMitt: any | undefined = onSetMittDefault
 
   let instanceId = uniqueId()
   let hasFocus = false
